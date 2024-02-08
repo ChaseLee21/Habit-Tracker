@@ -22,5 +22,53 @@
         "streak": "3",
         "category_id": 1, 
         "last_date": null
+    },
+    {
+        "name": "Coding Drills Finished",
+        "value": "12",
+        "person": "Chase",
+        "streak": "0",
+        "category_id": 2,
+        "last_date": null
+    },
+    {
+        "name": "Projects Completed",
+        "value": "2",
+        "person": "Chase",
+        "streak": "0",
+        "category_id": 2, 
+        "last_date": null
+    },
+    {
+        "name": "Study Sessions", 
+        "value": "3",
+        "person": "Chase",
+        "streak": "0",
+        "category_id": 2, 
+        "last_date": null
+    },
+    {
+        "name": "Date Nights",
+        "value": "4",
+        "person": "Chase",
+        "streak": "4",
+        "category_id": 3,
+        "last_date": null
+    },
+    {
+        "name": "Words of Affirmation Given",
+        "value": "2",
+        "person": "Chase",
+        "streak": "0",
+        "category_id": 3, 
+        "last_date": null
+    },
+    {
+        "name": "Acts of Service Done", 
+        "value": "9",
+        "person": "Chase",
+        "streak": "3",
+        "category_id": 3, 
+        "last_date": null
     }
 ]
