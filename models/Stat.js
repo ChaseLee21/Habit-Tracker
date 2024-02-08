@@ -29,13 +29,20 @@ Stat.init(
     last_date: {
       type: DataTypes.DATE,
     },
-    },
-    {
-        sequelize,
-        freezeTableName: true,
-        underscored: true,
-        modelName: 'stat',
+    category_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'category',
+        key: 'id',
+      },
     }
+  },
+  {
+      sequelize,
+      freezeTableName: true,
+      underscored: true,
+      modelName: 'stat',
+  }
 );
 
 module.exports = Stat;
