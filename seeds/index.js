@@ -1,6 +1,6 @@
 const sequelize = require('../config/connection');
 const Stat = require('../models/Stat');
-const statsData = require('./stats-seeds.json');
+const statsData = require('./stats-seed.json');
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });

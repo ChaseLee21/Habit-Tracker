@@ -17,7 +17,7 @@ Stat.init(
     },
     value: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     person: {
       type: DataTypes.STRING,
@@ -28,7 +28,6 @@ Stat.init(
     },
     last_date: {
       type: DataTypes.DATE,
-      allowNull: false,
     },
     },
     {
@@ -39,4 +38,4 @@ Stat.init(
     }
 );
 
-module.exports = Dish;
+module.exports = Stat;
