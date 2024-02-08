@@ -1,25 +1,25 @@
 const router = require('express').Router();
-const Dish = require('../models/Dish');
+const Stat = require('../models/Stat');
 
 // route to get all dishes
 router.get('/', async (req, res) => {
-  const dishData = await Dish.findAll().catch((err) => { 
+  const statData = await Stat.findAll().catch((err) => { 
       res.json(err);
     });
-      const dishes = dishData.map((dish) => dish.get({ plain: true }));
-      res.render('all', { dishes });
+      const stats = statData.map((stat) => stat.get({ plain: true }));
+      res.render('all', { stats });
     });
 
 // route to get one dish
-router.get('/dish/:id', async (req, res) => {
+router.get('/stat/:id', async (req, res) => {
   try{ 
-      const dishData = await Dish.findByPk(req.params.id);
-      if(!dishData) {
-          res.status(404).json({message: 'No dish with this id!'});
+      const statData = await Stat.findByPk(req.params.id);
+      if(!statData) {
+          res.status(404).json({message: 'No stat found with this id!'});
           return;
       }
-      const dish = dishData.get({ plain: true });
-      res.render('dish', dish);
+      const stat = statData.get({ plain: true });
+      res.render('stat', stat);
     } catch (err) {
         res.status(500).json(err);
     };     
