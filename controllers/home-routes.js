@@ -3,12 +3,12 @@ const Stat = require('../models/Stat');
 
 // route to get all dishes
 router.get('/', async (req, res) => {
-  const statData = await Stat.findAll().catch((err) => { 
+    const statData = await Stat.findAll().catch((err) => { 
       res.json(err);
     });
-      const stats = statData.map((stat) => stat.get({ plain: true }));
-      res.render('all', { stats });
-    });
+    const stats = statData.map((stat) => stat.get({ plain: true }));
+    res.render('all', { stats });
+  });
 
 // route to get one dish
 router.get('/stat/:id', async (req, res) => {

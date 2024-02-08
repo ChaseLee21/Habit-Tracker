@@ -1,3 +1,6 @@
-<div class="stat_container">
-    <h2>Some Stat Text</h2>
+<div class="d-flex flex-row">
+    <h2 class="text-center">Health</h2>
+    {{#each stats as |stat|}}
+        {{stat.person}}'s {{stat.name}}: {{stat.value}} On a streak of {{stat.streak}}
+    {{/each}}
 </div>

@@ -24,7 +24,7 @@ Stat.init(
       allowNull: false,
     },
     streak: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.INTEGER,
     },
     last_date: {
       type: DataTypes.DATE,
