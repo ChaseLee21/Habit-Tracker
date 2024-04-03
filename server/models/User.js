@@ -1,13 +1,14 @@
 const { Schema, model } = require('mongoose');
 const crypto = require('crypto');
 
+//TODO - add logic that checks if id and salt were passed in the request
 const userSchema = new Schema({
-    id: { type: String, required: true },
+    id: { type: String, required: false },
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
     habits: { type: Array, required: true },
-    salt: { type: String, required: true }
+    salt: { type: String, required: false }
 });
 
 userSchema.pre('save', function(next) {

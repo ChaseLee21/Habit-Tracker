@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-const User = require('./User');
-const Habit = require('./Habit');
-const Analytics = require('./Analytics');
-const db = require('../config');
+const User = require('../models/User');
+const Habit = require('../models/Habit');
+const Analytics = require('../models/Analytics');
+const db = require('../config/connection');
 
 const userData = require('./userData.json');
 const habitData = require('./habitData.json');
@@ -17,6 +17,18 @@ db.once('open', async () => {
         await User.create(userData);
         await Habit.create(habitData);
         await Analytics.create(analyticsData);
+
+        // HACK: This is not the best way to seed data, but it works for now
+        // I am hardcoding the habits into the users
+        // I am hardcoding the analytics into the habits
+        for (let i = 0; i < habitData.length; i++) {
+            const habit = await Habit.findOne({ name: habitData[i].name });
+            const user = await User.findOne({ email: userData[i].email });
+            habit.analytics.push(analyticsData[i]);
+            habit.analytics.push(analyticsData[i + 3]);
+            user.habits.push(habit);
+            await user.save();
+        }
 
         console.log('Data seeded successfully!');
         process.exit(0);

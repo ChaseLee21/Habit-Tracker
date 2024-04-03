@@ -1,0 +1,35 @@
+[
+    {
+        "name": "Exercise",
+        "description": "I want to exercise more often to improve my health and fitness.",
+        "why": "I want to be healthier and feel better about myself.",
+        "goal": "My habit is complete once I have jogged for 20 minutes",
+        "reward": "I will reward myself with new shoes once I have completed my habit 30 times.",
+        "frequency": "3 times a week",
+        "streak": 0,
+        "longestStreak": 0,
+        "analytics": []
+    },
+    {
+        "name": "Diet",
+        "description": "I want to eat healthier to improve my health.",
+        "why": "I want to be healthier and feel better about myself.",
+        "goal": "My habit is complete once I have cooked one healthy meal.",
+        "reward": "I will reward myself with new clothes once I have completed my habit 30 times.",
+        "frequency": "5 times a week",
+        "streak": 0,
+        "longestStreak": 0,
+        "analytics": []
+    },
+    {
+        "name": "React",
+        "description": "I want to increase my knowledge with the React framework to improve my coding abilities.",
+        "why": "I want to be a better coder and further my career in IT.",
+        "goal": "My habit is complete once I have coded for one hour focusing on react without distractions.",
+        "reward": "I will reward myself with pokemon cards once I have completed my habit 10 times.",
+        "frequency": "5 times a week",
+        "streak": 0,
+        "longestStreak": 0,
+        "analytics": []
+    }
+]
