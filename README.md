@@ -66,4 +66,57 @@ The minimum viable product for this project will be met once the above features 
 - Habit Settings
     - Users can edit the habit name, description, goal, reward, and frequency
     - Users can delete a habit
-    
+
+## Data Schema
+
+### User
+
+```json
+{
+    "id": "string",
+    "email": "string",
+    "password": "string",
+    "habits": "array"
+}
+```
+
+### Habit
+
+```json
+{
+    "id": "string",
+    "name": "string",
+    "description": "string",
+    "why": "string",
+    "goal": "number",
+    "reward": "string",
+    "frequency": "string",
+    "streak": "number",
+    "longestStreak": "number",
+    "analytics": "array"
+}
+```
+
+### Analytics
+
+```json
+{
+    "date": "string",
+    "completed": "boolean"
+}
+```
+
+## Technology Stack
+
+- React
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- Tailwind CSS
+- JWT for authentication
+- Chart.js for analytics
+
+## Deployment
+
+The application will be deployed on Heroku. The database will be hosted on MongoDB Atlas.
