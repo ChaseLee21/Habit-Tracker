@@ -15,6 +15,8 @@ userSchema.pre('save', function(next) {
         return next();
     }
 
+    this.id = this.email;
+
     // Generate a salt
     this.salt = crypto.randomBytes(16).toString('hex');
 
