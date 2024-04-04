@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('./config/connection.js');
+const api = require('./api/index.js');
 
 const PORT = 3000
 
@@ -11,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //TODO: server static files
 
-//TODO: use api routes
+app.use('/api', api);
 
 // Connect to MongoDB
 db.once('open', () => {
