@@ -29,4 +29,28 @@ userSchema.pre('save', function(next) {
     });
 });
 
+userSchema.pre('findOneAndUpdate', function(next) {
+    const password = this.getUpdate().$set.password;
+    if (!password) {
+        return next();
+    }
+
+    try {
+        const salt = crypto.randomBytes(16).toString('hex');
+
+        crypto.pbkdf2(password, salt, 1000, 64, 'sha512', (err, hash) => {
+            if (err) {
+                return next(err);
+            }
+
+            this.getUpdate().$set.password = hash.toString('hex');
+            this.getUpdate().$set.salt = salt;
+            next();
+        });
+
+    } catch (err) {
+        return next(err);
+    }
+});
+
 module.exports = model('User', userSchema);
