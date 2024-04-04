@@ -1,10 +1,8 @@
 const { Schema, model } = require('mongoose');
 const crypto = require('crypto');
-const { v4: uuidv4 } = require('uuid');
 
 //TODO - add logic that checks if id and salt were passed in the request
 const userSchema = new Schema({
-    id: { type: String, required: false },
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
@@ -16,8 +14,6 @@ userSchema.pre('save', function(next) {
     if (!this.isModified('password')) {
         return next();
     }
-
-    this.id = uuidv4();
 
     // Generate a salt
     this.salt = crypto.randomBytes(16).toString('hex');
