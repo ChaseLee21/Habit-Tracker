@@ -24,9 +24,9 @@ db.once('open', async () => {
         for (let i = 0; i < habitData.length; i++) {
             const habit = await Habit.findOne({ name: habitData[i].name });
             const user = await User.findOne({ email: userData[i].email });
-            habit.analytics.push(analyticsData[i]);
-            habit.analytics.push(analyticsData[i + 3]);
-            user.habits.push(habit);
+            habit.analytics.push(analyticsData[i]._id);
+            habit.analytics.push(analyticsData[i + 3]._id);
+            user.habits.push(habit._id);
             await user.save();
         }
 
