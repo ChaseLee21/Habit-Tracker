@@ -5,9 +5,9 @@ const crypto = require('crypto');
 const userSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false},
     habits: { type: Array, required: true },
-    salt: { type: String, required: false }
+    salt: { type: String, required: false, select: false}
 });
 
 userSchema.pre('save', function(next) {
