@@ -11,6 +11,9 @@ const userSchema = new Schema({
 
 // Middleware to hash the password before saving
 userSchema.pre('save', function(next) {
+    if (!this.isModified('password')) {
+        return next();
+    }
     this.salt = crypto.randomBytes(16).toString('hex');
 
     crypto.pbkdf2(this.password, this.salt, 1000, 64, 'sha512', (err, hash) => {
