@@ -37,6 +37,9 @@ router.post('/', (req, res) => {
     const userData = req.body;
     User.create(userData)
         .then((user) => {
+            user = user.toObject();
+            delete user.password;
+            delete user.salt;
             res.status(201).json({ message: 'User created successfully', user: user });
         })
         .catch((err) => {
