@@ -5,6 +5,10 @@ const router = require('express').Router();
 router.get('/', (req, res) => {
     User.find({})
         .then((users) => {
+            if (!users || users.length === 0) {
+                res.status(404).json({ message: 'No users were found' });
+                return;
+            }
             res.json(users);
         })
         .catch((err) => {
@@ -17,6 +21,10 @@ router.get('/:id', (req, res) => {
     const { id } = req.params;
     User.findOne({ _id: id })
         .then((user) => {
+            if (!user) {
+                res.status(404).json({ message: 'No user found with this id' });
+                return;
+            }
             res.json(user);
         })
         .catch((err) => {
@@ -42,6 +50,10 @@ router.put('/:id', (req, res) => {
     const userData = req.body;
     User.findOneAndUpdate(({ _id: id }, userData))
         .then((user) => {
+            if (!user) {
+                res.status(404).json({ message: 'No user found with this id' });
+                return;
+            }
             res.status(200).json({ message: 'User updated successfully', user: user});
         })
         .catch((err) => {
@@ -53,7 +65,11 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
     User.findOneAndDelete({ _id: id })
-        .then(() => {
+        .then((user) => {
+            if (!user) {
+                res.status(404).json({ message: 'No user found with this id' });
+                return;
+            }
             res.status(200).json({ message: 'User deleted successfully' });
         })
         .catch((err) => {
