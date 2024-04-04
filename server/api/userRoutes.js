@@ -1,4 +1,4 @@
-const User = require('../models/index');
+const { User } = require('../models/index');
 const router = require('express').Router();
 
 // GET all users
