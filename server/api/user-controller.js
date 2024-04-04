@@ -51,7 +51,7 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
     const { id } = req.params;
     const userData = req.body;
-    User.findOneAndUpdate(({ _id: id }, userData))
+    User.findOneAndUpdate({ _id: id }, { $set: userData })
         .then((user) => {
             if (!user) {
                 res.status(404).json({ message: 'No user found with this id' });
@@ -60,7 +60,7 @@ router.put('/:id', (req, res) => {
             res.status(200).json({ message: 'User updated successfully', user: user});
         })
         .catch((err) => {
-            res.status(400).json(err);
+            res.status(400).json(err.message);
         });
 });
 

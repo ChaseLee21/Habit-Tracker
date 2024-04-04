@@ -30,12 +30,15 @@ userSchema.pre('save', function(next) {
 });
 
 userSchema.pre('findOneAndUpdate', function(next) {
-    const password = this.getUpdate().$set.password;
-    if (!password) {
+    const update = this.getUpdate();
+
+    // Check if $set exists and password is being updated
+    if (!update.$set || !update.$set.password) {
         return next();
     }
 
     try {
+        const password = update.$set.password;
         const salt = crypto.randomBytes(16).toString('hex');
 
         crypto.pbkdf2(password, salt, 1000, 64, 'sha512', (err, hash) => {
@@ -43,8 +46,8 @@ userSchema.pre('findOneAndUpdate', function(next) {
                 return next(err);
             }
 
-            this.getUpdate().$set.password = hash.toString('hex');
-            this.getUpdate().$set.salt = salt;
+            update.$set.password = hash.toString('hex');
+            update.$set.salt = salt;
             next();
         });
 
