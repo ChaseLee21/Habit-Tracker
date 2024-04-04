@@ -24,10 +24,13 @@ db.once('open', async () => {
         for (let i = 0; i < habitData.length; i++) {
             const habit = await Habit.findOne({ name: habitData[i].name });
             const user = await User.findOne({ email: userData[i].email });
-            habit.analytics.push(analyticsData[i]._id);
-            habit.analytics.push(analyticsData[i + 3]._id);
+            const analytics1 = await Analytics.findOne({ date: analyticsData[i].date });
+            const analytics2 = await Analytics.findOne({ date: analyticsData[i + 3].date });
+            habit.analytics.push(analytics1._id);
+            habit.analytics.push(analytics2._id);
             user.habits.push(habit._id);
             await user.save();
+            await habit.save();
         }
 
         console.log('Data seeded successfully!');
