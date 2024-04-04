@@ -9,6 +9,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//TODO: server static files
+
+//TODO: use api routes
+
 // Connect to MongoDB
 db.once('open', () => {
     console.log('Connected to MongoDB');
