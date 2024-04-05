@@ -1,4 +1,4 @@
-const {Analytics} = require('../models/index');
+const {Analytics, Habit} = require('../models/index');
 const router = require("express").Router();
 
 // GET all analytics
@@ -35,16 +35,28 @@ router.get('/:id', (req, res) => {
 });
 
 //POST analytic
-router.post('/', (req, res) => {
+router.post('/:habitId', (req, res) => {
     const analyticData = req.body;
+    const habitId = req.params.habitId;
     Analytics.create(analyticData)
-    .then((analytic) => {
-        res.status(201).json({message: "analytic successfully created", analytic: analytic});
-    })
-    .catch((err) => {
-        console.log(err);
-        res.status(500).json({message: "An error has occurred while attempting to create the analytic"});
-    })
+        .then((analytic) => {
+            Habit.findOneAndUpdate({ _id: habitId }, { $push: { analytics: analytic._id } })
+                .then((habit) => {
+                    if (!habit) {
+                        res.status(404).json({message: "No habit was found with that id"});
+                        return;
+                    }
+                    res.status(201).json({message: "analytic successfully created", analytic: analytic});
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(500).json({message: "An error has occurred while attempting to create the analytic"});
+                })
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({message: "An error has occurred while attempting to create the analytic"});
+        })
 });
 
 //PUT analytic by id
