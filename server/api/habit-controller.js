@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Habit } = require('../models/index');
+const { Habit, User } = require('../models/index');
 
 // GET all habits
 router.get('/', (req, res) => {
@@ -33,11 +33,24 @@ router.get('/:id', (req, res) => {
 });
 
 // POST a new habit
-router.post('/', (req, res) => {
+router.post('/:id', (req, res) => {
     const habitData = req.body;
+    const userId = req.params.id;
+    // Create a new habit
     Habit.create(habitData)
         .then((habit) => {
-            res.status(201).json({ message: 'Habit created successfully', habit: habit });
+            // Add the habit _id to the user's habits array
+            User.findOneAndUpdate({ _id: userId }, { $push: { habits: habit._id } })
+                .then((user) => {
+                    if (!user) {
+                        res.status(404).json({ message: 'No user found with this id' });
+                        return;
+                    }
+                    res.status(201).json({ message: 'Habit created successfully', habit: habit });
+                })
+                .catch((err) => {
+                    res.status(400).json(err);
+                });
         })
         .catch((err) => {
             res.status(400).json(err);
