@@ -83,7 +83,17 @@ router.delete('/:id', (req, res) => {
                 res.status(404).json({ message: 'No habit found with this id' });
                 return;
             }
-            res.status(200).json({ message: 'Habit deleted successfully', habit: habit});
+            User.findOneAndUpdate({ habits: id }, { $pull: { habits: id } })
+                .then((user) => {
+                    if (!user) {
+                        console.log('A habit was deleted but no user was not found with the habit id');
+                        return;
+                    }
+                    res.status(200).json({ message: 'Habit deleted successfully', habit: habit});
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         })
         .catch((err) => {
             res.status(400).json(err);
