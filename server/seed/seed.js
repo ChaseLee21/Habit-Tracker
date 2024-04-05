@@ -24,6 +24,7 @@ db.once('open', async () => {
 
         for (let i = 0; i < analyticsData.length; i++) {
             analyticsData[i].habit = await Habit.findOne().select('_id');
+            analyticsData[i].user = await User.findOne().select('_id');
         }
 
         await Analytics.create(analyticsData);
