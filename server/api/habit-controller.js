@@ -87,7 +87,6 @@ router.delete('/:id', (req, res) => {
                 .then((user) => {
                     if (!user) {
                         console.log('A habit was deleted but no user was not found with the habit id');
-                        return;
                     }
                     res.status(200).json({ message: 'Habit deleted successfully', habit: habit});
                 })
