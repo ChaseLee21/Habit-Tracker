@@ -3,7 +3,7 @@ const { Habit, User } = require('../models/index');
 
 // GET all habits
 router.get('/', (req, res) => {
-    Habit.find({})
+    Habit.find({ })
         .then((habits) => {
             if (!habits || habits.length === 0) {
                 res.status(404).json({ message: 'No habits were found' });
@@ -16,16 +16,16 @@ router.get('/', (req, res) => {
         });
 });
 
-// GET one habit by id
-router.get('/:id', (req, res) => {
-    const { id } = req.params;
-    Habit.findOne({ _id: id })
-        .then((habit) => {
-            if (!habit) {
-                res.status(404).json({ message: 'No habit found with this id' });
+// GET all habits for a user
+router.get('/:userId', (req, res) => {
+    const userId = req.params.userId;
+    Habit.find({ user: userId })
+        .then((habits) => {
+            if (!habits || habits.length === 0) {
+                res.status(404).json({ message: 'No habits were found' });
                 return;
             }
-            res.json(habit);
+            res.json(habits);
         })
         .catch((err) => {
             res.status(400).json(err);

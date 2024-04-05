@@ -1,9 +1,10 @@
 const {Analytics, Habit} = require('../models/index');
 const router = require("express").Router();
 
-// GET all analytics
-router.get('/', (req, res) => {
-    Analytics.find({})
+// GET all analytics for a habit
+router.get('/:habitId', (req, res) => {
+    const habitId = req.params.habitId;
+    Analytics.find({ habit: habitId })
         .then((analytics) => {
             if (!analytics || analytics.length === 0) {
                 res.status(404).json({message: "No analytics were found"})
