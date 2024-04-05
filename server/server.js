@@ -22,3 +22,6 @@ db.once('open', () => {
         console.log(`Server is running on port ${PORT}`);
     });
 });
+
+//GOAL 1: habit _id in the user document
+//GOAL 2: analytic _id in the habit document

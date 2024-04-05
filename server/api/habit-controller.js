@@ -33,9 +33,9 @@ router.get('/:id', (req, res) => {
 });
 
 // POST a new habit
-router.post('/:id', (req, res) => {
+router.post('/:userId', (req, res) => {
     const habitData = req.body;
-    const userId = req.params.id;
+    const userId = req.params.userId;
     // Create a new habit
     Habit.create(habitData)
         .then((habit) => {
