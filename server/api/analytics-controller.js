@@ -22,17 +22,48 @@ router.get('/:userId', (req, res) => {
 router.get('/:userId/:date', (req, res) => {
     const userId = req.params.userId;
     const date = req.params.date;
-    Analytics.find({ user: userId, date: date})
-        .then((analytics) => {
-            if (!analytics || analytics.length === 0) {
-                res.status(404).json({message: "No analytics were found"})
+    Habit.find({ user: userId })
+        .then((habits) => {
+            if (!habits || habits.length === 0) {
+                console.log("No habits were found at /api/analytics/:userId/:date", userId, date);
+                res.status(404).json({message: "No habits were found"})
                 return;
             }
-            res.status(200).json(analytics);
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).json({message: "An error has occurred while fetching analytics"});
+            Analytics.find({ user: userId, date: date})
+                .then((analytics) => {
+                    if (!analytics || analytics.length === 0) {
+                        console.log("No analytics were found at /api/analytics/:userId/:date", userId, date);
+                        res.status(404).json({message: "No analytics were found"})
+                        return;
+                    }
+                    for (let i = 0; i < habits.length; i++) {
+                        const habit = habits[i];
+                        const analytic = analytics.find(analytic => {
+                            return analytic.habit.toString() === habit._id.toString();
+                        });
+                        if (!analytic) {
+                            const newAnalytic = {
+                                user: userId,
+                                habit: habit._id,
+                                date: date,
+                                completed: false
+                            }
+                            Analytics.create(newAnalytic)
+                                .then((analytic) => {
+                                    analytics.push(analytic);
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    res.status(500).json({message: "An error has occurred while creating analytics"});
+                                })
+                        }
+                    }
+                    res.status(200).json(analytics);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(500).json({message: "An error has occurred while fetching analytics"});
+                })
         })
 });
 
