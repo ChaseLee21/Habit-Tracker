@@ -9,10 +9,11 @@ router.get('/', (req, res) => {
                 res.status(404).json({message: "No analytics were found"})
                 return;
             }
-            res.json(analytics);
+            res.status(200).json(analytics);
         })
         .catch((err) => {
-            res.status(400).json({message: err})
+            console.log(err);
+            res.status(500).json({message: "An error has occurred while fetching analytics"});
         })
 });
 
@@ -25,10 +26,11 @@ router.get('/:id', (req, res) => {
                 res.status(404).json({message: "No analytic was found with that id"})
                 return;
             }
-            res.json(analytic);
+            res.status(200).json(analytic);
         })
         .catch((err) => {
-            res.status(400).json({message: err})
+            console.log(err);
+            res.status(500).json({message: "An error has occurred while fetching the analytic"});
         })
 });
 
@@ -39,7 +41,8 @@ router.post('/', (req, res) => {
         res.status(201).json({message: "analytic successfully created", analytic: analytic});
     })
     .catch((err) => {
-        res.status(400).json({message: err});
+        console.log(err);
+        res.status(500).json({message: "An error has occurred while attempting to create the analytic"});
     })
 });
 
@@ -47,32 +50,34 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
     const id = req.params.id
     const analyticData = req.body
-    Analytics.findByIdAndUpdate({ _id: id }, { $set: analyticData })
+    Analytics.findOneAndUpdate({ _id: id }, { $set: analyticData }, { new: true })
         .then((analytic) => {
             if (!analytic) {
                 res.status(404).json({message: "No analytic was found with that id"})
                 return;
             }
-            res.json({message: "analytic successfully updated", analytic: analytic});
+            res.status(200).json({message: "analytic successfully updated", analytic: analytic});
         })
         .catch((err) => {
-            res.status(400).json({message: err});
+            console.log(err);
+        res.status(500).json({message: "An error has occurred while attempting to update the analytic"});
         })
 });
 
 //Delete analytic by id
 router.delete('/:id', (req, res) => {
     const id = req.params.id
-    Analytics.findByIdAndDelete({ _id: id })
+    Analytics.findOneAndDelete({ _id: id })
         .then((analytic) => {
             if (!analytic) {
                 res.status(404).json({message: "No analytic was found with that id"})
                 return;
             }
-            res.json({message: "analytic successfully deleted", analytic: analytic});
+            res.status(200).json({message: "analytic successfully deleted", analytic: analytic});
         })
         .catch((err) => {
-            res.status(400).json({message: err});
+            console.log(err);
+            res.status(500).json({message: "An error has occurred while attempting to delete the analytic"});
         })
 });
 
