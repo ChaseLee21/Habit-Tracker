@@ -4,8 +4,8 @@ function Header() {
 
     return (
       <>
-        <header>
-          <h1>Habit Builder</h1>
+        <header className="bg-primaryBg">
+          <h1 className="text-primaryText">Habit Builder</h1>
           <Navbar />
         </header>
       </>
