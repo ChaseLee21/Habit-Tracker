@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const habitSchema = new Schema({
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
     why: { type: String, required: true },
@@ -9,7 +10,6 @@ const habitSchema = new Schema({
     frequency: { type: String, required: true },
     streak: { type: Number, required: false },
     longestStreak: { type: Number, required: false },
-    analytics: [{ type: Schema.Types.ObjectId, ref: 'Analytics' }]
 });
 
 module.exports = model('Habit', habitSchema);

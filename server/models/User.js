@@ -5,7 +5,6 @@ const userSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true, select: false},
-    habits: [{ type: Schema.Types.ObjectId, ref: 'Habit' }],
     salt: { type: String, required: false, select: false}
 });
 
