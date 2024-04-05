@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
     })
 });
 
-//PUT analytic
+//PUT analytic by id
 router.put('/:id', (req, res) => {
     const id = req.params.id
     const analyticData = req.body
@@ -60,6 +60,20 @@ router.put('/:id', (req, res) => {
         })
 });
 
-//
+//Delete analytic by id
+router.delete('/:id', (req, res) => {
+    const id = req.params.id
+    Analytics.findByIdAndDelete({ _id: id })
+        .then((analytic) => {
+            if (!analytic) {
+                res.status(404).json({message: "No analytic was found with that id"})
+                return;
+            }
+            res.json({message: "analytic successfully deleted", analytic: analytic});
+        })
+        .catch((err) => {
+            res.status(400).json({message: err});
+        })
+});
 
 module.exports = router;
