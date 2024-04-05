@@ -9,7 +9,9 @@ function Day() {
 
     return (
       <>
+      <section>
         <h2 className="flex rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">Today is {days[weekDay]}, {months[month]} {numbers[date]}</h2>
+      </section>
       </>
     )
   }
