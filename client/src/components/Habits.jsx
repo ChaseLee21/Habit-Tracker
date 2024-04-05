@@ -5,7 +5,7 @@ function Habits() {
 
   // TODO: Replace with the user's ID that is logged in
   // this id is from the seeded data in the database for development
-  const userId = '661073dc6ac0110de897da60';
+  const userId = '661083661f5b7502d761242a';
 
   const date = new Date().toISOString().split('T')[0];
 
@@ -16,6 +16,7 @@ function Habits() {
   useEffect(() => {
     axios.get('/api/habits/' + userId)
       .then(res => {
+        console.log(res.data);
         setHabits(res.data);
       })
       .catch(err => {
@@ -27,6 +28,7 @@ function Habits() {
   useEffect(() => {
     axios.get('/api/analytics/' + userId + '/' + date)
       .then(res => {
+        console.log(res.data);
         setTodaysAnalytics(res.data);
       })
       .catch(err => {
@@ -50,7 +52,9 @@ function Habits() {
                 {/* TODO: update this form once the api is updated. */}
                 <form action={`/api/analytics/${habit._id}/${date}`} method="POST">
                   <button type="submit" className="rounded-md p-1">
-                  {todaysAnalytics.find(analytics => analytics.habit === habit._id).completed ? '✅' : '❌'}
+                  {todaysAnalytics.length > 0 && todaysAnalytics.find((analytic) => {
+                    return analytic.habit.toString() === habit._id.toString();
+                  }).completed ? '✅' : '❌'}
                   </button>
                 </form>
               </div>
