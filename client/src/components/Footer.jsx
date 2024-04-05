@@ -1,4 +1,4 @@
-function Todos() {
+function Footer() {
 
     return (
       <>
@@ -7,5 +7,5 @@ function Todos() {
     )
   }
   
-  export default Todos
+  export default Footer
   
