@@ -12,6 +12,7 @@ function Habits() {
   const [habits, setHabits] = useState([]);
   const [todaysAnalytics, setTodaysAnalytics] = useState([]);
 
+  // get all habits for the user
   useEffect(() => {
     axios.get('/api/habits/' + userId)
       .then(res => {
@@ -22,11 +23,11 @@ function Habits() {
       });
     }, []);
 
+  // get all analytics for the user for today
   useEffect(() => {
     axios.get('/api/analytics/' + userId + '/' + date)
       .then(res => {
         setTodaysAnalytics(res.data);
-        console.log(todaysAnalytics);
       })
       .catch(err => {
         console.log(err);
@@ -49,7 +50,7 @@ function Habits() {
                 {/* TODO: update this form once the api is updated. */}
                 <form action={`/api/analytics/${habit._id}/${date}`} method="POST">
                   <button type="submit" className="rounded-md p-1">
-                  {todaysAnalytics.find(analytics => analytics.habit === habit._id) ? '✅' : '❌'}
+                  {todaysAnalytics.find(analytics => analytics.habit === habit._id).completed ? '✅' : '❌'}
                   </button>
                 </form>
               </div>
@@ -58,7 +59,6 @@ function Habits() {
             </li>
           ))}
         </ul>
-
       </section>
       </>
     )
