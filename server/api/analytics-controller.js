@@ -86,7 +86,17 @@ router.delete('/:id', (req, res) => {
                 res.status(404).json({message: "No analytic was found with that id"})
                 return;
             }
-            res.status(200).json({message: "analytic successfully deleted", analytic: analytic});
+            Habit.findOneAndUpdate({ analytics: id }, { $pull: { analytics: id } })
+                .then((habit) => {
+                    if (!habit) {
+                        console.log("An analytic was deleted but no habit was found with the analytic id")
+                    }
+                    res.status(200).json({message: "analytic successfully deleted", analytic: analytic});
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(500).json({message: "An error has occurred while attempting to delete the analytic"});
+                })
         })
         .catch((err) => {
             console.log(err);
