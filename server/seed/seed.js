@@ -15,23 +15,18 @@ db.once('open', async () => {
         await Analytics.deleteMany({});
 
         await User.create(userData);
-        await Habit.create(habitData);
-        await Analytics.create(analyticsData);
 
-        // HACK: This is not the best way to seed data, but it works for now
-        // I am hardcoding the habits into the users
-        // I am hardcoding the analytics into the habits
         for (let i = 0; i < habitData.length; i++) {
-            const habit = await Habit.findOne({ name: habitData[i].name });
-            const user = await User.findOne({ email: userData[i].email });
-            const analytics1 = await Analytics.findOne({ date: analyticsData[i].date });
-            const analytics2 = await Analytics.findOne({ date: analyticsData[i + 3].date });
-            habit.analytics.push(analytics1._id);
-            habit.analytics.push(analytics2._id);
-            user.habits.push(habit._id);
-            await user.save();
-            await habit.save();
+            habitData[i].user = await User.findOne().select('_id');
         }
+
+        await Habit.create(habitData);
+
+        for (let i = 0; i < analyticsData.length; i++) {
+            analyticsData[i].habit = await Habit.findOne().select('_id');
+        }
+
+        await Analytics.create(analyticsData);
 
         console.log('Data seeded successfully!');
         process.exit(0);
