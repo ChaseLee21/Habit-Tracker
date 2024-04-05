@@ -3,10 +3,10 @@ function Navbar() {
     return (
       <>
         <nav className="bg-secondary">
-            <ul className="m-2 p-2">
-                <li className="border border-black ps-2">Home</li>
-                <li className="border border-black ps-2">New Habit</li>
-                <li className="border border-black ps-2">Logout</li>
+            <ul className="m-2 py-2 text-lg">
+                <li className=" p-1 ps-3 hover:text-highlight">Home</li>
+                <li className="border-y p-1 ps-3 hover:text-highlight">New Habit</li>
+                <li className=" p-1 ps-3 hover:text-highlight">Logout</li>
             </ul>
         </nav>
       </>
