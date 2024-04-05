@@ -1,14 +1,21 @@
 const express = require('express');
 const db = require('./config/connection.js');
 const api = require('./api/index.js');
+const cors = require('cors');
 
 const PORT = 3000
 
 // Create an Express app
 const app = express();
 
+// Middleware to allow react to connect to the server during development
+app.use(cors({
+    origin: 'http://localhost:5173'
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 
 //TODO: server static files
 
