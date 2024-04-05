@@ -1,10 +1,28 @@
 const {Analytics, Habit} = require('../models/index');
 const router = require("express").Router();
 
-// GET all analytics for a habit
-router.get('/:habitId', (req, res) => {
-    const habitId = req.params.habitId;
-    Analytics.find({ habit: habitId })
+// GET all analytics for a user 
+router.get('/:userId', (req, res) => {
+    const userId = req.params.userId;
+    Analytics.find({ user: userId })
+        .then((analytics) => {
+            if (!analytics || analytics.length === 0) {
+                res.status(404).json({message: "No analytics were found"})
+                return;
+            }
+            res.status(200).json(analytics);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({message: "An error has occurred while fetching analytics"});
+        })
+});
+
+// GET all analytics for a user specific to a date
+router.get('/:userId/:date', (req, res) => {
+    const userId = req.params.userId;
+    const date = req.params.date;
+    Analytics.find({ user: userId, date: date})
         .then((analytics) => {
             if (!analytics || analytics.length === 0) {
                 res.status(404).json({message: "No analytics were found"})
