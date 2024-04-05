@@ -36,6 +36,7 @@ router.get('/:id', (req, res) => {
 
 //POST analytic
 router.post('/', (req, res) => {
+    const analyticData = req.body;
     Analytics.create(analyticData)
     .then((analytic) => {
         res.status(201).json({message: "analytic successfully created", analytic: analytic});
@@ -48,8 +49,8 @@ router.post('/', (req, res) => {
 
 //PUT analytic by id
 router.put('/:id', (req, res) => {
-    const id = req.params.id
-    const analyticData = req.body
+    const id = req.params.id;
+    const analyticData = req.body;
     Analytics.findOneAndUpdate({ _id: id }, { $set: analyticData }, { new: true })
         .then((analytic) => {
             if (!analytic) {
