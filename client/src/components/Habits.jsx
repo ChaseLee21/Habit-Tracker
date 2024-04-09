@@ -36,6 +36,29 @@ function Habits() {
       });
     }, []);
 
+    function handleAnalyticsSubmit(event) {
+      event.preventDefault();
+      const habitId = event.target.habitId.value;
+      const analytic = todaysAnalytics.find(analytic => {
+        return analytic.habit.toString() === habitId.toString();
+      });
+      const completed = !analytic.completed;
+      axios.put('/api/analytics/' + analytic._id, { completed })
+        .then(res => {
+          console.log(res.data);
+          const updatedAnalytics = todaysAnalytics.map(analytic => {
+            if (analytic._id === res.data.analytic._id) {
+              return res.data.analytic;
+            }
+            return analytic;
+          });
+          setTodaysAnalytics(updatedAnalytics);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+
     return (
       <>
       <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
@@ -49,8 +72,8 @@ function Habits() {
                   <p>: {habit.streak}{habit.streak > 3 ? '🔥' : ''}</p>
                 </div>
                 {/* habit completed form */}
-                {/* TODO: update this form once the api is updated. */}
-                <form action={`/api/analytics/${habit._id}/${date}`} method="PUT">
+                <form onSubmit={handleAnalyticsSubmit}>
+                  <input type="hidden" name="habitId" value={habit._id} />
                   <button type="submit" className="rounded-md p-1">
                   {todaysAnalytics.length > 0 && todaysAnalytics.find((analytic) => {
                     return analytic.habit.toString() === habit._id.toString();
@@ -67,9 +90,4 @@ function Habits() {
       </>
     )
   }
-  
   export default Habits
-  // 4/5/2024
-  // Just finished retrieving the habits and analytics for the user.
-  // Left off on lines 54 - 58 where i created a ternary operator to check if the habit was completed for the day.
-  // Next I need to add functionality to the form to update the habit to either completed or not completed for the day.
