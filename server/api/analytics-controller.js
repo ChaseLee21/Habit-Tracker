@@ -31,11 +31,6 @@ router.get('/:userId/:date', (req, res) => {
             }
             Analytics.find({ user: userId, date: date})
                 .then((analytics) => {
-                    if (!analytics || analytics.length === 0) {
-                        console.log("No analytics were found at /api/analytics/:userId/:date", userId, date);
-                        res.status(404).json({message: "No analytics were found"})
-                        return;
-                    }
                     for (let i = 0; i < habits.length; i++) {
                         const habit = habits[i];
                         const analytic = analytics.find(analytic => {
