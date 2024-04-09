@@ -50,7 +50,7 @@ function Habits() {
                 </div>
                 {/* habit completed form */}
                 {/* TODO: update this form once the api is updated. */}
-                <form action={`/api/analytics/${habit._id}/${date}`} method="POST">
+                <form action={`/api/analytics/${habit._id}/${date}`} method="PUT">
                   <button type="submit" className="rounded-md p-1">
                   {todaysAnalytics.length > 0 && todaysAnalytics.find((analytic) => {
                     return analytic.habit.toString() === habit._id.toString();
@@ -69,4 +69,7 @@ function Habits() {
   }
   
   export default Habits
-  
+  // 4/5/2024
+  // Just finished retrieving the habits and analytics for the user.
+  // Left off on lines 54 - 58 where i created a ternary operator to check if the habit was completed for the day.
+  // Next I need to add functionality to the form to update the habit to either completed or not completed for the day.

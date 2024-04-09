@@ -127,6 +127,24 @@ router.put('/:id', (req, res) => {
         })
 });
 
+//PUT analytic by habit id and date => mark analytic as completed
+router.put('/:habitId/:date', (req, res) => {
+    const habitId = req.params.habitId;
+    const date = req.params.date;
+    Analytics.findOneAndUpdate({ habit: habitId, date: date }, { $set: { completed: true } }, { new: true })
+        .then((analytic) => {
+            if (!analytic) {
+                res.status(404).json({message: "No analytic was found with that habit id and date"})
+                return;
+            }
+            res.status(200).json({message: "analytic successfully updated", analytic: analytic});
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json({message: "An error has occurred while attempting to update the analytic"});
+        })
+});
+
 //Delete analytic by id
 router.delete('/:id', (req, res) => {
     const id = req.params.id
