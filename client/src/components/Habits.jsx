@@ -34,8 +34,30 @@ function Habits() {
       .catch(err => {
         console.log(err);
       });
-    }, []);
+    }, [date]);
 
+    useEffect(() => {
+      for (const analytic of todaysAnalytics) {
+        if (!analytic.completed) {
+          return;
+        }
+        const habitId = analytic.habit;
+        axios.put('/api/habits/streak/' + habitId.toString())
+          .then((res) => {
+            console.log(res.data);
+            const updatedHabits = habits.map(habit => {
+              if (habit._id === habitId) {
+                return res.data.habit;
+              }
+              return habit;
+            });
+            setHabits(updatedHabits);
+          })
+      }
+    }, [todaysAnalytics])
+
+
+    // handle the form submission to update the habit completed status
     function handleAnalyticsSubmit(event) {
       event.preventDefault();
       const habitId = event.target.habitId.value;
@@ -62,7 +84,7 @@ function Habits() {
     return (
       <>
       <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
-        <h2>Today's Habits Progress</h2>
+        <h2>Todays Habit Progress</h2>
         <ul className="list-inside">
           {habits.map(habit => (
             <li key={habit._id} className="m-2">
