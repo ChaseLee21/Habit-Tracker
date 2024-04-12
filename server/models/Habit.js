@@ -8,7 +8,6 @@ const habitSchema = new Schema({
     goal: { type: String, required: true },
     reward: { type: String, required: true},
     frequency: { type: String, required: true },
-    streak: { type: Number, required: false },
     longestStreak: { type: Number, required: false },
 });
 
