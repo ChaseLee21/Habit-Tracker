@@ -16,10 +16,11 @@ router.get('/', (req, res) => {
         });
 });
 
-// GET one user by id
+// GET one user by id and populate habits
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     User.findOne({ _id: id })
+        .populate('habits')
         .then((user) => {
             if (!user) {
                 res.status(404).json({ message: 'No user found with this id' });
