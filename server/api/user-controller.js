@@ -17,61 +17,51 @@ router.get('/', (req, res) => {
 });
 
 // GET one user by id => populate habits => populate analytics => create new analytics if one is not found for today's date
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
     const yesterday = new Date(currentDate);
     yesterday.setDate(yesterday.getDate() - 1);
-    User.findOne({ _id: id })
-        .populate({
+    try {
+        const user = await User.findOne({ _id: id }).populate({
             path: 'habits', 
             populate: {
                 path: 'analytics',
                 model: 'Analytics',
             }
-        })
-        .then((user) => {
-            if (!user) {
-                res.status(404).json({ message: 'No user found with this id' });
-                return;
-            }
-            if (user.habits.length === 0) {
-                res.status(404).json({ message: 'No habits found for this user' });
-                return;
-            }
-            user.habits.forEach((habit) => {
-                const todaysAnalytic = habit.analytics.find(analytic => {
-                    return analytic.date.getTime() === currentDate.getTime();
-                });
-                if (!todaysAnalytic) {
-                    const yesterdaysAnalytic = habit.analytics.find(analytic => {
-                        return analytic.date.getTime() === yesterday.getTime();
-                    });
-                    let newAnalytic = {
-                        user: id,
-                        habit: habit._id,
-                        date: currentDate,
-                        completed: false,
-                        streak: 0
-                    };
-                    if (yesterdaysAnalytic && yesterdaysAnalytic.streak > 0 && yesterdaysAnalytic.completed) {
-                        newAnalytic.streak = yesterdaysAnalytic.streak;
-                    }
-                    Analytics.create(newAnalytic)
-                        .then((analytic) => {
-                            habit.analytics.push(analytic._id);
-                        })
-                        .catch((err) => {
-                            res.status(500).json(err);
-                        });
-                }
-            });
-            res.json(user);
-        })
-        .catch((err) => {
-            res.status(400).json(err);
         });
+        if (!user) {
+            return res.status(404).json({ message: 'No user found with this id' });
+        }
+        if (user.habits.length === 0) {
+            return res.status(404).json({ message: 'No habits found for this user' });
+        }
+        const promises = user.habits.map(async (habit) => {
+            const todaysAnalytic = habit.analytics.find(analytic => analytic.date.getTime() === currentDate.getTime());
+            if (!todaysAnalytic) {
+                const yesterdaysAnalytic = habit.analytics.find(analytic => analytic.date.getTime() === yesterday.getTime());
+                let newAnalytic = {
+                    user: id,
+                    habit: habit._id,
+                    date: currentDate,
+                    completed: false,
+                    streak: 0
+                };
+                if (yesterdaysAnalytic && yesterdaysAnalytic.streak > 0 && yesterdaysAnalytic.completed) {
+                    newAnalytic.streak = yesterdaysAnalytic.streak;
+                }
+                const analytic = await Analytics.create(newAnalytic);
+                habit.analytics.push(analytic._id);
+            }
+        });
+        await Promise.all(promises);
+        await user.save();
+        res.json(user);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 });
 
 // POST a new user
