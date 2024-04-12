@@ -9,55 +9,22 @@ function Habits() {
 
   const date = new Date().toISOString().split('T')[0];
 
-  const [habits, setHabits] = useState([]);
-  const [todaysAnalytics, setTodaysAnalytics] = useState([]);
+  const [user, setUser] = useState({});
 
-  // Gets all habits for the user on component mount
+  // Gets the user populated with habits and analytics on component mount
   useEffect(() => {
-    axios.get('/api/habits/' + userId)
+    axios.get('/api/users/' + userId)
       .then(res => {
         console.log(res.data);
-        setHabits(res.data);
+        setUser(res.data);
       })
       .catch(err => {
         console.log(err);
       });
     }, []);
 
-  // Gets all analytics for the user on component mount and when the date changes
-  useEffect(() => {
-    axios.get('/api/analytics/' + userId + '/' + date)
-      .then(res => {
-        console.log(res.data);
-        setTodaysAnalytics(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    }, [date]);
-
-    // Update the analytic completed status
-    function handleAnalyticsSubmit(event) {
-      event.preventDefault();
-      const habitId = event.target.habitId.value;
-      const analytic = todaysAnalytics.find(analytic => {
-        return analytic.habit.toString() === habitId.toString();
-      });
-      const completed = !analytic.completed;
-      axios.put('/api/analytics/' + analytic._id, { completed })
-        .then(res => {
-          console.log(res.data);
-          const updatedAnalytics = todaysAnalytics.map(analytic => {
-            if (analytic._id === res.data.analytic._id) {
-              return res.data.analytic;
-            }
-            return analytic;
-          });
-          setTodaysAnalytics(updatedAnalytics);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+    function handleAnalyticsSubmit(e) {
+      
     }
 
     return (
@@ -65,7 +32,7 @@ function Habits() {
       <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
         <h2>Todays Habit Progress</h2>
         <ul className="list-inside">
-          {habits.map(habit => (
+          {user.habits.map(habit => (
             <li key={habit._id} className="m-2">
               <div className="flex justify-between">
                 <div className="flex">
