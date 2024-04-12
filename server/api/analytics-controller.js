@@ -28,6 +28,11 @@ router.put('/:id', (req, res) => {
                 res.status(404).json({message: "No analytic was found with that id"})
                 return;
             }
+            if (analytic.completed) {
+                analytic.streak = analytic.yesterdayStreak + 1;
+            } else {
+                analytic.streak = analytic.yesterdayStreak;
+            }
             res.status(200).json({message: "analytic successfully updated", analytic: analytic});
         })
         .catch((err) => {
