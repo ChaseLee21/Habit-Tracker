@@ -30,6 +30,7 @@ router.put('/:id', (req, res) => {
             }
             if (analytic.completed) {
                 analytic.streak = analytic.yesterdayStreak + 1;
+                Habit.findOneAndUpdate({ _id: analytic.habit }, { $max: { longestStreak: analytic.streak } });
             } else {
                 analytic.streak = analytic.yesterdayStreak;
             }
