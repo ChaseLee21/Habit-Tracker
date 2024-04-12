@@ -36,7 +36,7 @@ function Habits() {
       });
     }, [date]);
 
-    // handle the form submission to update the habit completed status
+    // Update the analytic completed status
     function handleAnalyticsSubmit(event) {
       event.preventDefault();
       const habitId = event.target.habitId.value;
