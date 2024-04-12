@@ -1,7 +1,7 @@
 const { User } = require('../models/index');
 const router = require('express').Router();
 
-// GET all users
+// GET all users (for testing)
 router.get('/', (req, res) => {
     User.find({})
         .then((users) => {
@@ -16,16 +16,46 @@ router.get('/', (req, res) => {
         });
 });
 
-// GET one user by id and populate habits
+// GET one user by id => populate habits => populate analytics filtered by today's date => create analytics if not found
 router.get('/:id', (req, res) => {
     const { id } = req.params;
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
     User.findOne({ _id: id })
-        .populate('habits')
+        .populate({
+            path: 'habits', 
+            populate: {
+                path: 'analytics',
+                model: 'Analytics',
+                match: { date: currentDate }
+            }
+        })
         .then((user) => {
             if (!user) {
                 res.status(404).json({ message: 'No user found with this id' });
                 return;
             }
+            if (user.habits.length === 0) {
+                res.status(404).json({ message: 'No habits found for this user' });
+                return;
+            }
+            user.habits.forEach((habit) => {
+                if (habit.analytics.length === 0) {
+                    const newAnalytic = {
+                        user: id,
+                        habit: habit._id,
+                        date: currentDate,
+                        completed: false
+                    }
+                    Analytics.create(newAnalytic)
+                        .then((analytic) => {
+                            habit.analytics.push(analytic);
+                        })
+                        .catch((err) => {
+                            res.status(500).json(err);
+                        });
+                }
+            });
             res.json(user);
         })
         .catch((err) => {
