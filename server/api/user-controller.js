@@ -50,6 +50,7 @@ router.get('/:id', async (req, res) => {
                 };
                 if (yesterdaysAnalytic && yesterdaysAnalytic.streak > 0 && yesterdaysAnalytic.completed) {
                     newAnalytic.streak = yesterdaysAnalytic.streak;
+                    newAnalytic.yesterdayStreak = yesterdaysAnalytic.streak;
                 }
                 const analytic = await Analytics.create(newAnalytic);
                 habit.analytics.push(analytic._id);
