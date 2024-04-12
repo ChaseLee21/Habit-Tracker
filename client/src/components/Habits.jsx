@@ -12,7 +12,7 @@ function Habits() {
   const [habits, setHabits] = useState([]);
   const [todaysAnalytics, setTodaysAnalytics] = useState([]);
 
-  // get all habits for the user
+  // Gets all habits for the user on component mount
   useEffect(() => {
     axios.get('/api/habits/' + userId)
       .then(res => {
@@ -24,7 +24,7 @@ function Habits() {
       });
     }, []);
 
-  // get all analytics for the user for today
+  // Gets all analytics for the user on component mount and when the date changes
   useEffect(() => {
     axios.get('/api/analytics/' + userId + '/' + date)
       .then(res => {
@@ -35,27 +35,6 @@ function Habits() {
         console.log(err);
       });
     }, [date]);
-
-    useEffect(() => {
-      for (const analytic of todaysAnalytics) {
-        if (!analytic.completed) {
-          return;
-        }
-        const habitId = analytic.habit;
-        axios.put('/api/habits/streak/' + habitId.toString())
-          .then((res) => {
-            console.log(res.data);
-            const updatedHabits = habits.map(habit => {
-              if (habit._id === habitId) {
-                return res.data.habit;
-              }
-              return habit;
-            });
-            setHabits(updatedHabits);
-          })
-      }
-    }, [todaysAnalytics])
-
 
     // handle the form submission to update the habit completed status
     function handleAnalyticsSubmit(event) {
@@ -96,10 +75,12 @@ function Habits() {
                 {/* habit completed form */}
                 <form onSubmit={handleAnalyticsSubmit}>
                   <input type="hidden" name="habitId" value={habit._id} />
+                  {/* Submit Form Button */}
                   <button type="submit" className="rounded-md p-1">
-                  {todaysAnalytics.length > 0 && todaysAnalytics.find((analytic) => {
-                    return analytic.habit.toString() === habit._id.toString();
-                  }).completed ? '✅' : '❌'}
+                    {/* Finds the analytic.completed value for habit */}
+                    {todaysAnalytics.length > 0 && todaysAnalytics.find((analytic) => {
+                      return analytic.habit.toString() === habit._id.toString();
+                    }).completed ? '✅' : '❌'}
                   </button>
                 </form>
               </div>
