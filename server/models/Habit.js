@@ -9,6 +9,7 @@ const habitSchema = new Schema({
     reward: { type: String, required: true},
     frequency: { type: String, required: true },
     longestStreak: { type: Number, required: false },
+    analytics: [{ type: Schema.Types.ObjectId, ref: 'Analytics' }]
 });
 
 module.exports = model('Habit', habitSchema);

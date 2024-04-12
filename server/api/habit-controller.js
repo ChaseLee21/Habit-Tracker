@@ -58,6 +58,7 @@ router.post('/:userId', (req, res) => {
 });
 
 // PUT updated habit by id
+// TODO: Check if the data being updated includes analytics
 router.put('/:id', (req, res) => {
     const { id } = req.params;
     const habitData = req.body;
