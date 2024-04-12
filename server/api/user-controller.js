@@ -16,18 +16,19 @@ router.get('/', (req, res) => {
         });
 });
 
-// GET one user by id => populate habits => populate analytics filtered by today's date => create analytics if not found
+// GET one user by id => populate habits => populate analytics => create new analytics if one is not found for today's date
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     const currentDate = new Date();
     currentDate.setHours(0, 0, 0, 0);
+    const yesterday = new Date(currentDate);
+    yesterday.setDate(yesterday.getDate() - 1);
     User.findOne({ _id: id })
         .populate({
             path: 'habits', 
             populate: {
                 path: 'analytics',
                 model: 'Analytics',
-                match: { date: currentDate }
             }
         })
         .then((user) => {
@@ -40,16 +41,26 @@ router.get('/:id', (req, res) => {
                 return;
             }
             user.habits.forEach((habit) => {
-                if (habit.analytics.length === 0) {
-                    const newAnalytic = {
+                const todaysAnalytic = habit.analytics.find(analytic => {
+                    return analytic.date.getTime() === currentDate.getTime();
+                });
+                if (!todaysAnalytic) {
+                    const yesterdaysAnalytic = habit.analytics.find(analytic => {
+                        return analytic.date.getTime() === yesterday.getTime();
+                    });
+                    let newAnalytic = {
                         user: id,
                         habit: habit._id,
                         date: currentDate,
-                        completed: false
+                        completed: false,
+                        streak: 0
+                    };
+                    if (yesterdaysAnalytic && yesterdaysAnalytic.streak > 0 && yesterdaysAnalytic.completed) {
+                        newAnalytic.streak = yesterdaysAnalytic.streak;
                     }
                     Analytics.create(newAnalytic)
                         .then((analytic) => {
-                            habit.analytics.push(analytic);
+                            habit.analytics.push(analytic._id);
                         })
                         .catch((err) => {
                             res.status(500).json(err);
