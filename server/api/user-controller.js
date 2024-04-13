@@ -1,4 +1,4 @@
-const { User } = require('../models/index');
+const { User, Analytics } = require('../models/index');
 const router = require('express').Router();
 
 // GET all users (for testing)
@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
 });
 
 // GET one user by id => populate habits => populate analytics => create new analytics if one is not found for today's date
+// TODO: look into a possible bug where a new analytics is created with only a streak and _id property when this route is hit
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     const currentDate = new Date();
