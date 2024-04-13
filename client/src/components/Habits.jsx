@@ -32,32 +32,32 @@ function Habits() {
       <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
         <h2>Todays Habit Progress</h2>
         <ul className="list-inside">
-          {user.habits.map(habit => (
-            <li key={habit._id} className="m-2">
-              <div className="flex justify-between">
-                <div className="flex">
-                  <h3>{habit.name}</h3>
-                  <p>: {habit.streak}{habit.streak > 3 ? '🔥' : ''}</p>
-                </div>
-                {/* habit completed form */}
-                <form onSubmit={handleAnalyticsSubmit}>
-                  <input type="hidden" name="habitId" value={habit._id} />
-                  {/* Submit Form Button */}
-                  <button type="submit" className="rounded-md p-1">
-                    {/* Finds the analytic.completed value for habit */}
-                    {todaysAnalytics.length > 0 && todaysAnalytics.find((analytic) => {
-                      return analytic.habit.toString() === habit._id.toString();
-                    }).completed ? '✅' : '❌'}
-                  </button>
-                </form>
-              </div>
-              <p className="text-sm">{habit.goal}</p>
-              
-            </li>
-          ))}
         </ul>
       </section>
       </>
     )
   }
   export default Habits
+  // {user.habits.map(habit => (
+  //   <li key={habit._id} className="m-2">
+  //     <div className="flex justify-between">
+  //       <div className="flex">
+  //         <h3>{habit.name}</h3>
+  //         <p>: {habit.streak}{habit.streak > 3 ? '🔥' : ''}</p>
+  //       </div>
+  //       {/* habit completed form */}
+  //       <form onSubmit={handleAnalyticsSubmit}>
+  //         <input type="hidden" name="habitId" value={habit._id} />
+  //         {/* Submit Form Button */}
+  //         <button type="submit" className="rounded-md p-1">
+  //           {/* Finds the analytic.completed value for habit */}
+  //           {todaysAnalytics.length > 0 && todaysAnalytics.find((analytic) => {
+  //             return analytic.habit.toString() === habit._id.toString();
+  //           }).completed ? '✅' : '❌'}
+  //         </button>
+  //       </form>
+  //     </div>
+  //     <p className="text-sm">{habit.goal}</p>
+      
+  //   </li>
+  // ))}
