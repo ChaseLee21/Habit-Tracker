@@ -24,6 +24,26 @@ function Habits() {
     }, []);
 
     function handleAnalyticsSubmit(e) {
+      e.preventDefault();
+      const habitId = e.target.habitId.value;
+      let analytic = user
+        .habits
+        .find(habit => habit._id === habitId)
+        .analytics
+        .find(analytic => new Date(analytic.date).toISOString().split('T')[0] === today);
+      analytic.completed = !analytic.completed;
+      axios.put('/api/analytics/' + analytic._id, analytic)
+        .then(res => {
+          console.log("analytic successfully updated", res.data);
+          let analytic = user.habits.find(habit => habit._id === habitId).analytics.find(analytic => analytic._id === res.data.analytic._id);
+          analytic.completed = res.data.analytic.completed;
+          analytic.streak = res.data.analytic.streak;
+          setUser({...user});
+          console.log(user);
+        })
+        .catch(err => {
+          console.log(err);
+        });
       
     }
 
@@ -37,7 +57,7 @@ function Habits() {
               <div className="flex justify-between">
                 <div className="flex">
                   <h3>{habit.name}</h3>
-                  <p>: {habit.streak}{habit.streak > 3 ? '🔥' : ''}</p>
+                  <p>: {habit.analytics.find(analytic => new Date(analytic.date).toISOString().split('T')[0] === today).streak}{habit.streak > 3 ? '🔥' : ''}</p>
                 </div>
                 {/* habit completed form */}
                 <form onSubmit={handleAnalyticsSubmit}>
