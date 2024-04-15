@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import {putAnalytic, getUser} from "../util/axios";
 
 function Habits() {
 
@@ -13,7 +13,7 @@ function Habits() {
 
   // Gets the user populated with habits and analytics on component mount
   useEffect(() => {
-    axios.get('/api/users/' + userId)
+    getUser(userId)
       .then(res => {
         console.log(res.data);
         setUser(res.data);
@@ -32,7 +32,7 @@ function Habits() {
         .analytics
         .find(analytic => new Date(analytic.date).toISOString().split('T')[0] === today);
       analytic.completed = !analytic.completed;
-      axios.put('/api/analytics/' + analytic._id, analytic)
+      putAnalytic(analytic)
         .then(res => {
           console.log("analytic successfully updated", res.data);
           let analytic = user.habits.find(habit => habit._id === habitId).analytics.find(analytic => analytic._id === res.data.analytic._id);
