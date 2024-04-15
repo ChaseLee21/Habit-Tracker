@@ -13,15 +13,20 @@ function Habits() {
 
   // Gets the user populated with habits and analytics on component mount
   useEffect(() => {
-    getUser(userId)
-      .then(res => {
-        console.log(res.data);
-        setUser(res.data);
-      })
-      .catch(err => {
+    async function fetchUser() {
+      try {
+        const userData = await getUser(userId);
+        if (userData) {
+          setUser(userData);
+        } else {
+          console.log('No user data found');
+        }
+      } catch (err) {
         console.log(err);
-      });
-    }, []);
+      }
+    }
+    fetchUser();
+  }, []);
 
     async function handleAnalyticsSubmit(e) {
       e.preventDefault();

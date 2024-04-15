@@ -10,14 +10,20 @@ function Todos() {
 
   // Gets the user populated with habits and analytics on component mount
   useEffect(() => {
-    getUser(userId)
-      .then(res => {
-        setUser(res.data);
-      })
-      .catch(err => {
+    async function fetchUser() {
+      try {
+        const userData = await getUser(userId);
+        if (userData) {
+          setUser(userData);
+        } else {
+          console.log('No user data found');
+        }
+      } catch (err) {
         console.log(err);
-      });
-    }, []);
+      }
+    }
+    fetchUser();
+  }, []);
 
   function handleTodoSubmit(e) {
     e.preventDefault();

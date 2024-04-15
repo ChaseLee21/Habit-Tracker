@@ -9,11 +9,10 @@ async function putAnalytic(analytic) {
   }
 }
 
-//TODO: find out why i return request instead of request.data
 async function getUser(userId) {
   try {
     const request = await axios.get('/api/users/' + userId);
-    return request;
+    return request.data;
   } catch (err) {
     console.log(err);
   }
