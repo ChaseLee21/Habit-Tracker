@@ -5,7 +5,7 @@ function Habits() {
 
   // TODO: Replace with the user's ID that is logged in
   // this id is from the seeded data in the database for development
-  const userId = '6619cddf126bb54dad75331c';
+  const userId = '661d6a6089c31b8559a19468';
 
   const today = new Date().toISOString().split('T')[0];
 

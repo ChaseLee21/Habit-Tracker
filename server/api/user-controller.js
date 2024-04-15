@@ -20,10 +20,8 @@ router.get('/', (req, res) => {
 // TODO: look into a possible bug where a new analytics is created with only a streak and _id property when this route is hit
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
-    const currentDate = new Date();
-    currentDate.setHours(0, 0, 0, 0);
-    const yesterday = new Date(currentDate);
-    yesterday.setDate(yesterday.getDate() - 1);
+    const currentDate = new Date().toISOString().split('T')[0];
+    const yesterday = new Date(Date.now() - 864e5).toISOString().split('T')[0];
     try {
         const user = await User.findOne({ _id: id }).populate({
             path: 'habits', 
@@ -39,9 +37,11 @@ router.get('/:id', async (req, res) => {
             return res.status(404).json({ message: 'No habits found for this user' });
         }
         const promises = user.habits.map(async (habit) => {
-            const todaysAnalytic = habit.analytics.find(analytic => analytic.date.getTime() === currentDate.getTime());
+            const todaysAnalytic = habit.analytics.find(analytic => {
+                return analytic.date.toISOString().split('T')[0] === currentDate;
+            });
             if (!todaysAnalytic) {
-                const yesterdaysAnalytic = habit.analytics.find(analytic => analytic.date.getTime() === yesterday.getTime());
+                const yesterdaysAnalytic = habit.analytics.find(analytic => analytic.date === yesterday);
                 let newAnalytic = {
                     user: id,
                     habit: habit._id,
@@ -53,8 +53,14 @@ router.get('/:id', async (req, res) => {
                     newAnalytic.streak = yesterdaysAnalytic.streak;
                     newAnalytic.yesterdayStreak = yesterdaysAnalytic.streak;
                 }
-                const analytic = await Analytics.create(newAnalytic);
-                habit.analytics.push(analytic._id);
+                await Analytics.create(newAnalytic)
+                    .then((analytic) => {
+                        habit.analytics.push(analytic);
+                        habit.save();
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    });
             }
         });
         await Promise.all(promises);
