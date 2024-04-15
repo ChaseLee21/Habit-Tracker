@@ -23,28 +23,23 @@ function Habits() {
       });
     }, []);
 
-    function handleAnalyticsSubmit(e) {
+    async function handleAnalyticsSubmit(e) {
       e.preventDefault();
       const habitId = e.target.habitId.value;
-      let analytic = user
-        .habits
-        .find(habit => habit._id === habitId)
-        .analytics
-        .find(analytic => new Date(analytic.date).toISOString().split('T')[0] === today);
-      analytic.completed = !analytic.completed;
-      putAnalytic(analytic)
-        .then(res => {
-          console.log("analytic successfully updated", res.data);
-          let analytic = user.habits.find(habit => habit._id === habitId).analytics.find(analytic => analytic._id === res.data._id);
-          analytic.completed = res.data.completed;
-          analytic.streak = res.data.streak;
-          setUser({...user});
-          console.log(user);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      
+      try {
+        const habitIndex = user.habits.findIndex(habit => habit._id === habitId);
+        const analyticIndex = user.habits[habitIndex].analytics.findIndex(analytic => new Date(analytic.date).toISOString().split('T')[0] === today);
+        
+        let analytic = user.habits[habitIndex].analytics[analyticIndex];
+        analytic.completed = !analytic.completed;
+        analytic = await putAnalytic(analytic);
+    
+        let updatedUser = {...user};
+        updatedUser.habits[habitIndex].analytics[analyticIndex] = analytic;
+        setUser(updatedUser);
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     return (
