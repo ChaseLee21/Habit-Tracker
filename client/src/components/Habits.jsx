@@ -45,7 +45,7 @@ function Habits() {
     return (
       <>
       <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
-        <h2>Todays Habit Progress</h2>
+        <h2>Habit Progress</h2>
         <ul className="list-inside">
           {user.habits && user.habits.map(habit => (
             <li key={habit._id} className="m-2">
