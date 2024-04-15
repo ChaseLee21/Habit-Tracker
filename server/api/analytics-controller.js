@@ -19,27 +19,27 @@ router.get('/:userId', (req, res) => {
 });
 
 //PUT analytic by id (used to update the completed status)
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
     const id = req.params.id;
     const analyticData = req.body;
-    Analytics.findOneAndUpdate({ _id: id }, { $set: analyticData }, { new: true })
-        .then((analytic) => {
-            if (!analytic) {
-                res.status(404).json({message: "No analytic was found with that id"})
-                return;
-            }
-            if (analytic.completed) {
-                analytic.streak = analytic.yesterdayStreak + 1;
-                Habit.findOneAndUpdate({ _id: analytic.habit }, { $max: { longestStreak: analytic.streak } });
-            } else {
-                analytic.streak = analytic.yesterdayStreak;
-            }
-            res.status(200).json({message: "analytic successfully updated", analytic: analytic});
-        })
-        .catch((err) => {
-            console.log(err);
+    try {
+        const analytic = await Analytics.findOneAndUpdate({ _id: id }, analyticData, { new: true });
+        if (!analytic) {
+            res.status(404).json({message: "No analytic was found with that id"})
+            return;
+        }
+        if (analytic.completed) {
+            analytic.streak = analytic.yesterdayStreak + 1;
+            Habit.findOneAndUpdate({ _id: analytic.habit }, { $max: { longestStreak: analytic.streak } });
+        } else {
+            analytic.streak = analytic.yesterdayStreak;
+        }
+        await analytic.save();
+        res.status(200).json(analytic);
+    } catch (err) {
+        console.log(err);
         res.status(500).json({message: "An error has occurred while attempting to update the analytic"});
-        })
+    }
 });
 
 //Delete analytic by id (not yet implemented on front end)

@@ -35,9 +35,9 @@ function Habits() {
       putAnalytic(analytic)
         .then(res => {
           console.log("analytic successfully updated", res.data);
-          let analytic = user.habits.find(habit => habit._id === habitId).analytics.find(analytic => analytic._id === res.data.analytic._id);
-          analytic.completed = res.data.analytic.completed;
-          analytic.streak = res.data.analytic.streak;
+          let analytic = user.habits.find(habit => habit._id === habitId).analytics.find(analytic => analytic._id === res.data._id);
+          analytic.completed = res.data.completed;
+          analytic.streak = res.data.streak;
           setUser({...user});
           console.log(user);
         })
