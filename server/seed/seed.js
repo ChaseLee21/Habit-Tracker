@@ -53,7 +53,7 @@ db.once('open', async () => {
             user: user._id,
             date: new Date(Date.now() - 864e5).toISOString().split('T')[0],
             completed: true,
-            streak: 0,
+            streak: 1,
             yesterdayStreak: 0
         });
 
