@@ -1,11 +1,22 @@
 import axios from "axios";
 
-function putAnalytic(analytic) {
-  return axios.put('/api/analytics/' + analytic._id, analytic);
+async function putAnalytic(analytic) {
+  try {
+    const request = await axios.put('/api/analytics/' + analytic._id, analytic);
+    return request.data;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-function getUser(userId) {
-  return axios.get('/api/users/' + userId);
+//TODO: find out why i return request instead of request.data
+async function getUser(userId) {
+  try {
+    const request = await axios.get('/api/users/' + userId);
+    return request;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export {putAnalytic, getUser};
