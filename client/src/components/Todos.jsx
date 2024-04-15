@@ -26,8 +26,17 @@ function Todos() {
   }, []);
 
   function handleTodoSubmit(e) {
-    e.preventDefault();
-    throw new Error('Not implemented');
+    try {
+      const todoIndex = user.todos.findIndex(todo => {
+        return todo === e.target.value;
+      })
+      const updatedTodos = [...user.todos];
+      updatedTodos.splice(todoIndex, 1);
+      let updatedUser = {...user, todos: updatedTodos};
+      setUser(updatedUser);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -36,18 +45,14 @@ function Todos() {
       <h2>Todos</h2>
       <ul className="list-inside">
       {user.todos && user.todos.map(todo => (
-          <li key={todo._id} className="m-2">
+          <li key={todo} className="m-2">
             <div className="flex justify-between">
               <div className="flex">
-                <h3>{todo.name}</h3>
+                <h3>{todo}</h3>
               </div>
               {/* habit completed form */}
               <form onSubmit={handleTodoSubmit}>
-                <input type="hidden" name="habitId" value={todo._id} />
-                {/* Submit Form Button */}
-                <button type="submit" className="rounded-md p-1">
-                  submit
-                </button>
+                <input type='checkbox' name="habitId" value={todo} onClick={handleTodoSubmit} />
               </form>
             </div>
           </li>
