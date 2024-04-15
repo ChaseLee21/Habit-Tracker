@@ -25,7 +25,21 @@ function Todos() {
     fetchUser();
   }, []);
 
-  function handleTodoSubmit(e) {
+  function handleTodoCreate(e) {
+    e.preventDefault();
+    const todo = e.target.todo.value;
+    try {
+      const updatedTodos = [...user.todos];
+      updatedTodos.push(todo);
+      let updatedUser = {...user, todos: updatedTodos};
+      setUser(updatedUser);
+      e.target.todo.value = '';
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  function handleTodoDelete(e) {
     try {
       const todoIndex = user.todos.findIndex(todo => {
         return todo === e.target.value;
@@ -41,8 +55,14 @@ function Todos() {
 
   return (
     <>
-      <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
-      <h2>Todos</h2>
+    <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
+      <div className='flex flex-row'>
+        <h2>Todos:</h2>
+        <form className='mx-2' onSubmit={handleTodoCreate}>
+          <input className='px-2 mx-2 rounded' type='text' name='todo' />
+          <button className='bg-primaryBg text-primaryText px-2 mx-2 rounded' type='submit'>Add</button>
+        </form>
+      </div>
       <ul className="list-inside">
       {user.todos && user.todos.map(todo => (
           <li key={todo} className="m-2">
@@ -51,8 +71,8 @@ function Todos() {
                 <h3>{todo}</h3>
               </div>
               {/* habit completed form */}
-              <form onSubmit={handleTodoSubmit}>
-                <input type='checkbox' name="habitId" value={todo} onClick={handleTodoSubmit} />
+              <form onSubmit={handleTodoDelete}>
+                <input type='checkbox' name="habitId" value={todo} onClick={handleTodoDelete} />
               </form>
             </div>
           </li>
