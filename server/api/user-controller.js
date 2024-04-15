@@ -1,4 +1,5 @@
 const { User, Analytics } = require('../models/index');
+const { createTodaysAnalytics } = require('../utils/user-controller');
 const router = require('express').Router();
 
 // GET all users (for testing)
@@ -20,8 +21,6 @@ router.get('/', (req, res) => {
 // TODO: look into a possible bug where a new analytics is created with only a streak and _id property when this route is hit
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
-    const currentDate = new Date().toISOString().split('T')[0];
-    const yesterday = new Date(Date.now() - 864e5).toISOString().split('T')[0];
     try {
         const user = await User.findOne({ _id: id }).populate({
             path: 'habits', 
@@ -30,40 +29,9 @@ router.get('/:id', async (req, res) => {
                 model: 'Analytics',
             }
         });
-        if (!user) {
-            return res.status(404).json({ message: 'No user found with this id' });
-        }
-        if (user.habits.length === 0) {
-            return res.status(404).json({ message: 'No habits found for this user' });
-        }
-        const promises = user.habits.map(async (habit) => {
-            const todaysAnalytic = habit.analytics.find(analytic => {
-                return analytic.date.toISOString().split('T')[0] === currentDate;
-            });
-            if (!todaysAnalytic) {
-                const yesterdaysAnalytic = habit.analytics.find(analytic => analytic.date === yesterday);
-                let newAnalytic = {
-                    user: id,
-                    habit: habit._id,
-                    date: currentDate,
-                    completed: false,
-                    streak: 0
-                };
-                if (yesterdaysAnalytic && yesterdaysAnalytic.streak > 0 && yesterdaysAnalytic.completed) {
-                    newAnalytic.streak = yesterdaysAnalytic.streak;
-                    newAnalytic.yesterdayStreak = yesterdaysAnalytic.streak;
-                }
-                await Analytics.create(newAnalytic)
-                    .then((analytic) => {
-                        habit.analytics.push(analytic);
-                        habit.save();
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                    });
-            }
-        });
-        await Promise.all(promises);
+        if (!user) return res.status(404).json({ message: 'No user found with this id' });
+        if (user.habits.length === 0) return res.status(404).json({ message: 'No habits found for this user' });
+        await createTodaysAnalytics(user.habits, user._id);
         await user.save();
         res.json(user);
     } catch (err) {
