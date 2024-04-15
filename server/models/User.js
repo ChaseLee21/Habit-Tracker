@@ -6,7 +6,8 @@ const userSchema = new Schema({
     email: { type: String, required: true },
     password: { type: String, required: true, select: false},
     salt: { type: String, required: false, select: false},
-    habits: [{ type: Schema.Types.ObjectId, ref: 'Habit' }]
+    habits: [{ type: Schema.Types.ObjectId, ref: 'Habit' }],
+    todos: [{ type: String, required: false }],
 });
 
 // Middleware to hash the password before saving

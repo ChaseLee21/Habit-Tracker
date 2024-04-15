@@ -20,7 +20,8 @@ db.once('open', async () => {
             name: 'John Doe',
             email: 'johndoe@gmail.com',
             password: 'password123',
-            habits: []
+            habits: [],
+            todos: ['Buy groceries', 'Clean the house', 'Call mom']
         });
         
         console.log("Adding habit to the user");

@@ -4,7 +4,7 @@ import { getUser } from '../util/axios';
 function Todos() {
   // TODO: Replace with the user's ID that is logged in
   // this id is from the seeded data in the database for development
-  const userId = '661d789ab93534f13c58aaa1';
+  const userId = '661d8404f1165ca02a556c4f';
 
   const [user, setUser] = useState({});
 
