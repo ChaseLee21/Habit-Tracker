@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getUser } from '../util/axios';
-import { updateTodos, updateUserTodosState } from '../util/todo-helpers';
+import { createTodo, updateUserTodosState, removeTodo } from '../util/todo-helpers';
 
 function Todos() {
   // TODO: Replace with the user's ID that is logged in
@@ -29,7 +29,7 @@ function Todos() {
   function handleTodoCreate(e) {
     try {
       e.preventDefault();
-      let updatedTodos = updateTodos(e.target.todo.value, user.todos);
+      const updatedTodos = createTodo(e.target.todo.value, user.todos);
       const updatedUser = updateUserTodosState(user, updatedTodos);
       setUser(updatedUser);
       e.target.todo.value = '';
@@ -40,12 +40,8 @@ function Todos() {
 
   function handleTodoDelete(e) {
     try {
-      const todoIndex = user.todos.findIndex(todo => {
-        return todo === e.target.value;
-      })
-      const updatedTodos = [...user.todos];
-      updatedTodos.splice(todoIndex, 1);
-      let updatedUser = {...user, todos: updatedTodos};
+      const updatedTodos = removeTodo(e.target.value, user.todos);
+      const updatedUser = updateUserTodosState(user, updatedTodos);
       setUser(updatedUser);
     } catch (err) {
       console.log(err);
