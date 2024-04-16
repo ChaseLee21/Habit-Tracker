@@ -28,24 +28,38 @@ function Habits() {
     fetchUser();
   }, []);
 
-    async function handleAnalyticsSubmit(e) {
+  async function handleAnalyticsSubmit(e) {
+    try {
       e.preventDefault();
       const habitId = e.target.habitId.value;
-      try {
-        const habitIndex = user.habits.findIndex(habit => habit._id === habitId);
-        const analyticIndex = user.habits[habitIndex].analytics.findIndex(analytic => new Date(analytic.date).toISOString().split('T')[0] === today);
-        
-        let analytic = user.habits[habitIndex].analytics[analyticIndex];
-        analytic.completed = !analytic.completed;
-        analytic = await putAnalytic(analytic);
-    
-        let updatedUser = {...user};
-        updatedUser.habits[habitIndex].analytics[analyticIndex] = analytic;
-        setUser(updatedUser);
-      } catch (err) {
-        console.log(err);
-      }
+      const habitIndex = user.habits.findIndex(habit => habit._id === habitId);
+      const analyticIndex = user.habits[habitIndex].analytics.findIndex(analytic => new Date(analytic.date).toISOString().split('T')[0] === today);
+      let analytic = user.habits[habitIndex].analytics[analyticIndex];
+      analytic = await putCompletedAnalytic(analytic);
+      updateUserAnalyticsState(analytic, habitIndex, analyticIndex);
+    } catch (err) {
+      console.log(err);
     }
+  }
+
+  async function putCompletedAnalytic(analytic) {
+    try {
+      analytic.completed = !analytic.completed;
+      return await putAnalytic(analytic);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  function updateUserAnalyticsState(analytic, habitIndex, analyticIndex) {
+    try {
+      let updatedUser = {...user};
+      updatedUser.habits[habitIndex].analytics[analyticIndex] = analytic;
+      setUser(updatedUser);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
     return (
       <>
