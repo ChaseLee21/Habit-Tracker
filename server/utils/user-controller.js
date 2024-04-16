@@ -12,14 +12,14 @@ async function createTodaysAnalytics(habits, userId) {
                 completed: false,
                 streak: 0
             };
-            setAnalyticStreak(newAnalytic);
+            setAnalyticStreak(newAnalytic, habit);
             await createAnalytic(newAnalytic, habit)
         }
     });
 
     await Promise.all(promises);
 
-    function setAnalyticStreak(analytic) {
+    function setAnalyticStreak(analytic, habit) {
         const yesterdaysAnalytic = habit.analytics.find(analytic => analytic.date === yesterday);
         if (yesterdaysAnalytic && yesterdaysAnalytic.streak > 0 && yesterdaysAnalytic.completed) {
             analytic.streak = yesterdaysAnalytic.streak;
