@@ -10,7 +10,8 @@ async function createTodaysAnalytics(habits, userId) {
                 habit: habit._id,
                 date: today,
                 completed: false,
-                streak: 0
+                streak: 0,
+                yesterdayStreak: 0
             };
             setAnalyticStreak(newAnalytic, habit);
             await createAnalytic(newAnalytic, habit)
