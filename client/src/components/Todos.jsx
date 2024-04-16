@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getUser } from '../util/axios';
+import { getUser, putUser } from '../util/axios';
 import { createTodo, updateUserTodosState, removeTodo } from '../util/todo-helpers';
 
 function Todos() {
@@ -32,6 +32,7 @@ function Todos() {
       const updatedTodos = createTodo(e.target.todo.value, user.todos);
       const updatedUser = updateUserTodosState(user, updatedTodos);
       setUser(updatedUser);
+      putUser(updatedUser);
       e.target.todo.value = '';
     } catch (err) {
       console.log(err);
@@ -43,6 +44,7 @@ function Todos() {
       const updatedTodos = removeTodo(e.target.value, user.todos);
       const updatedUser = updateUserTodosState(user, updatedTodos);
       setUser(updatedUser);
+      putUser(updatedUser);
     } catch (err) {
       console.log(err);
     }
