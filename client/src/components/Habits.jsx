@@ -36,6 +36,7 @@ function Habits() {
       const analyticIndex = user.habits[habitIndex].analytics.findIndex(analytic => new Date(analytic.date).toISOString().split('T')[0] === today);
       let analytic = user.habits[habitIndex].analytics[analyticIndex];
       analytic = await putCompletedAnalytic(analytic);
+      console.log(analytic);
       updateUserAnalyticsState(analytic, habitIndex, analyticIndex);
     } catch (err) {
       console.log(err);
