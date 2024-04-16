@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getUser } from '../util/axios';
+import { updateTodos, updateUserTodosState } from '../util/todo-helpers';
 
 function Todos() {
   // TODO: Replace with the user's ID that is logged in
@@ -26,12 +27,10 @@ function Todos() {
   }, []);
 
   function handleTodoCreate(e) {
-    e.preventDefault();
-    const todo = e.target.todo.value;
     try {
-      const updatedTodos = [...user.todos];
-      updatedTodos.push(todo);
-      let updatedUser = {...user, todos: updatedTodos};
+      e.preventDefault();
+      let updatedTodos = updateTodos(e.target.todo.value, user.todos);
+      const updatedUser = updateUserTodosState(user, updatedTodos);
       setUser(updatedUser);
       e.target.todo.value = '';
     } catch (err) {
