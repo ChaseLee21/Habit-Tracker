@@ -1,54 +1,48 @@
 const { User, Habit, Analytics } = require('../models');
 
-async function createTodaysAnalytics(habits, userId) {
+async function createAnalyticsForToday(habit, userId) {
     const today = new Date().toISOString().split('T')[0];
     const yesterday = new Date(Date.now() - 864e5).toISOString().split('T')[0];
-    const promises = habits.map(async (habit) => {
-        if (!existingTodaysAnalytic(habit)) {
-            let newAnalytic = {
-                user: userId,
-                habit: habit._id,
-                date: today,
-                completed: false,
-                streak: 0,
-                yesterdayStreak: 0
-            };
-            setAnalyticStreak(newAnalytic, habit);
-            await createAnalytic(newAnalytic, habit)
-        }
-    });
+    console.log(habit, 'habit');
+    if (!existingTodaysAnalytic()) {
+        let newAnalytic = {
+            user: userId,
+            habit: habit._id,
+            date: today,
+            completed: false,
+            streak: 0,
+            yesterdayStreak: 0
+        };
+        setAnalyticStreak(newAnalytic);
+        await createAnalytic(newAnalytic)
+    }
 
-    await Promise.all(promises);
-
-    function setAnalyticStreak(analytic, habit) {
+    // Helper functions
+    function setAnalyticStreak(analytic) {
         const yesterdaysAnalytic = habit.analytics.find(analytic => {
             return analytic.date.toISOString().split('T')[0] === yesterday;
         });
         if (yesterdaysAnalytic && yesterdaysAnalytic.streak > 0 && yesterdaysAnalytic.completed) {
             analytic.streak = yesterdaysAnalytic.streak;
             analytic.yesterdayStreak = yesterdaysAnalytic.streak;
-            console.log('Setting streak', analytic.streak);
-            console.log('Setting yesterdayStreak', analytic.yesterdayStreak);
         }
     }
-
-    function existingTodaysAnalytic(habit) {
+    
+    function existingTodaysAnalytic() {
         return habit.analytics.find(analytic => {
             return analytic.date.toISOString().split('T')[0] === today;
         });
     }
-
-    async function createAnalytic(analytic, habit) {
-        Analytics.create(analytic)
-            .then((analytic) => {
-                console.log('Analytic successfully created', analytic);
-                habit.analytics.push(analytic);
-                habit.save();
-            })
-            .catch((err) => {
-                console.log(err)
-            });
+    
+    async function createAnalytic(analytic) {
+        try {
+            const newAnalytic = await Analytics.create(analytic);
+            habit.analytics.push(newAnalytic);
+            await habit.save();
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 
-module.exports = { createTodaysAnalytics };
+module.exports = { createAnalyticsForToday };

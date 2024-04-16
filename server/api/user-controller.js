@@ -1,5 +1,5 @@
 const { User, Analytics } = require('../models/index');
-const { createTodaysAnalytics } = require('../utils/user-helpers');
+const { createAnalyticsForToday } = require('../utils/user-helpers');
 const router = require('express').Router();
 
 // GET all users (for testing)
@@ -31,7 +31,9 @@ router.get('/:id', async (req, res) => {
         });
         if (!user) return res.status(404).json({ message: 'No user found with this id' });
         if (user.habits.length === 0) return res.status(404).json({ message: 'No habits found for this user' });
-        await createTodaysAnalytics(user.habits, user._id);
+        for (let habit of user.habits) {
+            await createAnalyticsForToday(habit, user._id);
+        }
         await user.save();
         res.json(user);
     } catch (err) {
