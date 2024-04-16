@@ -83,9 +83,7 @@ function Habits() {
               {/* habit completed form */}
               <form onSubmit={handleAnalyticsSubmit}>
                 <input type="hidden" name="habitId" value={habit._id} />
-                {/* Submit Form Button */}
                 <button type="submit" className="rounded-md p-1">
-                  {/* Finds the analytic.completed value for habit */}
                   {findHabitAnalyticForToday(habit).completed ? '✅' : '❌'}
                 </button>
               </form>
