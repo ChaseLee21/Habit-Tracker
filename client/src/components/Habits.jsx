@@ -64,8 +64,13 @@ function Habits() {
   }
 
   function findHabitAnalyticForToday(habit) {
-    let analytic = habit.analytics.find(analytic => new Date(analytic.date).toISOString().split('T')[0] === today);
-    return analytic || {streak: 0};
+    try {
+      const analytic = habit.analytics.find(analytic => new Date(analytic.date).toISOString().split('T')[0] === today);
+      return analytic;
+    } catch (err) {
+      console.log(err);
+      return {streak: 0};
+    }
   }
 
   return (
