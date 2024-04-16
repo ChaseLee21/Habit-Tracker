@@ -3,7 +3,6 @@ const { User, Habit, Analytics } = require('../models');
 async function createAnalyticsForToday(habit, userId) {
     const today = new Date().toISOString().split('T')[0];
     const yesterday = new Date(Date.now() - 864e5).toISOString().split('T')[0];
-    console.log(habit, 'habit');
     if (!existingTodaysAnalytic()) {
         let newAnalytic = {
             user: userId,
