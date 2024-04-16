@@ -28,7 +28,7 @@ router.put('/:id', async (req, res) => {
             res.status(404).json({message: "No analytic was found with that id"})
             return;
         }
-        if (analytic.completed === true && analytic.yesterdayStreak === 0) {
+        if (analytic.completed === true && analytic.yesterdayStreak >= 0) {
             analytic.streak = analytic.yesterdayStreak + 1;
             Habit.findOneAndUpdate({ _id: analytic.habit }, { $max: { longestStreak: analytic.streak } });
         } else {
