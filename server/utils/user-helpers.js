@@ -21,10 +21,14 @@ async function createTodaysAnalytics(habits, userId) {
     await Promise.all(promises);
 
     function setAnalyticStreak(analytic, habit) {
-        const yesterdaysAnalytic = habit.analytics.find(analytic => analytic.date === yesterday);
+        const yesterdaysAnalytic = habit.analytics.find(analytic => {
+            return analytic.date.toISOString().split('T')[0] === yesterday;
+        });
         if (yesterdaysAnalytic && yesterdaysAnalytic.streak > 0 && yesterdaysAnalytic.completed) {
             analytic.streak = yesterdaysAnalytic.streak;
             analytic.yesterdayStreak = yesterdaysAnalytic.streak;
+            console.log('Setting streak', analytic.streak);
+            console.log('Setting yesterdayStreak', analytic.yesterdayStreak);
         }
     }
 
@@ -37,6 +41,7 @@ async function createTodaysAnalytics(habits, userId) {
     async function createAnalytic(analytic, habit) {
         Analytics.create(analytic)
             .then((analytic) => {
+                console.log('Analytic successfully created', analytic);
                 habit.analytics.push(analytic);
                 habit.save();
             })
