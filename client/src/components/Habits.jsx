@@ -86,9 +86,7 @@ function Habits() {
                 {/* Submit Form Button */}
                 <button type="submit" className="rounded-md p-1">
                   {/* Finds the analytic.completed value for habit */}
-                  {habit.analytics.find((analytic) => {
-                    return new Date(analytic.date).toISOString().split('T')[0] === today;
-                  }).completed ? '✅' : '❌'}
+                  {findHabitAnalyticForToday(habit).completed ? '✅' : '❌'}
                 </button>
               </form>
             </div>
