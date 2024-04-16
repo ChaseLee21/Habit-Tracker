@@ -17,6 +17,7 @@ function Habits() {
       try {
         const userData = await getUser(userId);
         if (userData) {
+          console.log(userData);
           setUser(userData);
         } else {
           console.log('No user data found');
@@ -62,36 +63,42 @@ function Habits() {
     }
   }
 
-    return (
-      <>
-      <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
-        <h2>Habit Progress</h2>
-        <ul className="list-inside">
-          {user.habits && user.habits.map(habit => (
-            <li key={habit._id} className="m-2">
-              <div className="flex justify-between">
-                <div className="flex">
-                  <h3>{habit.name}</h3>
-                  <p>: {habit.analytics.find(analytic => new Date(analytic.date).toISOString().split('T')[0] === today).streak}{habit.streak > 3 ? '🔥' : ''}</p>
-                </div>
-                {/* habit completed form */}
-                <form onSubmit={handleAnalyticsSubmit}>
-                  <input type="hidden" name="habitId" value={habit._id} />
-                  {/* Submit Form Button */}
-                  <button type="submit" className="rounded-md p-1">
-                    {/* Finds the analytic.completed value for habit */}
-                    {habit.analytics.find((analytic) => {
-                      return new Date(analytic.date).toISOString().split('T')[0] === today;
-                    }).completed ? '✅' : '❌'}
-                  </button>
-                </form>
-              </div>
-              <p className="text-sm">{habit.goal}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-      </>
-    )
+  function findHabitAnalyticForToday(habit) {
+    let analytic = habit.analytics.find(analytic => new Date(analytic.date).toISOString().split('T')[0] === today);
+    return analytic || {streak: 0};
   }
-  export default Habits
+
+  return (
+    <>
+    <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
+      <h2>Habit Progress</h2>
+      <ul className="list-inside">
+        {user.habits && user.habits.map(habit => (
+          <li key={habit._id} className="m-2">
+            <div className="flex justify-between">
+              <div className="flex">
+                <h3>{habit.name}</h3>
+                <p>: {findHabitAnalyticForToday(habit).streak}</p>
+              </div>
+              {/* habit completed form */}
+              <form onSubmit={handleAnalyticsSubmit}>
+                <input type="hidden" name="habitId" value={habit._id} />
+                {/* Submit Form Button */}
+                <button type="submit" className="rounded-md p-1">
+                  {/* Finds the analytic.completed value for habit */}
+                  {habit.analytics.find((analytic) => {
+                    return new Date(analytic.date).toISOString().split('T')[0] === today;
+                  }).completed ? '✅' : '❌'}
+                </button>
+              </form>
+            </div>
+            <p className="text-sm">{habit.goal}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+    </>
+  )
+}
+
+export default Habits
