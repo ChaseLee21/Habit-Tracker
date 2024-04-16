@@ -1,5 +1,5 @@
 const { User, Analytics } = require('../models/index');
-const { createTodaysAnalytics } = require('../utils/user-controller');
+const { createTodaysAnalytics } = require('../utils/user-helpers');
 const router = require('express').Router();
 
 // GET all users (for testing)
