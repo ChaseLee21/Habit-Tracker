@@ -1,7 +1,8 @@
-const { User } = require('../models/index');
+const { User, Analytics } = require('../models/index');
+const { createAnalyticsForToday } = require('../utils/user-helpers');
 const router = require('express').Router();
 
-// GET all users
+// GET all users (for testing)
 router.get('/', (req, res) => {
     User.find({})
         .then((users) => {
@@ -16,20 +17,29 @@ router.get('/', (req, res) => {
         });
 });
 
-// GET one user by id
-router.get('/:id', (req, res) => {
+// GET one user by id => populate habits => populate analytics => create new analytics if one is not found for today's date
+// TODO: look into a possible bug where a new analytics is created with only a streak and _id property when this route is hit
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
-    User.findOne({ _id: id })
-        .then((user) => {
-            if (!user) {
-                res.status(404).json({ message: 'No user found with this id' });
-                return;
+    try {
+        const user = await User.findOne({ _id: id }).populate({
+            path: 'habits', 
+            populate: {
+                path: 'analytics',
+                model: 'Analytics',
             }
-            res.json(user);
-        })
-        .catch((err) => {
-            res.status(400).json(err);
         });
+        if (!user) return res.status(404).json({ message: 'No user found with this id' });
+        if (user.habits.length === 0) return res.status(404).json({ message: 'No habits found for this user' });
+        for (let habit of user.habits) {
+            await createAnalyticsForToday(habit, user._id);
+        }
+        await user.save();
+        res.json(user);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 });
 
 // POST a new user

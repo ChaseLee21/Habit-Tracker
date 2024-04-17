@@ -4,37 +4,72 @@ const Habit = require('../models/Habit');
 const Analytics = require('../models/Analytics');
 const db = require('../config/connection');
 
-const userData = require('./userData.json');
-const habitData = require('./habitData.json');
-const analyticsData = require('./analyticsData.json');
-
 db.once('open', async () => {
     try {
-        await User.deleteMany({});
-        await Habit.deleteMany({});
-        await Analytics.deleteMany({});
 
-        await User.create(userData);
-        await Habit.create(habitData);
-        await Analytics.create(analyticsData);
+        console.log("Dropping tables in the database");
 
-        // HACK: This is not the best way to seed data, but it works for now
-        // I am hardcoding the habits into the users
-        // I am hardcoding the analytics into the habits
-        for (let i = 0; i < habitData.length; i++) {
-            const habit = await Habit.findOne({ name: habitData[i].name });
-            const user = await User.findOne({ email: userData[i].email });
-            const analytics1 = await Analytics.findOne({ date: analyticsData[i].date });
-            const analytics2 = await Analytics.findOne({ date: analyticsData[i + 3].date });
-            habit.analytics.push(analytics1._id);
-            habit.analytics.push(analytics2._id);
-            user.habits.push(habit._id);
-            await user.save();
-            await habit.save();
-        }
+        await Analytics.deleteMany();
+        await Habit.deleteMany();
+        await User.deleteMany();
 
-        console.log('Data seeded successfully!');
+        console.log("Creating tables in the database");
+        console.log("Adding user to the database");
+        
+        const user = await User.create({
+            name: 'John Doe',
+            email: 'johndoe@gmail.com',
+            password: 'password123',
+            habits: [],
+            todos: ['Buy groceries', 'Clean the house', 'Call mom']
+        });
+        
+        console.log("Adding habit to the user");
+        
+        const habit = await Habit.create({
+            user: user._id,
+            name: 'Exercise',
+            description: "I want to exercise more often to improve my health and fitness.",
+            why: "I want to be healthier and feel better about myself.",
+            goal: "My habit is complete once I have jogged for 20 minutes",
+            reward: "I will reward myself with new shoes once I have completed my habit 30 times.",
+            frequency: "3 times a week",
+            longestStreak: 0,
+            analytics: []
+        });
+
+        console.log("Adding analytics to the habit");
+
+        const today = await Analytics.create({
+            habit: habit._id,
+            user: user._id,
+            date: new Date().toISOString().split('T')[0],
+            completed: false,
+            streak: 1,
+            yesterdayStreak: 1
+        });
+
+        const yesterday = await Analytics.create({
+            habit: habit._id,
+            user: user._id,
+            date: new Date(Date.now() - 864e5).toISOString().split('T')[0],
+            completed: true,
+            streak: 1,
+            yesterdayStreak: 0
+        });
+
+        console.log("Saving...");
+
+        await habit.analytics.push(today);
+        await habit.analytics.push(yesterday);
+        await habit.save();
+        await user.habits.push(habit);
+        await user.save();
+
+        console.log("Seed data has been added to the database");
+
         process.exit(0);
+
     } catch (err) {
         console.error(err);
         process.exit(1);
