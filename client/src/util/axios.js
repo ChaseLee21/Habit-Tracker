@@ -27,4 +27,14 @@ async function putUser(user) {
   }
 }
 
-export {putAnalytic, getUser, putUser};
+async function createUser(userData) {
+  try {
+    const request = await axios.post('/api/users', userData);
+    return request.data;
+  } catch (err) {
+    console.log(err);
+  }
+
+}
+
+export {putAnalytic, getUser, putUser, createUser};
