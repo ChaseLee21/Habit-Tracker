@@ -47,7 +47,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     const userData = req.body;
     try {
-        const user = await User.create(userData);
+        let user = await User.create(userData);
         if (!user) return res.status(400).json({ message: 'User could not be created' });
         user = user.toObject();
         delete user.password;
