@@ -7,6 +7,7 @@ import Home from './views/Home.jsx'
 import Register from './views/Register.jsx'
 import Login from './views/Login.jsx'
 import NewHabit from './views/NewHabit.jsx'
+import { withAuth } from './components/Hoc.jsx'
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />
+        element: withAuth(<Home />)
       }, 
       {
         path: '/register',
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/new-habit',
-        element: <NewHabit />
+        element: withAuth(<NewHabit />)
       },
     ]
   }

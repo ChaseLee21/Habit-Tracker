@@ -6,6 +6,7 @@ function withAuth(ComponentToProtect) {
   return function ProtectedRoute(props) {
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
       async function checkAuth() {
@@ -16,6 +17,7 @@ function withAuth(ComponentToProtect) {
           } else {
             setIsAuthenticated(true);
             setIsLoading(false);
+            setUser(user);
           }
         } catch (err) {
           setIsAuthenticated(false);
@@ -30,7 +32,7 @@ function withAuth(ComponentToProtect) {
     } else if (!isAuthenticated) {
       return <Redirect to="/login" />;
     } else {
-      return <ComponentToProtect {...props} />;
+      return <ComponentToProtect {...props} user={user} />;
     }
   }
 }
