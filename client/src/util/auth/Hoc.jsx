@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { checkToken } from '../utils/axios';
+import { useNavigate } from 'react-router-dom';
+import { checkToken } from '../axios';
 
 function withAuth(ComponentToProtect) {
   return function ProtectedRoute(props) {
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
@@ -30,7 +31,8 @@ function withAuth(ComponentToProtect) {
     if (isLoading) {
       return <div>Loading...</div>; // replace with a loading spinner or similar
     } else if (!isAuthenticated) {
-      return <Redirect to="/login" />;
+      navigate('/login');
+      return null;
     } else {
       return <ComponentToProtect {...props} user={user} />;
     }

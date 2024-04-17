@@ -7,7 +7,7 @@ import Home from './views/Home.jsx'
 import Register from './views/Register.jsx'
 import Login from './views/Login.jsx'
 import NewHabit from './views/NewHabit.jsx'
-import { withAuth } from './components/Hoc.jsx'
+import ProtectedRoute from './util/auth/Hoc.jsx'
 
 const router = createBrowserRouter([
   {
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: withAuth(<Home />)
+        element: <ProtectedRoute component={Home} />
       }, 
       {
         path: '/register',
@@ -29,12 +29,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/new-habit',
-        element: withAuth(<NewHabit />)
+        element: <ProtectedRoute component={NewHabit} />
       },
     ]
   }
 ])
-
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
