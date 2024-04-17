@@ -3,7 +3,7 @@ import { postUser } from "../util/axios";
 
 function Register() {
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const username = e.target.username.value;
@@ -11,7 +11,9 @@ function Register() {
     const confirmPassword = e.target.confirmPassword.value;
     if (validateForm(email, username, password, confirmPassword)) {
       const userData = { email: email, name: username, password: password };
-      postUser(userData);
+      const user = await postUser(userData);
+      console.log("User Created: ", user);
+      window.location.href = "/";
     }
   }
 
