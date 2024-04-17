@@ -1,18 +1,17 @@
 import { validateEmail, validatePassword, validateUsername } from "../util/validate-helpers";
-import { createUser } from "../util/axios";
+import { postUser } from "../util/axios";
 
 function Register() {
 
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
     const email = e.target.email.value;
     const username = e.target.username.value;
     const password = e.target.password.value;
     const confirmPassword = e.target.confirmPassword.value;
     if (validateForm(email, username, password, confirmPassword)) {
-      const userData = { email, username, password };
-      createUser(userData);
+      const userData = { email: email, name: username, password: password };
+      postUser(userData);
     }
   }
 
