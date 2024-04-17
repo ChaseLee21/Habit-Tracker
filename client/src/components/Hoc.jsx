@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { checkToken } from '../utils/axios';
 
 function withAuth(ComponentToProtect) {
   return function ProtectedRoute(props) {
@@ -7,15 +8,21 @@ function withAuth(ComponentToProtect) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-      fetch('/api/checkToken') // replace with your API endpoint
-        .then(res => {
-          if (res.status === 200) setIsAuthenticated(true);
+      async function checkAuth() {
+        try {
+          const user = await checkToken();
+          if (!user) {
+            throw new Error('Not authorized');
+          } else {
+            setIsAuthenticated(true);
+            setIsLoading(false);
+          }
+        } catch (err) {
+          setIsAuthenticated(false);
           setIsLoading(false);
-        })
-        .catch(err => {
-          console.error(err);
-          setIsLoading(false);
-        });
+        }
+      }
+      checkAuth();
     }, []);
 
     if (isLoading) {
