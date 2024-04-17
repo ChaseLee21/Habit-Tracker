@@ -1,7 +1,12 @@
+const { authMiddleware } = require('../utils/auth');
 const router = require('express').Router();
 const userController = require('./user-controller');
 const habitController = require('./habit-controller');
 const analyticsController = require('./analytics-controller');
+
+router.use('/checkToken', authMiddleware, (req, res) => {
+    res.json({ user: req.user });
+});
 
 router.use('/users', userController);
 router.use('/habits', habitController);
