@@ -1,6 +1,21 @@
 const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'habit-tracker-jwt-sssecret';
 
+function authMiddleware (req, res, next) {
+    const token = req.cookies.HabitTrackerToken;
+    if (!token) {
+        return res.status(401).json({ message: 'You must be logged in to do that' });
+    }
+    try {
+        const user = verifyToken(token);
+        req.user = user;
+        next();
+    } catch (err) {
+        console.log(err);
+        res.status(401).json({ message: 'You must be logged in to do that' });
+    }
+}
+
 function signToken (user) {
     const payload = { id: user._id, email: user.email, name: user.name };
     const expires = { expiresIn: '2h' };
