@@ -6,6 +6,7 @@ import './axiosConfig.js'
 import Home from './views/Home.jsx'
 import Register from './views/Register.jsx'
 import Login from './views/Login.jsx'
+import NewHabit from './views/NewHabit.jsx'
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />
+      },
+      {
+        path: '/new-habit',
+        element: <NewHabit />
       },
     ]
   }
