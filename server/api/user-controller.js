@@ -1,6 +1,7 @@
 const { User, Analytics } = require('../models/index');
 const { createAnalyticsForToday } = require('../utils/user-helpers');
 const router = require('express').Router();
+const { signToken } = require('../utils/auth');
 
 // GET all users (for testing)
 router.get('/', (req, res) => {
@@ -51,7 +52,9 @@ router.post('/', async (req, res) => {
         user = user.toObject();
         delete user.password;
         delete user.salt;
-        res.status(201).json({ message: 'User created successfully', user: user });
+        const token = signToken(user);
+        res.cookie('HabitTrackerToken', token, { httpOnly: true });
+        res.status(201).json(user);
     } catch (err) {
         console.log(err);
         res.status(400).json(err);
