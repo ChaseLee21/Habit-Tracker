@@ -43,19 +43,19 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST a new user
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const userData = req.body;
-    User.create(userData)
-        .then((user) => {
-            user = user.toObject();
-            delete user.password;
-            delete user.salt;
-            res.status(201).json({ message: 'User created successfully', user: user });
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(400).json(err);
-        });
+    try {
+        const user = await User.create(userData);
+        if (!user) return res.status(400).json({ message: 'User could not be created' });
+        user = user.toObject();
+        delete user.password;
+        delete user.salt;
+        res.status(201).json({ message: 'User created successfully', user: user });
+    } catch (err) {
+        console.log(err);
+        res.status(400).json(err);
+    }
 })
 
 // PUT updated user by id
