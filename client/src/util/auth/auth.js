@@ -1,7 +1,14 @@
 import withAuth from "./Hoc";
+import Home from "../../views/Home";
+import NewHabit from "../../views/NewHabit";
 
 function ProtectedRoute({ component: Component }) {
-    return withAuth(Component)();
+    const component = withAuth(Component);
+    return component;
 }
 
-export default ProtectedRoute;
+const ProtectedHome = ProtectedRoute({ component: Home });
+
+const ProtectedNewHabit = ProtectedRoute({component: NewHabit});
+
+export { ProtectedHome, ProtectedNewHabit };

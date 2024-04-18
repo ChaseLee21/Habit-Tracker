@@ -3,11 +3,9 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import './axiosConfig.js'
-import Home from './views/Home.jsx'
 import Register from './views/Register.jsx'
 import Login from './views/Login.jsx'
-import NewHabit from './views/NewHabit.jsx'
-import ProtectedRoute from './util/auth/Hoc.jsx'
+import { ProtectedHome, ProtectedNewHabit } from './util/auth/auth.js'
 
 const router = createBrowserRouter([
   {
@@ -17,7 +15,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <ProtectedRoute component={Home} />
+        element: <ProtectedHome />
       }, 
       {
         path: '/register',
@@ -29,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/new-habit',
-        element: <ProtectedRoute component={NewHabit} />
+        element: <ProtectedNewHabit />
       },
     ]
   }

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { checkToken } from '../axios';
 
 function withAuth(ComponentToProtect) {
-  return function ProtectedRoute(props) {
+  const ProtectedComponent = function (props) {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -16,6 +16,7 @@ function withAuth(ComponentToProtect) {
           if (!user) {
             throw new Error('Not authorized');
           } else {
+            console.log(user);
             setIsAuthenticated(true);
             setIsLoading(false);
             setUser(user);
@@ -28,15 +29,29 @@ function withAuth(ComponentToProtect) {
       checkAuth();
     }, []);
 
+    useEffect(() => {
+      if (!isLoading && !isAuthenticated) {
+        navigate('/login');
+      }
+    }, [isLoading, isAuthenticated, navigate]);
+
     if (isLoading) {
       return <div>Loading...</div>; // replace with a loading spinner or similar
     } else if (!isAuthenticated) {
-      navigate('/login');
       return null;
     } else {
       return <ComponentToProtect {...props} user={user} />;
     }
   }
+
+  ProtectedComponent.displayName = `WithAuth(${getDisplayName(ComponentToProtect)})`;
+
+  return ProtectedComponent;
+}
+
+// Helper function to get the display name of a component
+function getDisplayName(Component) {
+  return Component.displayName || Component.name || 'Component';
 }
 
 export default withAuth;
