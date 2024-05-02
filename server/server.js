@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('./config/connection.js');
 const api = require('./api/index.js');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const PORT = 3000
 
@@ -16,6 +17,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cookieParser());
 
 //TODO: server static files
 
