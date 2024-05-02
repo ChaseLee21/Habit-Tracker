@@ -7,19 +7,8 @@ const auth = require('../utils/auth');
 const { User } = require('../models');
 
 router.use('/checkToken', authMiddleware, async (req, res) => {
-    const token = req.cookies.habitTrackerToken;
-    const verifiedToken = auth.verifyToken(token);
-    if (verifiedToken) {
-        console.log(verifiedToken);
-        let user = await User.findById(verifiedToken.id);
-        user = user.toObject();
-        delete user.salt;
-        delete user.password;
-        res.json({ user: user });
-    }
-    else {
-        res.status(401).json({ message: 'Invalid token' });
-    }
+    console.log('checkToken');
+    res.json({ user: user });
 });
 
 router.use('/login', (req, res) => {
