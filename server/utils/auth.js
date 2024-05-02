@@ -3,7 +3,7 @@ const JWT_SECRET = 'habit-tracker-jwt-sssecret';
 
 function authMiddleware (req, res, next) {
     console.log('authMiddleware');
-    console.log(req.cookies);
+    console.log(req.cookies, 'cookies');
     let token = req.cookies.habitTrackerToken;
     console.log(token, 'token');
     if (!token || token === 'null' || token === 'undefined') {

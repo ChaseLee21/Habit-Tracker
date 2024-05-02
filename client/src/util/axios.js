@@ -38,7 +38,7 @@ async function postUser(userData) {
 
 async function checkToken() {
   try {
-    const request = await axios.get('/api/checkToken');
+    const request = await axios.get('/api/checkToken', { withCredentials: true });
     return request.data;
   } catch (err) {
     console.log(err);

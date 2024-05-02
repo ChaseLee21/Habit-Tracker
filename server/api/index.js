@@ -6,11 +6,6 @@ const analyticsController = require('./analytics-controller');
 const auth = require('../utils/auth');
 const { User } = require('../models');
 
-router.use('/checkToken', authMiddleware, async (req, res) => {
-    console.log('checkToken');
-    res.json({ user: user });
-});
-
 router.use('/login', (req, res) => {
     User.findOne({ email: req.body.email }).then(user => {
         if (!user) {
@@ -26,11 +21,19 @@ router.use('/login', (req, res) => {
         user = user.toObject();
         delete user.salt;
         delete user.password;
-        const token = auth.signToken(user._id, user.email, user.name);
-        res.cookie('habitTrackerToken', token, { httpOnly: true });
+        console.log('user found in login route, signing token, setting cookie, and sending response');
+        const token = auth.signToken(user);
+        res.cookie('habitTrackerToken', token, { path: '/' });
+        console.log('cookie set');
         res.json({ user });
     });
 });
+
+router.use('/checkToken', authMiddleware, async (req, res) => {
+    console.log('checkToken');
+    res.json({ user: req.user });
+});
+
 
 router.use('/users', userController);
 router.use('/habits', habitController);
