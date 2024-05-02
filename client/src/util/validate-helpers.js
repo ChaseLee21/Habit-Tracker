@@ -16,4 +16,9 @@ function validatePassword(password, confirmPassword) {
   return re.test(password);
 }
 
-export { validateEmail, validateUsername, validatePassword };
+function validateLoginPassword(password) {
+  const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+  return re.test(password);
+}
+
+export { validateEmail, validateUsername, validatePassword, validateLoginPassword };

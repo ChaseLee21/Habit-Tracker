@@ -6,6 +6,7 @@ function authMiddleware (req, res, next) {
     if (req.cookies) {
         token = req.cookies.HabitTrackerToken;
     }
+    console.log(token);
     if (!token || token === 'null' || token === 'undefined') {
         return res.status(401).json({ message: 'You must be logged in to do that' });
     }

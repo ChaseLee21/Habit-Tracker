@@ -45,4 +45,13 @@ async function checkToken() {
   }
 }
 
-export {putAnalytic, getUser, putUser, postUser, checkToken};
+async function login(userData) {
+  try {
+    const request = await axios.get('/api/login', userData);
+    return request.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export {putAnalytic, getUser, putUser, postUser, checkToken, login};
