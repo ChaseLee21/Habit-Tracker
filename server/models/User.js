@@ -16,13 +16,6 @@ userSchema.methods.checkPassword = function(password) {
     return this.password === hash;
 }
 
-
-// Method to generate a token
-userSchema.methods.generateToken = function() {
-    const token = crypto.randomBytes(16).toString('hex');
-    return token;
-}
-
 // Middleware to hash the password before saving
 userSchema.pre('save', function(next) {
     if (!this.isModified('password')) {

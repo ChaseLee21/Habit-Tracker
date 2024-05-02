@@ -21,7 +21,7 @@ router.use('/login', (req, res) => {
             res.status(401).json({ message: 'Wrong password!' });
             return;
         }
-        const token = user.generateToken();
+        const token = auth.signToken(user._id, user.email, user.name);
         res.json({ token, user });
     });
 });
