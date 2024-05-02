@@ -47,7 +47,7 @@ async function checkToken() {
 
 async function login(userData) {
   try {
-    const request = await axios.get('/api/login', userData);
+    const request = await axios.post('/api/login', userData);
     return request.data;
   } catch (err) {
     console.log(err);

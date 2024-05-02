@@ -4,11 +4,24 @@ const crypto = require('crypto');
 const userSchema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true },
-    password: { type: String, required: true, select: false},
-    salt: { type: String, required: false, select: false},
+    password: { type: String, required: true},
+    salt: { type: String, required: false},
     habits: [{ type: Schema.Types.ObjectId, ref: 'Habit' }],
     todos: [{ type: String, required: false }],
 });
+
+// Method to check the password
+userSchema.methods.checkPassword = function(password) {
+    const hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
+    return this.password === hash;
+}
+
+
+// Method to generate a token
+userSchema.methods.generateToken = function() {
+    const token = crypto.randomBytes(16).toString('hex');
+    return token;
+}
 
 // Middleware to hash the password before saving
 userSchema.pre('save', function(next) {
