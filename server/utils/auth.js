@@ -2,8 +2,11 @@ const jwt = require('jsonwebtoken');
 const JWT_SECRET = 'habit-tracker-jwt-sssecret';
 
 function authMiddleware (req, res, next) {
-    const token = req.cookies.HabitTrackerToken;
-    if (!token) {
+    let token;
+    if (req.cookies) {
+        token = req.cookies.HabitTrackerToken;
+    }
+    if (!token || token === 'null' || token === 'undefined') {
         return res.status(401).json({ message: 'You must be logged in to do that' });
     }
     try {

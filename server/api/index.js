@@ -5,6 +5,8 @@ const habitController = require('./habit-controller');
 const analyticsController = require('./analytics-controller');
 
 router.use('/checkToken', authMiddleware, (req, res) => {
+    console.log('checkToken route hit');
+    console.log(req.user);
     res.json({ user: req.user });
 });
 
