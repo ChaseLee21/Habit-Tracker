@@ -5,8 +5,17 @@ const habitController = require('./habit-controller');
 const analyticsController = require('./analytics-controller');
 const { User } = require('../models');
 
-router.use('/checkToken', authMiddleware, (req, res) => {
-    res.json({ user: req.user });
+router.use('/checkToken', authMiddleware, async (req, res) => {
+    const token = req.cookies.habitTrackerToken;
+    const verifiedToken = auth.verifyToken(token);
+    if (verifiedToken) {
+        console.log(verifiedToken);
+        const user = await User.findById(verifiedToken.id);
+        res.json({ user: user });
+    }
+    else {
+        res.status(401).json({ message: 'Invalid token' });
+    }
 });
 
 router.use('/login', (req, res) => {
@@ -22,7 +31,8 @@ router.use('/login', (req, res) => {
             return;
         }
         const token = auth.signToken(user._id, user.email, user.name);
-        res.json({ token, user });
+        res.cookie('habitTrackerToken', token, { httpOnly: true });
+        res.json({ user });
     });
 });
 
