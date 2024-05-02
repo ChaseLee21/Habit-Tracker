@@ -3,6 +3,7 @@ const router = require('express').Router();
 const userController = require('./user-controller');
 const habitController = require('./habit-controller');
 const analyticsController = require('./analytics-controller');
+const auth = require('../utils/auth');
 const { User } = require('../models');
 
 router.use('/checkToken', authMiddleware, async (req, res) => {
@@ -10,7 +11,10 @@ router.use('/checkToken', authMiddleware, async (req, res) => {
     const verifiedToken = auth.verifyToken(token);
     if (verifiedToken) {
         console.log(verifiedToken);
-        const user = await User.findById(verifiedToken.id);
+        let user = await User.findById(verifiedToken.id);
+        user = user.toObject();
+        delete user.salt;
+        delete user.password;
         res.json({ user: user });
     }
     else {
@@ -30,6 +34,9 @@ router.use('/login', (req, res) => {
             res.status(401).json({ message: 'Wrong password!' });
             return;
         }
+        user = user.toObject();
+        delete user.salt;
+        delete user.password;
         const token = auth.signToken(user._id, user.email, user.name);
         res.cookie('habitTrackerToken', token, { httpOnly: true });
         res.json({ user });
