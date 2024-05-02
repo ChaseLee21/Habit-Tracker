@@ -47,7 +47,8 @@ async function checkToken() {
 
 async function login(userData) {
   try {
-    const request = await axios.post('/api/login', userData);
+    const request = await axios.post('/api/login', userData, { withCredentials: true });
+    console.log(request);
     return request.data;
   } catch (err) {
     console.log(err);
