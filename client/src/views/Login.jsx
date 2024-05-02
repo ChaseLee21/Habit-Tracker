@@ -11,7 +11,7 @@ function Login() {
       const userData = { email: email, password: password };
       const user = await login(userData);
       console.log("User LoggedIn: ", user);
-      // window.location.href = "/";
+      window.location.href = "/";
     }
   }
 
