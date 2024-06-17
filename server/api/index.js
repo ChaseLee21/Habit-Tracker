@@ -21,11 +21,8 @@ router.use('/login', (req, res) => {
         user = user.toObject();
         delete user.salt;
         delete user.password;
-        console.log('user found in login route, signing token and setting cookie');
         const token = auth.signToken(user);
-        res.cookie('habitTrackerToken', token, { secure: false, sameSite: 'none', path: '/', domain: 'localhost'});
-        console.log('cookie set');
-        console.log('sending response');
+        res.cookie('habitTrackerToken', token, { secure: false, sameSite: 'none', path: '/',});
         res.json({ user });
     });
 });
