@@ -1,34 +1,34 @@
-import { validateEmail, validateLoginPassword } from "../util/validate-helpers";
-import { login } from "../util/axios";
+import { validateEmail, validateLoginPassword } from '../util/validate-helpers'
+import React from 'react'
+import { login } from '../util/axios'
 
-function Login() {
-
+function Login () {
   const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    e.preventDefault()
+    const email = e.target.email.value
+    const password = e.target.password.value
     if (validateForm(email, password)) {
-      const userData = { email: email, password: password };
-      const user = await login(userData);
-      console.log("User LoggedIn: ", user);
-      window.location.href = "/";
+      const userData = { email, password }
+      const user = await login(userData)
+      console.log('User LoggedIn: ', user)
+      window.location.href = '/'
     }
   }
 
-  function validateForm(email, password) {
+  function validateForm (email, password) {
     if (!validateEmail(email)) {
-      alert("Invalid email");
-      console.log("Invalid email");
-      return false;
+      alert('Invalid email')
+      console.log('Invalid email')
+      return false
     }
     if (!validateLoginPassword(password)) {
-      alert("Invalid password");
-      console.log("Invalid password");
-      return false;
+      alert('Invalid password')
+      console.log('Invalid password')
+      return false
     }
-    return true;
+    return true
   }
-  
+
   return (
     <>
       <h2 className="flex rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">Login</h2>
@@ -42,6 +42,5 @@ function Login() {
     </>
   )
 }
-  
-  export default Login
-  
+
+export default Login

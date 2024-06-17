@@ -1,12 +1,11 @@
+import React from 'react'
 
-function NewHabit() {
-
-    return (
+function NewHabit () {
+  return (
       <>
         <h1>New Habit</h1>
       </>
-    )
-  }
-  
-  export default NewHabit
-  
+  )
+}
+
+export default NewHabit
