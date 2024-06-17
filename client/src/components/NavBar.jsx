@@ -36,7 +36,7 @@ function Header () {
                 <Link to={'/register'} onClick={() => handleNavBarClick()}>Register</Link>
             </li>
             <li className="p-1 ps-3 hover:text-highlight text-secondaryText">
-                Logout
+                <Link to={'/logout'} onClick={() => handleNavBarClick()}>Logout</Link>
             </li>
         </ul>
       </nav>)}
