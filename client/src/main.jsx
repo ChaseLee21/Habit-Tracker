@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import React from 'react'
 import './index.css'
 import './axiosConfig.js'
 import Register from './views/Register.jsx'
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <ProtectedHome />
-      }, 
+      },
       {
         path: '/register',
         element: <Register />
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
       {
         path: '/new-habit',
         element: <ProtectedNewHabit />
-      },
+      }
     ]
   }
 ])
