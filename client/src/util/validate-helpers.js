@@ -1,24 +1,24 @@
-function validateEmail(email) {
-  const re = /\S+@\S+\.\S+/;
-  return re.test(email);
+function validateEmail (email) {
+  const re = /\S+@\S+\.\S+/
+  return re.test(email)
 }
 
-function validateUsername(username) {
-  const re = /^[a-zA-Z0-9]{6,}$/;
-  return re.test(username);
+function validateUsername (username) {
+  const re = /^[a-zA-Z0-9]{6,}$/
+  return re.test(username)
 }
 
-function validatePassword(password, confirmPassword) {
-  const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+function validatePassword (password, confirmPassword) {
+  const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
   if (password !== confirmPassword) {
-    return false;
+    return false
   }
-  return re.test(password);
+  return re.test(password)
 }
 
-function validateLoginPassword(password) {
-  const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-  return re.test(password);
+function validateLoginPassword (password) {
+  const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
+  return re.test(password)
 }
 
-export { validateEmail, validateUsername, validatePassword, validateLoginPassword };
+export { validateEmail, validateUsername, validatePassword, validateLoginPassword }

@@ -1,57 +1,57 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { checkToken } from '../axios';
+import { useEffect, useState, React } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { checkToken } from '../axios'
 
-function withAuth(ComponentToProtect) {
+function withAuth (ComponentToProtect) {
   const ProtectedComponent = function (props) {
-    const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(true);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState(null);
+    const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(true)
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
-      async function checkAuth() {
+      async function checkAuth () {
         try {
-          const user = await checkToken();
+          const user = await checkToken()
           if (!user) {
-            throw new Error('Not authorized');
+            throw new Error('Not authorized')
           } else {
-            console.log(user);
-            setIsAuthenticated(true);
-            setIsLoading(false);
-            setUser(user);
+            console.log(user)
+            setIsAuthenticated(true)
+            setIsLoading(false)
+            setUser(user)
           }
         } catch (err) {
-          setIsAuthenticated(false);
-          setIsLoading(false);
+          setIsAuthenticated(false)
+          setIsLoading(false)
         }
       }
-      checkAuth();
-    }, []);
+      checkAuth()
+    }, [])
 
     useEffect(() => {
       if (!isLoading && !isAuthenticated) {
-        navigate('/login');
+        navigate('/login')
       }
-    }, [isLoading, isAuthenticated, navigate]);
+    }, [isLoading, isAuthenticated, navigate])
 
     if (isLoading) {
-      return <div>Loading...</div>; // replace with a loading spinner or similar
+      return <div>Loading...</div> // replace with a loading spinner or similar
     } else if (!isAuthenticated) {
-      return null;
+      return null
     } else {
-      return <ComponentToProtect {...props} user={user} />;
+      return <ComponentToProtect {...props} user={user} />
     }
   }
 
-  ProtectedComponent.displayName = `WithAuth(${getDisplayName(ComponentToProtect)})`;
+  ProtectedComponent.displayName = `WithAuth(${getDisplayName(ComponentToProtect)})`
 
-  return ProtectedComponent;
+  return ProtectedComponent
 }
 
 // Helper function to get the display name of a component
-function getDisplayName(Component) {
-  return Component.displayName || Component.name || 'Component';
+function getDisplayName (Component) {
+  return Component.displayName || Component.name || 'Component'
 }
 
-export default withAuth;
+export default withAuth
