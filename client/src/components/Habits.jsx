@@ -1,8 +1,9 @@
 import { useEffect, useState, React } from 'react'
 import { putAnalytic, getUser } from '../util/axios'
+import PropTypes from 'prop-types'
 
 function Habits (props) {
-    const userId = props.user.user.id || props.user.id || user.id || ''
+    const userId = props.user.user.id || ''
     const today = new Date().toISOString().split('T')[0]
     const [user, setUser] = useState({})
 
@@ -92,6 +93,14 @@ function Habits (props) {
             </ul>
         </section>
     )
+}
+
+Habits.propTypes = {
+    user: PropTypes.shape({
+        user: PropTypes.shape({
+            id: PropTypes.string
+        })
+    }).isRequired
 }
 
 export default Habits
