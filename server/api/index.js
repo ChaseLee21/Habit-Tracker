@@ -22,7 +22,7 @@ router.use('/login', (req, res) => {
         delete user.salt
         delete user.password
         const token = auth.signToken(user)
-        res.cookie('habitTrackerToken', token, { secure: false, sameSite: 'none', path: '/' })
+        res.cookie('habitTrackerToken', token, { secure: false, sameSite: 'lax', maxAge: 1000 * 60 * 60 * 24 })
         res.json({ user })
     })
 })
