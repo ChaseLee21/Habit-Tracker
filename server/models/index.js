@@ -1,5 +1,5 @@
-const User = require('./User');
-const Habit = require('./Habit');
-const Analytics = require('./Analytics');
+const User = require('./User')
+const Habit = require('./Habit')
+const Analytics = require('./Analytics')
 
-module.exports = { User, Habit, Analytics };
+module.exports = { User, Habit, Analytics }

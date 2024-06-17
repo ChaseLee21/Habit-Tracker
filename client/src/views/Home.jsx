@@ -2,18 +2,17 @@ import Day from '../components/Day'
 import Habits from '../components/Habits'
 import Todos from '../components/Todos'
 import Progress from '../components/Progress'
+import React from 'react'
 
-function Home() {
-
+function Home (props) {
     return (
-      <>
-        <Day />
-        <Habits />
-        <Todos />
-        <Progress />
-      </>
+        <>
+            <Day />
+            <Habits {...props} />
+            <Todos />
+            <Progress />
+        </>
     )
-  }
-  
-  export default Home
-  
+}
+
+export default Home

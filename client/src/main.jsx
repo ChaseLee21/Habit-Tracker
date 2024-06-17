@@ -1,40 +1,44 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import React from 'react'
 import './index.css'
 import './axiosConfig.js'
-import Home from './views/Home.jsx'
 import Register from './views/Register.jsx'
 import Login from './views/Login.jsx'
-import NewHabit from './views/NewHabit.jsx'
+import Logout from './views/Logout.jsx'
+import { ProtectedHome, ProtectedNewHabit } from './util/auth/auth.js'
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    errorElement: <h1 className='display-2'>Wrong page!</h1>,
-    children: [
-      {
-        index: true,
-        element: <Home />
-      }, 
-      {
-        path: '/register',
-        element: <Register />
-      },
-      {
-        path: '/login',
-        element: <Login />
-      },
-      {
-        path: '/new-habit',
-        element: <NewHabit />
-      },
-    ]
-  }
+    {
+        path: '/',
+        element: <App />,
+        errorElement: <h1 className='display-2'>Wrong page!</h1>,
+        children: [
+            {
+                index: true,
+                element: <ProtectedHome />
+            },
+            {
+                path: '/register',
+                element: <Register />
+            },
+            {
+                path: '/login',
+                element: <Login />
+            },
+            {
+                path: '/logout',
+                element: <Logout />
+            },
+            {
+                path: '/new-habit',
+                element: <ProtectedNewHabit />
+            }
+        ]
+    }
 ])
 
-
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+    <RouterProvider router={router} />
 )
