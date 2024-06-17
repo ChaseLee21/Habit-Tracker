@@ -28,7 +28,6 @@ router.use('/login', (req, res) => {
 })
 
 router.use('/checkToken', authMiddleware, async (req, res) => {
-    console.log('checkToken')
     res.json({ user: req.user })
 })
 
