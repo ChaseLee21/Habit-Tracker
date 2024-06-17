@@ -1,13 +1,13 @@
 import { React, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function Logout () {
-    const history = useHistory()
+    const navigate = useNavigate()
 
     useEffect(() => {
         document.title = 'Logout - Habit Tracker'
         document.cookie = 'habitTrackerToken =; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-        history.push('/login')
+        navigate('/login')
     }, [history])
 
     return (
