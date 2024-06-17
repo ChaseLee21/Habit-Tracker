@@ -1,8 +1,15 @@
 import { validateEmail, validateLoginPassword } from '../util/validate-helpers'
-import React from 'react'
+import { React, useEffect } from 'react'
 import { login } from '../util/axios'
 
 function Login () {
+  useEffect(() => {
+    document.title = 'Login - Habit Tracker'
+    if (document.cookie.includes('habitTrackerToken')) {
+      window.location.href = '/'
+    }
+  }, [])
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault()
     const email = e.target.email.value
