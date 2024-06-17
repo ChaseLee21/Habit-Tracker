@@ -4,11 +4,11 @@ import Todos from '../components/Todos'
 import Progress from '../components/Progress'
 import React from 'react'
 
-function Home () {
+function Home (props) {
     return (
         <>
             <Day />
-            <Habits />
+            <Habits {...props} />
             <Todos />
             <Progress />
         </>

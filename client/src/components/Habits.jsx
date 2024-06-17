@@ -1,19 +1,15 @@
 import { useEffect, useState, React } from 'react'
 import { putAnalytic, getUser } from '../util/axios'
 
-function Habits () {
-    // TODO: Replace with the user's ID that is logged in
-    // this id is from the seeded data in the database for development
-    const userId = '661d8404f1165ca02a556c4f'
-
+function Habits (props) {
+    const userId = props.user.user.id || props.user.id || user.id || ''
     const today = new Date().toISOString().split('T')[0]
-
     const [user, setUser] = useState({})
 
-    // Gets the user populated with habits and analytics on component mount
     useEffect(() => {
         async function fetchUser () {
             try {
+                console.log(userId)
                 const userData = await getUser(userId)
                 if (userData) {
                     console.log(userData)
