@@ -29,15 +29,21 @@ function Header () {
               <li className="border-y p-1 ps-3 hover:text-highlight text-secondaryText">
                   <Link to={'/new-habit'} onClick={() => handleNavBarClick()}>New Habit</Link>
               </li>
+              {!document.cookie.includes('habitTrackerToken') &&
+                <li className="border-y p-1 ps-3 hover:text-highlight text-secondaryText">
+                    <Link to={'/register'} onClick={() => handleNavBarClick()}>Register</Link>
+                </li>
+              }
+              {!document.cookie.includes('habitTrackerToken') &&
               <li className="p-1 ps-3 hover:text-highlight text-secondaryText">
                   <Link to={'/login'} onClick={() => handleNavBarClick()}>Login</Link>
               </li>
-              <li className="border-y p-1 ps-3 hover:text-highlight text-secondaryText">
-                  <Link to={'/register'} onClick={() => handleNavBarClick()}>Register</Link>
-              </li>
-              <li className="p-1 ps-3 hover:text-highlight text-secondaryText">
-                  <Link to={'/logout'} onClick={() => handleNavBarClick()}>Logout</Link>
-              </li>
+              }
+              {document.cookie.includes('habitTrackerToken') &&
+                <li className="p-1 ps-3 hover:text-highlight text-secondaryText">
+                    <Link to={'/logout'} onClick={() => handleNavBarClick()}>Logout</Link>
+                </li>
+              }
           </ul>
       </nav>)}
             </header>
