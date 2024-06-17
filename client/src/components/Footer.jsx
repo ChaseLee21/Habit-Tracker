@@ -1,6 +1,7 @@
-function Footer() {
+import React from 'react'
 
-    return (
+function Footer () {
+  return (
       <footer className="flex flex-col items-center rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-sm shadow-xl">
         <h3>Made by Chase Seeberger</h3>
         <div className="flex">
@@ -8,8 +9,7 @@ function Footer() {
           <p className="px-2">LinkedIn</p>
         </div>
       </footer>
-    )
-  }
-  
-  export default Footer
-  
+  )
+}
+
+export default Footer

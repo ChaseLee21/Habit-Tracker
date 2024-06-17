@@ -1,57 +1,56 @@
-import { useState, useEffect } from 'react';
-import { getUser, putUser } from '../util/axios';
-import { createTodo, updateUserTodosState, removeTodo } from '../util/todo-helpers';
+import { useState, useEffect, React } from 'react'
+import { getUser, putUser } from '../util/axios'
+import { createTodo, updateUserTodosState, removeTodo } from '../util/todo-helpers'
 
-function Todos() {
+function Todos () {
   // TODO: Replace with the user's ID that is logged in
   // this id is from the seeded data in the database for development
-  const userId = '661d8404f1165ca02a556c4f';
+  const userId = '661d8404f1165ca02a556c4f'
 
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({})
 
   // Gets the user populated with habits and analytics on component mount
   useEffect(() => {
-    async function fetchUser() {
+    async function fetchUser () {
       try {
-        const userData = await getUser(userId);
+        const userData = await getUser(userId)
         if (userData) {
-          setUser(userData);
+          setUser(userData)
         } else {
-          console.log('No user data found');
+          console.log('No user data found')
         }
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     }
-    fetchUser();
-  }, []);
+    fetchUser()
+  }, [])
 
-  function handleTodoCreate(e) {
+  function handleTodoCreate (e) {
     try {
-      e.preventDefault();
-      const updatedTodos = createTodo(e.target.todo.value, user.todos);
-      const updatedUser = updateUserTodosState(user, updatedTodos);
-      setUser(updatedUser);
-      putUser(updatedUser);
-      e.target.todo.value = '';
+      e.preventDefault()
+      const updatedTodos = createTodo(e.target.todo.value, user.todos)
+      const updatedUser = updateUserTodosState(user, updatedTodos)
+      setUser(updatedUser)
+      putUser(updatedUser)
+      e.target.todo.value = ''
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
-  function handleTodoDelete(e) {
+  function handleTodoDelete (e) {
     try {
-      const updatedTodos = removeTodo(e.target.value, user.todos);
-      const updatedUser = updateUserTodosState(user, updatedTodos);
-      setUser(updatedUser);
-      putUser(updatedUser);
+      const updatedTodos = removeTodo(e.target.value, user.todos)
+      const updatedUser = updateUserTodosState(user, updatedTodos)
+      setUser(updatedUser)
+      putUser(updatedUser)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
   return (
-    <>
     <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
       <div className='flex flex-row'>
         <h2>Todos:</h2>
@@ -61,24 +60,22 @@ function Todos() {
         </form>
       </div>
       <ul className="list-inside">
-      {user.todos && user.todos.map(todo => (
-          <li key={todo} className="m-2">
-            <div className="flex justify-between">
-              <div className="flex">
-                <h3>{todo}</h3>
+        {user.todos && user.todos.map(todo => (
+            <li key={todo} className="m-2">
+              <div className="flex justify-between">
+                <div className="flex">
+                  <h3>{todo}</h3>
+                </div>
+                {/* habit completed form */}
+                <form onSubmit={handleTodoDelete}>
+                  <input type='checkbox' name="habitId" value={todo} onClick={handleTodoDelete} />
+                </form>
               </div>
-              {/* habit completed form */}
-              <form onSubmit={handleTodoDelete}>
-                <input type='checkbox' name="habitId" value={todo} onClick={handleTodoDelete} />
-              </form>
-            </div>
-          </li>
+            </li>
         ))}
       </ul>
     </section>
-    </>
   )
 }
 
 export default Todos
-  

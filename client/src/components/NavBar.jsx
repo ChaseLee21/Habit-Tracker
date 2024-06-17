@@ -1,17 +1,15 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, React } from 'react'
+import { Link } from 'react-router-dom'
 
-function Header() {
+function Header () {
+  const [showMenu, setShowMenu] = useState(false)
 
-const [showMenu, setShowMenu] = useState(false);
+  const handleNavBarClick = () => {
+    setShowMenu(!showMenu)
+    console.log(showMenu)
+  }
 
-const handleNavBarClick = () => {
-  setShowMenu(!showMenu);
-  console.log(showMenu);
-}
-
-
-return (
+  return (
   <>
     <header className="bg-primaryBg">
       <div className="flex justify-between items-center p-2">
@@ -44,8 +42,7 @@ return (
       </nav>)}
     </header>
   </>
-)
+  )
 }
-  
-  export default Header
-  
+
+export default Header

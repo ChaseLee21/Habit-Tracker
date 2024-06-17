@@ -1,11 +1,11 @@
-function Todos() {
+import React from 'react'
 
-    return (
+function Todos () {
+  return (
       <>
         <h3>Your Habit Progress:</h3>
       </>
-    )
-  }
-  
-  export default Todos
-  
+  )
+}
+
+export default Todos
