@@ -5,14 +5,14 @@ import Progress from '../components/Progress'
 import React from 'react'
 
 function Home () {
-  return (
-      <>
-        <Day />
-        <Habits />
-        <Todos />
-        <Progress />
-      </>
-  )
+    return (
+        <>
+            <Day />
+            <Habits />
+            <Todos />
+            <Progress />
+        </>
+    )
 }
 
 export default Home
