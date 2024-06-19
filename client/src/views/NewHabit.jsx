@@ -88,7 +88,7 @@ function NewHabit () {
         setShowDescriptionSelection(true)
         setSectionHeader({
             title: 'Create a New Habit',
-            subtext: 'Now that you have selected a starting point, you can define your habit. You can use the suggestions below or write your own description.'
+            subtext: `${newHabit.name}! Now let's define your habit. What will you do to ${newHabit.name}?`
         })
     }
 
