@@ -1,9 +1,12 @@
 import { React, useState, useEffect } from 'react'
 import StartingPointList from '../components/StartingPointList'
+import DescriptionSelection from '../components/DescriptionSelection'
 
 function NewHabit () {
     const [habit, setHabit] = useState(null)
 
+    // useEffects
+    // Check if there is a new habit in progress in local storage
     useEffect(() => {
         const localStorageHabit = JSON.parse(localStorage.getItem('newHabit'))
         if (localStorageHabit) {
@@ -18,7 +21,7 @@ function NewHabit () {
             }
         }
     }, [])
-
+    // Save habit to local storage
     useEffect(() => {
         console.log(habit)
         localStorage.setItem('newHabit', JSON.stringify(habit))
@@ -74,11 +77,17 @@ function NewHabit () {
             icon: '🚀'
         }
     ]
-
     const handleStartingPointSelection = (newHabit) => {
         setHabit(newHabit)
         setShowStartingPointList(false)
+        setShowDescriptionSelection(true)
     }
+
+    // Set Habit Description
+    const setHabitDescription = (description) => {
+        setHabit({ ...habit, description })
+    }
+    const [showDescriptionSelection, setShowDescriptionSelection] = useState(false)
 
     return (
         <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 shadow-xl">
@@ -86,6 +95,7 @@ function NewHabit () {
             <p>To help accelerate the process of creating a new habit we gave you some starting points.
             You will make goals and define your habit soon, this is just a starting point to get you going!</p>
             {showStartingPointList && <StartingPointList startingPoints={startingPoints} onItemClick={handleStartingPointSelection} />}
+            {showDescriptionSelection && <DescriptionSelection descriptions={startingPoints} onItemClick={setHabitDescription} />}
         </section>
     )
 }
