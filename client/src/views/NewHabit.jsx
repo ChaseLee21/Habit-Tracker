@@ -6,6 +6,7 @@ import WhySelection from '../components/WhySelection'
 import GoalSelection from '../components/GoalSelection'
 import FrequencySelection from '../components/FrequencySelection'
 import RewardSelection from '../components/RewardSelection'
+import HabitSummary from '../components/HabitSummary'
 
 function NewHabit () {
     const [habit, setHabit] = useState(null)
@@ -213,8 +214,20 @@ function NewHabit () {
     // Set Habit Reward
     const setHabitReward = (reward) => {
         setHabit({ ...habit, reward })
+        setShowRewardSelection(false)
+        setShowHabitSummary(true)
+        setSectionHeader({
+            title: 'Habit Summary',
+            subtext: 'Review the following information and click save to create your new habit.'
+        })
     }
     const [showRewardSelection, setShowRewardSelection] = useState(false)
+    const [showHabitSummary, setShowHabitSummary] = useState(false)
+
+    // Save Habit
+    const saveHabit = () => {
+        console.log('not implemented')
+    }
 
     return (
         <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 shadow-xl">
@@ -225,6 +238,7 @@ function NewHabit () {
             {ShowGoalSelection && <GoalSelection onItemClick={setHabitGoal} />}
             {showFrequencySelection && <FrequencySelection onItemClick={setHabitFrequency} />}
             {showRewardSelection && <RewardSelection onItemClick={setHabitReward} />}
+            {showHabitSummary && <HabitSummary habit={habit} handleSaveHabit={saveHabit}/>}
         </section>
     )
 }
