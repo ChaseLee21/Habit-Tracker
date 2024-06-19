@@ -190,8 +190,8 @@ function NewHabit () {
         setShowGoalSelection(false)
         setShowFrequencySelection(true)
         setSectionHeader({
-            title: 'How Often?',
-            subtext: 'How often will you do this habit?'
+            title: 'How often will you do this habit?',
+            subtext: ''
         })
     }
     const [ShowGoalSelection, setShowGoalSelection] = useState(false)

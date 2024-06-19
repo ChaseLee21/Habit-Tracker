@@ -9,7 +9,7 @@ function WhySelection ({ onItemClick }) {
     return (
         <div className='flex flex-col'>
             <input className='rounded w-full px-1' id='whyInput' type='text' max='100' onInput={handleInputChange}></input>
-            <button className='bg-primaryBg text-primaryText rounded w-fit p-1 my-2' onClick={() => onItemClick(why)}>Next Question</button>
+            <button className='bg-primaryBg text-primaryText rounded w-fit p-1 my-2' onClick={() => onItemClick(why)}>Next</button>
         </div>
     )
 }
