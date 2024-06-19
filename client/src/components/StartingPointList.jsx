@@ -6,7 +6,7 @@ function StartingPointList ({ startingPoints, onItemClick }) {
         <ul>
             {startingPoints.map((point, index) => {
                 return (
-                    <li key={index} className='m-2 p-2 bg-primaryBg text-primaryText rounded-md shadow-md' onClick={() => onItemClick(point)}>
+                    <li key={index} className='m-2 p-2 bg-primaryBg text-primaryText rounded-md shadow-md cursor-pointer' onClick={() => onItemClick(point)}>
                         <span className='mx-2'>{point.icon}</span>
                         {point.name}
                     </li>

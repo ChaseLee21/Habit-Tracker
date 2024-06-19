@@ -6,7 +6,7 @@ function DescriptionSelection ({ descriptions, onItemClick }) {
         <ul>
             {descriptions.map((description, index) => {
                 return (
-                    <li key={index} className='m-2 p-2 bg-primaryBg text-primaryText rounded-md shadow-md' onClick={() => onItemClick(description)}>
+                    <li key={index} className='m-2 p-2 bg-primaryBg text-primaryText rounded-md shadow-md cursor-pointer' onClick={() => onItemClick(description)}>
                         {description}
                     </li>
                 )
