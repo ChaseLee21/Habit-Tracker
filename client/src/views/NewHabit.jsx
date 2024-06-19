@@ -5,6 +5,7 @@ import SectionHeader from '../components/SectionHeader'
 import WhySelection from '../components/WhySelection'
 import GoalSelection from '../components/GoalSelection'
 import FrequencySelection from '../components/FrequencySelection'
+import RewardSelection from '../components/RewardSelection'
 
 function NewHabit () {
     const [habit, setHabit] = useState(null)
@@ -16,6 +17,7 @@ function NewHabit () {
     // useEffects
     // Check if there is a new habit in progress in local storage
     useEffect(() => {
+        document.title = 'Create a New Habit - Habit Tracker'
         const localStorageHabit = JSON.parse(localStorage.getItem('newHabit'))
         if (localStorageHabit) {
             const contiueWithHabit = window.confirm(`You left off creating a new habit in progress. Do you want to continue with ${localStorageHabit.name}?`)
@@ -199,10 +201,20 @@ function NewHabit () {
     // Set Habit Frequency
     const setHabitFrequency = (frequency) => {
         setHabit({ ...habit, frequency })
+        setShowFrequencySelection(false)
+        setShowRewardSelection(true)
+        setSectionHeader({
+            title: 'Reward',
+            subtext: 'Optionally, you can set a reward for completing the habit a certain amount of times in a row.'
+        })
     }
     const [showFrequencySelection, setShowFrequencySelection] = useState(false)
 
     // Set Habit Reward
+    const setHabitReward = (reward) => {
+        setHabit({ ...habit, reward })
+    }
+    const [showRewardSelection, setShowRewardSelection] = useState(false)
 
     return (
         <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 shadow-xl">
@@ -212,6 +224,7 @@ function NewHabit () {
             {showWhySelection && <WhySelection onItemClick={setHabitWhy} />}
             {ShowGoalSelection && <GoalSelection onItemClick={setHabitGoal} />}
             {showFrequencySelection && <FrequencySelection onItemClick={setHabitFrequency} />}
+            {showRewardSelection && <RewardSelection onItemClick={setHabitReward} />}
         </section>
     )
 }
