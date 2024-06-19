@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react'
-import StartingPointList from '../components/StartingPointList'
+import HabitSelection from '../components/HabitSelection'
 import DescriptionSelection from '../components/DescriptionSelection'
 import SectionHeader from '../components/SectionHeader'
 import WhySelection from '../components/WhySelection'
@@ -9,38 +9,8 @@ import RewardSelection from '../components/RewardSelection'
 import HabitSummary from '../components/HabitSummary'
 
 function NewHabit () {
-    const [habit, setHabit] = useState(null)
-    const [sectionHeader, setSectionHeader] = useState({
-        title: 'Create a New Habit',
-        subtext: 'To help accelerate the process of creating a new habit we gave you some starting points. You will make goals and define your habit soon, this is just a starting point to get you going!'
-    })
-
-    // useEffects
-    // Check if there is a new habit in progress in local storage
-    useEffect(() => {
-        document.title = 'Create a New Habit - Habit Tracker'
-        const localStorageHabit = JSON.parse(localStorage.getItem('newHabit'))
-        if (localStorageHabit) {
-            const contiueWithHabit = window.confirm(`You left off creating a new habit in progress. Do you want to continue with ${localStorageHabit.name}?`)
-            if (contiueWithHabit) {
-                setHabit(localStorageHabit)
-                // TODO: when user confirms to continue, set the page to show the next step they were on
-                setShowStartingPointList(false)
-            } else {
-                localStorage.removeItem('newHabit')
-                setShowStartingPointList(true)
-            }
-        }
-    }, [])
-    // Save habit to local storage
-    useEffect(() => {
-        console.log(habit)
-        localStorage.setItem('newHabit', JSON.stringify(habit))
-    }, [habit])
-
-    // Starting Points
-    const [showStartingPointList, setShowStartingPointList] = useState(true)
-    const startingPoints = [
+    // Default Habits
+    const defaultHabits = [
         {
             name: 'Exercise',
             descriptionOptions: [
@@ -153,17 +123,51 @@ function NewHabit () {
             icon: '🚀'
         }
     ]
-    const handleStartingPointSelection = (newHabit) => {
+
+    // State Variables
+    const [habit, setHabit] = useState(null)
+    const [sectionHeader, setSectionHeader] = useState({
+        title: 'Create a New Habit',
+        subtext: 'To help accelerate the process of creating a new habit we gave you some starting points. You will make goals and define your habit soon, this is just a starting point to get you going!'
+    })
+    const [ShowHabitSelection, setShowHabitSelection] = useState(true)
+    const [showDescriptionSelection, setShowDescriptionSelection] = useState(false)
+    const [showWhySelection, setShowWhySelection] = useState(false)
+    const [ShowGoalSelection, setShowGoalSelection] = useState(false)
+    const [showFrequencySelection, setShowFrequencySelection] = useState(false)
+    const [showRewardSelection, setShowRewardSelection] = useState(false)
+    const [showHabitSummary, setShowHabitSummary] = useState(false)
+
+    // Lifecycle Methods
+    useEffect(() => {
+        document.title = 'Create a New Habit - Habit Tracker'
+        const localStorageHabit = JSON.parse(localStorage.getItem('newHabit'))
+        if (localStorageHabit) {
+            const contiueWithHabit = window.confirm(`You left off creating a new habit in progress. Do you want to continue with ${localStorageHabit.name}?`)
+            if (contiueWithHabit) {
+                setHabit(localStorageHabit)
+                // TODO: when user confirms to continue, set the page to show the next step they were on
+                ShowHabitSelection(false)
+            } else {
+                localStorage.removeItem('newHabit')
+                ShowHabitSelection(true)
+            }
+        }
+    }, [])
+    useEffect(() => {
+        localStorage.setItem('newHabit', JSON.stringify(habit))
+    }, [habit])
+
+    // Event Handlers
+    const setHabitSelection = (newHabit) => {
         setHabit(newHabit)
-        setShowStartingPointList(false)
+        setShowHabitSelection(false)
         setShowDescriptionSelection(true)
         setSectionHeader({
             title: newHabit.name,
             subtext: `You have taken the first step! Now let's define your habit. What will you do to ${newHabit.name}?`
         })
     }
-
-    // Set Habit Description
     const setHabitDescription = (description) => {
         setHabit({ ...habit, description })
         setShowDescriptionSelection(false)
@@ -173,9 +177,6 @@ function NewHabit () {
             subtext: 'Why do you want to create this new habit?'
         })
     }
-    const [showDescriptionSelection, setShowDescriptionSelection] = useState(false)
-
-    // Set Habit Why
     const setHabitWhy = (why) => {
         setHabit({ ...habit, why })
         setShowWhySelection(false)
@@ -185,9 +186,6 @@ function NewHabit () {
             subtext: 'Remember when setting a new habit for the first time it is important to start small. A good rule of thumb when starting a new habit is to follow the 2 minute rule. Your goal should be so small that it takes less than 2 minutes to complete. In the future you will increase this goal.'
         })
     }
-    const [showWhySelection, setShowWhySelection] = useState(false)
-
-    // Set Habit Goal
     const setHabitGoal = (goal) => {
         setHabit({ ...habit, goal })
         setShowGoalSelection(false)
@@ -197,9 +195,6 @@ function NewHabit () {
             subtext: ''
         })
     }
-    const [ShowGoalSelection, setShowGoalSelection] = useState(false)
-
-    // Set Habit Frequency
     const setHabitFrequency = (frequency) => {
         setHabit({ ...habit, frequency })
         setShowFrequencySelection(false)
@@ -209,9 +204,6 @@ function NewHabit () {
             subtext: 'Optionally, you can set a reward for completing the habit a certain amount of times in a row.'
         })
     }
-    const [showFrequencySelection, setShowFrequencySelection] = useState(false)
-
-    // Set Habit Reward
     const setHabitReward = (reward) => {
         setHabit({ ...habit, reward })
         setShowRewardSelection(false)
@@ -221,10 +213,6 @@ function NewHabit () {
             subtext: 'Review the following information and click save to create your new habit.'
         })
     }
-    const [showRewardSelection, setShowRewardSelection] = useState(false)
-    const [showHabitSummary, setShowHabitSummary] = useState(false)
-
-    // Save Habit
     const saveHabit = () => {
         console.log('not implemented')
     }
@@ -232,7 +220,7 @@ function NewHabit () {
     return (
         <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 shadow-xl">
             <SectionHeader title={sectionHeader.title} subtext={sectionHeader.subtext} />
-            {showStartingPointList && <StartingPointList startingPoints={startingPoints} onItemClick={handleStartingPointSelection} />}
+            {ShowHabitSelection && <HabitSelection defaultHabits={defaultHabits} onItemClick={setHabitSelection} />}
             {showDescriptionSelection && <DescriptionSelection descriptions={habit.descriptionOptions} onItemClick={setHabitDescription} />}
             {showWhySelection && <WhySelection onItemClick={setHabitWhy} />}
             {ShowGoalSelection && <GoalSelection onItemClick={setHabitGoal} />}

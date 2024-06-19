@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function StartingPointList ({ startingPoints, onItemClick }) {
+function HabitSelection ({ defaultHabits, onItemClick }) {
     return (
         <ul>
-            {startingPoints.map((point, index) => {
+            {defaultHabits.map((point, index) => {
                 return (
                     <li key={index} className='m-2 p-2 bg-primaryBg text-primaryText rounded-md shadow-md cursor-pointer' onClick={() => onItemClick(point)}>
                         <span className='mx-2'>{point.icon}</span>
@@ -16,8 +16,8 @@ function StartingPointList ({ startingPoints, onItemClick }) {
     )
 }
 
-StartingPointList.propTypes = {
-    startingPoints: PropTypes.arrayOf(
+HabitSelection.propTypes = {
+    defaultHabits: PropTypes.arrayOf(
         PropTypes.shape({
             name: PropTypes.string.isRequired,
             icon: PropTypes.string.isRequired
@@ -26,4 +26,4 @@ StartingPointList.propTypes = {
     onItemClick: PropTypes.func.isRequired
 }
 
-export default StartingPointList
+export default HabitSelection
