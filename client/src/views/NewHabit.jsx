@@ -1,4 +1,5 @@
 import React from 'react'
+import StartingPointList from '../components/StartingPointList'
 
 function NewHabit () {
     const startingPoints = [
@@ -47,16 +48,7 @@ function NewHabit () {
         <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 shadow-xl">
             <h2 className='text-xl'>New Habit</h2>
             <p>To help accelerate the process of creating a new habit we gave you some starting points.</p>
-            <ul>
-                {startingPoints.map((point, index) => {
-                    return (
-                        <li key={index} className='m-2 p-2 bg-primaryBg text-primaryText rounded-md shadow-md'>
-                            <span className='mx-2'>{point.icon}</span>
-                            {point.name}
-                        </li>
-                    )
-                })}
-            </ul>
+            <StartingPointList startingPoints={startingPoints} />
         </section>
     )
 }
