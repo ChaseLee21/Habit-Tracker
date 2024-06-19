@@ -47,38 +47,103 @@ function NewHabit () {
         },
         {
             name: 'Eat Healthy',
+            descriptionOptions: [
+                'Cook more meals at home',
+                'Follow a meal plan or diet',
+                'Eat more fruits and vegetables'
+            ],
             icon: '🥗'
         },
         {
-            name: 'Meditation',
+            name: 'Meditation & Mindfulness',
+            descriptionOptions: [
+                'Practice guided meditation',
+                'Practice deep breathing',
+                'Practice mindfulness',
+                'Practice gratitude',
+                'Practice mantra meditation'
+            ],
             icon: '🧘‍♂️'
         },
         {
             name: 'Reading',
+            descriptionOptions: [
+                'Read a book',
+                'Read an article',
+                'Read a blog post',
+                'General reading time'
+            ],
             icon: '📚'
         },
         {
             name: 'Writing',
+            descriptionOptions: [
+                'Journaling',
+                'Creative writing',
+                'General writing time',
+                'Write poetry',
+                'Write a blog post',
+                'Write a short story'
+            ],
             icon: '📝'
         },
         {
-            name: 'Drawing',
+            name: 'Art & Drawing',
+            descriptionOptions: [
+                'Draw',
+                'Paint',
+                'Sketch',
+                'Doodle',
+                'Color',
+                'Create digital art',
+                'Pottery',
+                'Other art forms'
+            ],
             icon: '🎨'
         },
         {
             name: 'Coding',
+            descriptionOptions: [
+                'Learn to code',
+                'Work on a project',
+                'Practice coding',
+                'Code for fun',
+                'Code for work',
+                'Code for school'
+            ],
             icon: '💻'
         },
         {
             name: 'Learning a new language',
+            descriptionOptions: [
+                'Practice speaking',
+                'Practice writing',
+                'Practice reading',
+                'Practice listening',
+                'Practice vocabulary',
+                'Practice grammar',
+                'Practice pronunciation',
+                'Practice via apps'
+            ],
             icon: '🌐'
         },
         {
             name: 'Playing an instrument',
+            descriptionOptions: [
+                'Practice playing an instrument',
+                'Learn a new song',
+                'Learn a new chord',
+                'Learn a new scale',
+                'Learn a new technique',
+                'Learn music theory',
+                'Learn to read music',
+                'Learn to play with others'
+            ],
             icon: '🎸'
         },
         {
             name: 'Create a new habit',
+            descriptionOptions: [],
             icon: '🚀'
         }
     ]
@@ -87,8 +152,8 @@ function NewHabit () {
         setShowStartingPointList(false)
         setShowDescriptionSelection(true)
         setSectionHeader({
-            title: 'Create a New Habit',
-            subtext: `${newHabit.name}! Now let's define your habit. What will you do to ${newHabit.name}?`
+            title: habit.name,
+            subtext: `You have taken the first step! Now let's define your habit. What will you do to ${newHabit.name}?`
         })
     }
 
