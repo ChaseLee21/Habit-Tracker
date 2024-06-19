@@ -2,18 +2,27 @@ import { React, useState, useEffect } from 'react'
 import StartingPointList from '../components/StartingPointList'
 
 function NewHabit () {
-    let habit;
+    const [habit, setHabit] = useState(null)
 
     useEffect(() => {
         const localStorageHabit = JSON.parse(localStorage.getItem('newHabit'))
         if (localStorageHabit) {
             const contiueWithHabit = window.confirm(`You left off creating a new habit in progress. Do you want to continue with ${localStorageHabit.name}?`)
             if (contiueWithHabit) {
-                habit = localStorageHabit
+                setHabit(localStorageHabit)
                 // TODO: when user confirms to continue, set the page to show the next step they were on
+                setShowStartingPointList(false)
+            } else {
+                localStorage.removeItem('newHabit')
+                setShowStartingPointList(true)
             }
         }
     }, [])
+
+    useEffect(() => {
+        console.log(habit)
+        localStorage.setItem('newHabit', JSON.stringify(habit))
+    }, [habit])
 
     // Starting Points
     const [showStartingPointList, setShowStartingPointList] = useState(true)
@@ -66,10 +75,8 @@ function NewHabit () {
         }
     ]
 
-
-
-    const handleStartingPointSelection = (habit) => {
-        localStorage.setItem('newHabit', JSON.stringify(habit))
+    const handleStartingPointSelection = (newHabit) => {
+        setHabit(newHabit)
         setShowStartingPointList(false)
     }
 
