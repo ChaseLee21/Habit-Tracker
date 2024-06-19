@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+// Analytic API calls
 async function putAnalytic (analytic) {
     try {
         const request = await axios.put('/api/analytics/' + analytic._id, analytic)
@@ -9,6 +10,7 @@ async function putAnalytic (analytic) {
     }
 }
 
+// User API calls
 async function getUser (userId) {
     try {
         const request = await axios.get('/api/users/' + userId)
@@ -17,7 +19,6 @@ async function getUser (userId) {
         console.log(err)
     }
 }
-
 async function putUser (user) {
     try {
         const request = await axios.put('/api/users/' + user._id, user)
@@ -26,7 +27,6 @@ async function putUser (user) {
         console.log(err)
     }
 }
-
 async function postUser (userData) {
     try {
         const request = await axios.post('/api/users', userData)
@@ -36,6 +36,17 @@ async function postUser (userData) {
     }
 }
 
+// Habit API calls
+async function postHabit (id, habitData) {
+    try {
+        const request = await axios.post('/api/habits/' + id, habitData, { withCredentials: true })
+        return request.data
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+// Auth API calls
 async function checkToken () {
     try {
         const request = await axios.get('/api/checkToken', { withCredentials: true })
@@ -44,7 +55,6 @@ async function checkToken () {
         console.log(err)
     }
 }
-
 async function login (userData) {
     try {
         const request = await axios.post('/api/login', userData, { withCredentials: true })
@@ -55,4 +65,4 @@ async function login (userData) {
     }
 }
 
-export { putAnalytic, getUser, putUser, postUser, checkToken, login }
+export { putAnalytic, getUser, putUser, postUser, checkToken, login, postHabit }
