@@ -16,7 +16,7 @@ function DescriptionSelection ({ descriptions, onItemClick }) {
 }
 
 DescriptionSelection.propTypes = {
-    descriptions: PropTypes.arrayOf(String).isRequired,
+    descriptions: PropTypes.arrayOf(PropTypes.string).isRequired,
     onItemClick: PropTypes.func.isRequired
 }
 

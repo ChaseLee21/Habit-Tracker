@@ -1,9 +1,14 @@
 import { React, useState, useEffect } from 'react'
 import StartingPointList from '../components/StartingPointList'
 import DescriptionSelection from '../components/DescriptionSelection'
+import SectionHeader from '../components/SectionHeader'
 
 function NewHabit () {
     const [habit, setHabit] = useState(null)
+    const [sectionHeader, setSectionHeader] = useState({
+        title: 'Create a New Habit',
+        subtext: 'To help accelerate the process of creating a new habit we gave you some starting points. You will make goals and define your habit soon, this is just a starting point to get you going!'
+    })
 
     // useEffects
     // Check if there is a new habit in progress in local storage
@@ -81,6 +86,10 @@ function NewHabit () {
         setHabit(newHabit)
         setShowStartingPointList(false)
         setShowDescriptionSelection(true)
+        setSectionHeader({
+            title: 'Create a New Habit',
+            subtext: 'Now that you have selected a starting point, you can define your habit. You can use the suggestions below or write your own description.'
+        })
     }
 
     // Set Habit Description
@@ -91,9 +100,7 @@ function NewHabit () {
 
     return (
         <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 shadow-xl">
-            <h2 className='text-xl'>Create a New Habit</h2>
-            <p>To help accelerate the process of creating a new habit we gave you some starting points.
-            You will make goals and define your habit soon, this is just a starting point to get you going!</p>
+            <SectionHeader title={sectionHeader.title} subtext={sectionHeader.subtext} />
             {showStartingPointList && <StartingPointList startingPoints={startingPoints} onItemClick={handleStartingPointSelection} />}
             {showDescriptionSelection && <DescriptionSelection descriptions={habit.descriptionOptions} onItemClick={setHabitDescription} />}
         </section>
