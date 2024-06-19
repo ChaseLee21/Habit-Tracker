@@ -95,7 +95,7 @@ function NewHabit () {
             <p>To help accelerate the process of creating a new habit we gave you some starting points.
             You will make goals and define your habit soon, this is just a starting point to get you going!</p>
             {showStartingPointList && <StartingPointList startingPoints={startingPoints} onItemClick={handleStartingPointSelection} />}
-            {showDescriptionSelection && <DescriptionSelection descriptions={startingPoints} onItemClick={setHabitDescription} />}
+            {showDescriptionSelection && <DescriptionSelection descriptions={habit.descriptionOptions} onItemClick={setHabitDescription} />}
         </section>
     )
 }
