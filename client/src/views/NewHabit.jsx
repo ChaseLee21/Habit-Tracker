@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react'
 import StartingPointList from '../components/StartingPointList'
 import DescriptionSelection from '../components/DescriptionSelection'
 import SectionHeader from '../components/SectionHeader'
+import WhySelection from '../components/WhySelection'
 
 function NewHabit () {
     const [habit, setHabit] = useState(null)
@@ -152,7 +153,7 @@ function NewHabit () {
         setShowStartingPointList(false)
         setShowDescriptionSelection(true)
         setSectionHeader({
-            title: habit.name,
+            title: newHabit.name,
             subtext: `You have taken the first step! Now let's define your habit. What will you do to ${newHabit.name}?`
         })
     }
@@ -160,14 +161,33 @@ function NewHabit () {
     // Set Habit Description
     const setHabitDescription = (description) => {
         setHabit({ ...habit, description })
+        setShowDescriptionSelection(false)
+        setShowWhySelection(true)
+        setSectionHeader({
+            title: 'Why?',
+            subtext: 'Why do you want to create this new habit?'
+        })
     }
     const [showDescriptionSelection, setShowDescriptionSelection] = useState(false)
+
+    // Set Habit Why
+    const setHabitWhy = (why) => {
+        setHabit({ ...habit, why })
+    }
+    const [showWhySelection, setShowWhySelection] = useState(false)
+
+    // Set Habit Goal
+
+    // Set Habit Frequency
+
+    // Set Habit Reward
 
     return (
         <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 shadow-xl">
             <SectionHeader title={sectionHeader.title} subtext={sectionHeader.subtext} />
             {showStartingPointList && <StartingPointList startingPoints={startingPoints} onItemClick={handleStartingPointSelection} />}
             {showDescriptionSelection && <DescriptionSelection descriptions={habit.descriptionOptions} onItemClick={setHabitDescription} />}
+            {showWhySelection && <WhySelection onItemClick={setHabitWhy} />}
         </section>
     )
 }
