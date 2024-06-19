@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 import PropTypes from 'prop-types'
 
-function GoalSelection ({ habit, onItemClick }) {
+function GoalSelection ({ onItemClick }) {
     const [goal, setGoal] = useState('')
     const handleInputChange = (e) => {
         setGoal('I finished my habit for the day when I ' + e.target.value.toLowerCase())
@@ -18,11 +18,6 @@ function GoalSelection ({ habit, onItemClick }) {
 }
 
 GoalSelection.propTypes = {
-    habit: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        why: PropTypes.string.isRequired
-    }).isRequired,
     onItemClick: PropTypes.func.isRequired
 }
 

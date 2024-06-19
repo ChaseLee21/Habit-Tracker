@@ -4,6 +4,7 @@ import DescriptionSelection from '../components/DescriptionSelection'
 import SectionHeader from '../components/SectionHeader'
 import WhySelection from '../components/WhySelection'
 import GoalSelection from '../components/GoalSelection'
+import FrequencySelection from '../components/FrequencySelection'
 
 function NewHabit () {
     const [habit, setHabit] = useState(null)
@@ -186,10 +187,20 @@ function NewHabit () {
     // Set Habit Goal
     const setHabitGoal = (goal) => {
         setHabit({ ...habit, goal })
+        setShowGoalSelection(false)
+        setShowFrequencySelection(true)
+        setSectionHeader({
+            title: 'How Often?',
+            subtext: 'How often will you do this habit?'
+        })
     }
     const [ShowGoalSelection, setShowGoalSelection] = useState(false)
 
     // Set Habit Frequency
+    const setHabitFrequency = (frequency) => {
+        setHabit({ ...habit, frequency })
+    }
+    const [showFrequencySelection, setShowFrequencySelection] = useState(false)
 
     // Set Habit Reward
 
@@ -199,7 +210,8 @@ function NewHabit () {
             {showStartingPointList && <StartingPointList startingPoints={startingPoints} onItemClick={handleStartingPointSelection} />}
             {showDescriptionSelection && <DescriptionSelection descriptions={habit.descriptionOptions} onItemClick={setHabitDescription} />}
             {showWhySelection && <WhySelection onItemClick={setHabitWhy} />}
-            {ShowGoalSelection && <GoalSelection habit={habit} onItemClick={setHabitGoal} />}
+            {ShowGoalSelection && <GoalSelection onItemClick={setHabitGoal} />}
+            {showFrequencySelection && <FrequencySelection onItemClick={setHabitFrequency} />}
         </section>
     )
 }
