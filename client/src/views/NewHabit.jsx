@@ -3,6 +3,7 @@ import StartingPointList from '../components/StartingPointList'
 import DescriptionSelection from '../components/DescriptionSelection'
 import SectionHeader from '../components/SectionHeader'
 import WhySelection from '../components/WhySelection'
+import GoalSelection from '../components/GoalSelection'
 
 function NewHabit () {
     const [habit, setHabit] = useState(null)
@@ -173,10 +174,20 @@ function NewHabit () {
     // Set Habit Why
     const setHabitWhy = (why) => {
         setHabit({ ...habit, why })
+        setShowWhySelection(false)
+        setShowGoalSelection(true)
+        setSectionHeader({
+            title: 'Create a Goal',
+            subtext: 'Remember when setting a new habit for the first time it is important to start small. A good rule of thumb when starting a new habit is to follow the 2 minute rule. Your goal should be so small that it takes less than 2 minutes to complete. In the future you will increase this goal.'
+        })
     }
     const [showWhySelection, setShowWhySelection] = useState(false)
 
     // Set Habit Goal
+    const setHabitGoal = (goal) => {
+        setHabit({ ...habit, goal })
+    }
+    const [ShowGoalSelection, setShowGoalSelection] = useState(false)
 
     // Set Habit Frequency
 
@@ -188,6 +199,7 @@ function NewHabit () {
             {showStartingPointList && <StartingPointList startingPoints={startingPoints} onItemClick={handleStartingPointSelection} />}
             {showDescriptionSelection && <DescriptionSelection descriptions={habit.descriptionOptions} onItemClick={setHabitDescription} />}
             {showWhySelection && <WhySelection onItemClick={setHabitWhy} />}
+            {ShowGoalSelection && <GoalSelection habit={habit} onItemClick={setHabitGoal} />}
         </section>
     )
 }
