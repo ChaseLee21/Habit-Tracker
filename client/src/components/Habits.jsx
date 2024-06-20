@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 
 function Habits (props) {
     const userId = props.user.user.id || ''
-    const today = new Date().toISOString().split('T')[0]
+    const timezone = props.user.user.timezone || 'America/Los_Angeles'
+    const today = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
     const [user, setUser] = useState({})
 
     useEffect(() => {
@@ -30,7 +31,7 @@ function Habits (props) {
             e.preventDefault()
             const habitId = e.target.habitId.value
             const habitIndex = user.habits.findIndex(habit => habit._id === habitId)
-            const analyticIndex = user.habits[habitIndex].analytics.findIndex(analytic => new Date(analytic.date).toISOString().split('T')[0] === today)
+            const analyticIndex = user.habits[habitIndex].analytics.findIndex(analytic => analytic.date === today)
             let analytic = user.habits[habitIndex].analytics[analyticIndex]
             analytic = await putCompletedAnalytic(analytic)
             updateUserAnalyticsState(analytic, habitIndex, analyticIndex)
@@ -60,7 +61,7 @@ function Habits (props) {
 
     function findHabitAnalyticForToday (habit) {
         try {
-            const analytic = habit.analytics.find(analytic => new Date(analytic.date).toISOString().split('T')[0] === today)
+            const analytic = habit.analytics.find(analytic => analytic.date === today)
             return analytic
         } catch (err) {
             console.log(err)
@@ -99,7 +100,7 @@ Habits.propTypes = {
     user: PropTypes.shape({
         user: PropTypes.shape({
             id: PropTypes.string.isRequired,
-            timezone: PropTypes.string,
+            timezone: PropTypes.string.isRequired,
             email: PropTypes.string,
             name: PropTypes.string
         })
