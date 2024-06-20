@@ -1,11 +1,12 @@
 import { React, useEffect, useState } from 'react'
-import SectionHeader from '../components/SectionHeader'
 import PropTypes from 'prop-types'
 import { getUser } from '../util/axios'
+import ProfileSummary from '../components/ProfileSummary'
 
 function Profile (props) {
     const userId = props.user.user.id || ''
     const [user, setUser] = useState({})
+    const [edit, setEdit] = useState(false)
 
     useEffect(() => {
         async function fetchUser () {
@@ -26,27 +27,15 @@ function Profile (props) {
     }, [])
 
     return (
-        <main>
-            <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
-                <SectionHeader title='Profile' />
-                <p>Username: {user.name}</p>
-                <p>Email: {user.email}</p>
-                <p>Timezone: {user.timezone}</p>
-                <p>Habits:</p>
-                <ul>
-                    {user.habits && user.habits.map(habit => {
-                        return <li className='bg-primaryBg text-primaryText rounded p-2 w-fit' key={habit._id}>
-                            <p>{habit.name}</p>
-                            <p>{habit.description}</p>
-                            <p>{habit.why}</p>
-                            <p>{habit.goal}</p>
-                            <p>{habit.frequency} times a week</p>
-                            {habit.reward && <p>Reward: {habit.reward}</p>}
-                        </li>
-                    })}
-                </ul>
-            </section>
-        </main>
+        <div className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
+            <header className='flex justify-between '>
+                <h2>Profile</h2>
+                <button className='bg-primaryBg text-primaryText rounded px-2 w-fit' onClick={() => setEdit(!edit)}>{edit ? 'Save' : 'Edit'}</button>
+            </header>
+            <main>
+                {user.name && <ProfileSummary user={user} />}
+            </main>
+        </div>
     )
 }
 
