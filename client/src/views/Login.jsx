@@ -1,6 +1,7 @@
 import { validateEmail, validateLoginPassword } from '../util/validate-helpers'
 import { React, useEffect } from 'react'
 import { login, checkToken } from '../util/axios'
+import { Link } from 'react-router-dom'
 
 function Login () {
     useEffect(() => {
@@ -53,10 +54,11 @@ function Login () {
             <h2 className="flex rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">Login</h2>
             <form className="flex flex-col m-2 p-2 bg-secondaryBg rounded-md shadow-xl" onSubmit={handleLoginSubmit}>
                 <label htmlFor="email" className="text-secondaryText">Email:</label>
-                <input type="email" id="email" name="email" className="p-1 m-1 rounded-md" />
+                <input type="email" id="email" name="email" autoComplete='email' className="p-1 m-1 rounded-md" />
                 <label htmlFor="password" className="text-secondaryText">Password:</label>
-                <input type="password" id="password" name="password" className="p-1 m-1 rounded-md" />
+                <input type="password" id="password" name="password" autoComplete='current-password' className="p-1 m-1 rounded-md" />
                 <button type="submit" className="bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1">Login</button>
+                <p>Do not have an account? <Link to={'/register'} className='text-blue-800 underline'>Click here to register</Link></p>
             </form>
         </>
     )

@@ -21,4 +21,36 @@ function validateLoginPassword (password) {
     return re.test(password)
 }
 
-export { validateEmail, validateUsername, validatePassword, validateLoginPassword }
+function validateTimezone (timezone) {
+    const timezones = [
+        'Pacific/Midway',
+        'Pacific/Honolulu',
+        'America/Anchorage',
+        'America/Los_Angeles',
+        'America/Phoenix',
+        'America/Denver',
+        'America/Chicago',
+        'America/New_York',
+        'America/Caracas',
+        'America/Halifax',
+        'America/St_Johns',
+        'America/Argentina/Buenos_Aires',
+        'America/Sao_Paulo',
+        'Atlantic/Azores',
+        'Europe/London',
+        'Europe/Paris',
+        'Europe/Istanbul',
+        'Europe/Moscow',
+        'Asia/Dubai',
+        'Asia/Karachi',
+        'Asia/Dhaka',
+        'Asia/Jakarta',
+        'Asia/Shanghai',
+        'Asia/Tokyo',
+        'Australia/Sydney',
+        'Pacific/Auckland'
+    ]
+    return timezones.includes(timezone)
+}
+
+export { validateEmail, validateUsername, validatePassword, validateLoginPassword, validateTimezone }

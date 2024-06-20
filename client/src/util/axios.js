@@ -19,9 +19,9 @@ async function getUser (userId) {
         console.log(err)
     }
 }
-async function putUser (user) {
+async function putUser (id, userData) {
     try {
-        const request = await axios.put('/api/users/' + user._id, user)
+        const request = await axios.put('/api/users/' + id, userData)
         return request.data
     } catch (err) {
         console.log(err)
