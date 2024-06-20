@@ -2,6 +2,7 @@ import { React, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { getUser } from '../util/axios'
 import ProfileSummary from '../components/ProfileSummary'
+import ProfileEdit from '../components/ProfileEdit'
 
 function Profile (props) {
     const userId = props.user.user.id || ''
@@ -33,7 +34,8 @@ function Profile (props) {
                 <button className='bg-primaryBg text-primaryText rounded px-2 w-fit' onClick={() => setEdit(!edit)}>{edit ? 'Save' : 'Edit'}</button>
             </header>
             <main>
-                {user.name && <ProfileSummary user={user} />}
+                {user.name && !edit && <ProfileSummary user={user} />}
+                {user.name && edit && <ProfileEdit user={user} />}
             </main>
         </div>
     )
