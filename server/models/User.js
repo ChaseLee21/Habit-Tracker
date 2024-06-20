@@ -7,7 +7,8 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     salt: { type: String, required: false },
     habits: [{ type: Schema.Types.ObjectId, ref: 'Habit' }],
-    todos: [{ type: String, required: false }]
+    todos: [{ type: String, required: false }],
+    timezone: { type: String, required: true, default: 'America/Los_Angeles' }
 })
 
 // Method to check the password

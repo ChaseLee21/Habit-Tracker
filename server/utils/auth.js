@@ -23,7 +23,7 @@ function authMiddleware (req, res, next) {
 }
 
 function signToken (user) {
-    const payload = { id: user._id, email: user.email, name: user.name }
+    const payload = { id: user._id, email: user.email, name: user.name, timezone: user.timezone }
     const expires = { expiresIn: '2h' }
     return jwt.sign(payload, JWT_SECRET, expires)
 }

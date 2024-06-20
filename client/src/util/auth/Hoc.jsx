@@ -13,8 +13,9 @@ function withAuth (ComponentToProtect) {
             async function checkAuth () {
                 try {
                     const user = await checkToken()
-                    if (!user) {
-                        throw new Error('Not authorized')
+                    if (user.message === 'Request failed with status code 401') {
+                        setIsAuthenticated(false)
+                        setIsLoading(false)
                     } else {
                         console.log(user)
                         setIsAuthenticated(true)
