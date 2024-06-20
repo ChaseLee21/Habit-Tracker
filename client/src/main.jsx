@@ -7,7 +7,7 @@ import './axiosConfig.js'
 import Register from './views/Register.jsx'
 import Login from './views/Login.jsx'
 import Logout from './views/Logout.jsx'
-import { ProtectedHome, ProtectedNewHabit } from './util/auth/auth.js'
+import { ProtectedHome, ProtectedNewHabit, ProtectedProfile } from './util/auth/auth.js'
 
 const router = createBrowserRouter([
     {
@@ -34,6 +34,10 @@ const router = createBrowserRouter([
             {
                 path: '/new-habit',
                 element: <ProtectedNewHabit />
+            },
+            {
+                path: '/profile',
+                element: <ProtectedProfile />
             }
         ]
     }
