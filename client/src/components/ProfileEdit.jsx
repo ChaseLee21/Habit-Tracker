@@ -14,7 +14,9 @@ function ProfileEdit (props) {
             const userData = { email, name: username, timezone }
             const updatedUser = await putUser(user._id, userData)
             console.log('User Updated: ', updatedUser)
+            props.onEditSave()
         }
+        props.onEditCancel()
     }
 
     function validateForm (email, username, timezone) {
@@ -42,9 +44,9 @@ function ProfileEdit (props) {
                 <label htmlFor="email" className="text-secondaryText">Email:</label>
                 <input type="email" id="email" name="email" autoComplete='email' defaultValue={user.email} className="p-1 m-1 rounded-md" />
                 <label htmlFor="username" className="text-secondaryText">Username:</label>
-                <input type="text" id="username" name="username" autoComplete='username' className="p-1 m-1 rounded-md" />
+                <input type="text" id="username" name="username" autoComplete='username' defaultValue={user.name} className="p-1 m-1 rounded-md" />
                 <label htmlFor="timezone" className="text-secondaryText">Timezone:</label>
-                <select type="text" id="timezone" name="timezone" className="p-1 m-1 rounded-md">
+                <select type="text" id="timezone" name="timezone" defaultValue={user.timezone} className="p-1 m-1 rounded-md">
                     <option value="Pacific/Midway">Pacific/Midway</option>
                     <option value="Pacific/Honolulu">Pacific/Honolulu</option>
                     <option value="America/Anchorage">America/Anchorage</option>
@@ -109,7 +111,8 @@ ProfileEdit.propTypes = {
             reward: PropTypes.string
         }))
     }).isRequired,
-    onEditCancel: PropTypes.func.isRequired
+    onEditCancel: PropTypes.func.isRequired,
+    onEditSave: PropTypes.func.isRequired
 }
 
 export default ProfileEdit
