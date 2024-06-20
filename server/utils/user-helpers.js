@@ -19,7 +19,7 @@ async function createAnalyticsForToday (habit, userId, timezone) {
     // Helper functions
     function setAnalyticStreak (analytic) {
         const yesterdaysAnalytic = habit.analytics.find(analytic => {
-            return analytic.date.toLocaleString('en-US', { timeZone: timezone }).split('')[0] === yesterday
+            return analytic.date === yesterday
         })
         if (yesterdaysAnalytic && yesterdaysAnalytic.streak > 0 && yesterdaysAnalytic.completed) {
             analytic.streak = yesterdaysAnalytic.streak
@@ -29,7 +29,7 @@ async function createAnalyticsForToday (habit, userId, timezone) {
 
     function existingTodaysAnalytic () {
         return habit.analytics.find(analytic => {
-            return analytic.date.toLocaleString('en-US', { timeZone: timezone }).split(',')[0] === today
+            return analytic.date === today
         })
     }
 
