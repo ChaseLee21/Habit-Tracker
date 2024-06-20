@@ -53,6 +53,7 @@ async function checkToken () {
         return request.data
     } catch (err) {
         console.log(err)
+        return err
     }
 }
 async function login (userData) {

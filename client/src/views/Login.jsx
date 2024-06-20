@@ -1,13 +1,25 @@
 import { validateEmail, validateLoginPassword } from '../util/validate-helpers'
 import { React, useEffect } from 'react'
-import { login } from '../util/axios'
+import { login, checkToken } from '../util/axios'
 
 function Login () {
     useEffect(() => {
-        document.title = 'Login - Habit Tracker'
-        if (document.cookie.includes('habitTrackerToken')) {
-            window.location.href = '/'
+        async function checkExpiredToken () {
+            try {
+                document.title = 'Login - Habit Tracker'
+                if (document.cookie.includes('habitTrackerToken')) {
+                    const response = await checkToken()
+                    if (response.user) {
+                        window.location.href = '/'
+                    } else {
+                        document.cookie = 'habitTrackerToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+                    }
+                }
+            } catch (err) {
+                console.log(err)
+            }
         }
+        checkExpiredToken()
     }, [])
 
     const handleLoginSubmit = async (e) => {
