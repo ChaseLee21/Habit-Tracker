@@ -15,6 +15,9 @@ function authMiddleware (req, res, next) {
         next()
     } catch (err) {
         console.log(err)
+        if (err.name === 'TokenExpiredError') {
+            return res.status(401).json({ message: 'Your session has expired. Please log in again.' })
+        }
         res.status(401).json({ message: 'You must be logged in to do that' })
     }
 }
