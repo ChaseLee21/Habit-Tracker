@@ -98,7 +98,10 @@ function Habits (props) {
 Habits.propTypes = {
     user: PropTypes.shape({
         user: PropTypes.shape({
-            id: PropTypes.string
+            id: PropTypes.string.isRequired,
+            timezone: PropTypes.string,
+            email: PropTypes.string,
+            name: PropTypes.string
         })
     }).isRequired
 }
