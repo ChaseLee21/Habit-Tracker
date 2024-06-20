@@ -6,7 +6,7 @@ const habitSchema = new Schema({
     description: { type: String, required: true },
     why: { type: String, required: true },
     goal: { type: String, required: true },
-    reward: { type: String, required: true },
+    reward: { type: String, required: false },
     frequency: { type: String, required: true },
     longestStreak: { type: Number, required: false },
     analytics: [{ type: Schema.Types.ObjectId, ref: 'Analytics' }]

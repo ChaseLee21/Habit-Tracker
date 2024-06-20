@@ -1,4 +1,6 @@
 import { React, useState, useEffect } from 'react'
+import { postHabit } from '../util/axios'
+import PropTypes from 'prop-types'
 import HabitSelection from '../components/HabitSelection'
 import DescriptionSelection from '../components/DescriptionSelection'
 import SectionHeader from '../components/SectionHeader'
@@ -8,8 +10,9 @@ import FrequencySelection from '../components/FrequencySelection'
 import RewardSelection from '../components/RewardSelection'
 import HabitSummary from '../components/HabitSummary'
 
-function NewHabit () {
-    // Default Habits
+function NewHabit (props) {
+    // Variables
+    const userId = props.user.user.id || ''
     const defaultHabits = [
         {
             name: 'Exercise',
@@ -213,8 +216,8 @@ function NewHabit () {
             subtext: 'Review the following information and click save to create your new habit.'
         })
     }
-    const saveHabit = () => {
-        console.log('not implemented')
+    const saveHabit = async () => {
+        await postHabit(userId, { ...habit, user: userId })
     }
 
     return (
@@ -229,6 +232,14 @@ function NewHabit () {
             {showHabitSummary && <HabitSummary habit={habit} handleSaveHabit={saveHabit}/>}
         </section>
     )
+}
+
+NewHabit.propTypes = {
+    user: PropTypes.shape({
+        user: PropTypes.shape({
+            id: PropTypes.string
+        })
+    }).isRequired
 }
 
 export default NewHabit
