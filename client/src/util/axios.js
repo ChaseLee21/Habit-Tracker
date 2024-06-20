@@ -52,7 +52,6 @@ async function checkToken () {
         const request = await axios.get('/api/checkToken', { withCredentials: true })
         return request.data
     } catch (err) {
-        console.log(err)
         return err
     }
 }
