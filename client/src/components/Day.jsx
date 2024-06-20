@@ -12,10 +12,13 @@ function Day (props) {
     const [time, setTime] = useState(new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: timezone }))
 
     useEffect(() => {
-        const timer = setInterval(() => {
-            setTime(new Date().toLocaleTimeString('en-US', { timeZone: timezone }))
-        }, 60000)
-        return () => clearInterval(timer)
+        const timer = setTimeout(() => {
+            setTime(new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: timezone }))
+            setInterval(() => {
+                setTime(new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: timezone }))
+            }, 60000)
+        }, (60 - new Date().getSeconds()) * 1000)
+        return () => clearTimeout(timer)
     }, [timezone])
 
     return (
