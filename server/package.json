@@ -5,6 +5,7 @@
     "crypto": "^1.0.1",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
+    "moment-timezone": "^0.5.45",
     "mongoose": "^8.3.0",
     "shortid": "^2.2.16",
     "uuid": "^9.0.1"
