@@ -21,14 +21,23 @@ function Header () {
                 </div>
                 {showMenu && (<nav className="bg-secondaryBg">
                     <ul className="py-2 text-lg">
-                        <li className="p-1 ps-3 hover:text-highlight text-secondaryText">
-                            <Link to={'/'} onClick={() => handleNavBarClick()}>Home</Link>
-                        </li>
-                        <li className="border-y p-1 ps-3 hover:text-highlight text-secondaryText">
-                            <Link to={'/new-habit'} onClick={() => handleNavBarClick()}>New Habit</Link>
-                        </li>
+                        {document.cookie.includes('habitTrackerToken') &&
+                            <li className="border-b p-1 ps-3 hover:text-highlight text-secondaryText">
+                                <Link to={'/'} onClick={() => handleNavBarClick()}>Home</Link>
+                            </li>
+                        }
+                        {document.cookie.includes('habitTrackerToken') &&
+                            <li className="border-b p-1 ps-3 hover:text-highlight text-secondaryText">
+                                <Link to={'/profile'} onClick={() => handleNavBarClick()}>My Profile</Link>
+                            </li>
+                        }
+                        {document.cookie.includes('habitTrackerToken') &&
+                            <li className="border-b p-1 ps-3 hover:text-highlight text-secondaryText">
+                                <Link to={'/new-habit'} onClick={() => handleNavBarClick()}>New Habit</Link>
+                            </li>
+                        }
                         {!document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-y p-1 ps-3 hover:text-highlight text-secondaryText">
+                            <li className="border-b p-1 ps-3 hover:text-highlight text-secondaryText">
                                 <Link to={'/register'} onClick={() => handleNavBarClick()}>Register</Link>
                             </li>
                         }
