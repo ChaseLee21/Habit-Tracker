@@ -27,6 +27,10 @@ function Profile (props) {
         fetchUser()
     }, [])
 
+    function onEditCancel () {
+        setEdit(false)
+    }
+
     return (
         <div className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
             <header className='flex justify-between '>
@@ -35,7 +39,7 @@ function Profile (props) {
             </header>
             <main>
                 {user.name && !edit && <ProfileSummary user={user} />}
-                {user.name && edit && <ProfileEdit user={user} />}
+                {user.name && edit && <ProfileEdit user={user} onEditCancel={onEditCancel} />}
             </main>
         </div>
     )
@@ -44,7 +48,6 @@ function Profile (props) {
 Profile.propTypes = {
     user: PropTypes.shape({
         user: PropTypes.shape({
-            id: PropTypes.string.isRequired,
             timezone: PropTypes.string.isRequired,
             email: PropTypes.string,
             name: PropTypes.string
