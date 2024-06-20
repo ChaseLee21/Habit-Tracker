@@ -1,8 +1,8 @@
 const { Analytics } = require('../models')
 
-async function createAnalyticsForToday (habit, userId) {
-    const today = new Date().toISOString().split('T')[0]
-    const yesterday = new Date(Date.now() - 864e5).toISOString().split('T')[0]
+async function createAnalyticsForToday (habit, userId, timezone) {
+    const today = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
+    const yesterday = new Date(Date.now() - 864e5).toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
     if (!existingTodaysAnalytic()) {
         const newAnalytic = {
             user: userId,
@@ -19,7 +19,7 @@ async function createAnalyticsForToday (habit, userId) {
     // Helper functions
     function setAnalyticStreak (analytic) {
         const yesterdaysAnalytic = habit.analytics.find(analytic => {
-            return analytic.date.toISOString().split('T')[0] === yesterday
+            return analytic.date.toLocaleString('en-US', { timeZone: timezone }).split('')[0] === yesterday
         })
         if (yesterdaysAnalytic && yesterdaysAnalytic.streak > 0 && yesterdaysAnalytic.completed) {
             analytic.streak = yesterdaysAnalytic.streak
@@ -29,7 +29,7 @@ async function createAnalyticsForToday (habit, userId) {
 
     function existingTodaysAnalytic () {
         return habit.analytics.find(analytic => {
-            return analytic.date.toISOString().split('T')[0] === today
+            return analytic.date.toLocaleString('en-US', { timeZone: timezone }).split(',')[0] === today
         })
     }
 

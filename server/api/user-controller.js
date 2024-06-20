@@ -33,7 +33,7 @@ router.get('/:id', async (req, res) => {
         if (!user) return res.status(404).json({ message: 'No user found with this id' })
         if (user.habits.length >= 0) {
             for (const habit of user.habits) {
-                await createAnalyticsForToday(habit, user._id)
+                await createAnalyticsForToday(habit, user._id, user.timezone)
             }
         }
         await user.save()
