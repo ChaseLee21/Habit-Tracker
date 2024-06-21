@@ -4,11 +4,6 @@ import PropTypes from 'prop-types'
 function HabitEdit (props) {
     const [habit] = useState(props.habit)
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log('Submit habit edit')
-    }
-
     const handleDelete = (e) => {
         e.preventDefault()
         console.log('Delete habit')
@@ -30,7 +25,7 @@ function HabitEdit (props) {
                 <label htmlFor='habitReward' className="text-secondaryText">Habit Rewards:</label>
                 <input id='habitReward' type='text' defaultValue={habit.reward} className="p-1 m-1 rounded-md"></input>
                 <div className='flex'>
-                    <button type='submit' onClick={handleSubmit} className='bg-primaryBg text-primaryText rounded px-2 w-fit hover:underline mx-2'>Save</button>
+                    <button type='button' onClick={() => props.onSubmit(habit)} className='bg-primaryBg text-primaryText rounded px-2 w-fit hover:underline mx-2'>Save</button>
                     <button type='button' onClick={() => props.onCancel()} className='bg-primaryBg text-primaryText rounded px-2 w-fit hover:underline mx-2'>Cancel</button>
                     <button type='button' onClick={handleDelete} className='bg-red-600 text-primaryText rounded px-2 w-fit hover:underline mx-2'>Delete</button>
                 </div>
@@ -49,7 +44,8 @@ HabitEdit.propTypes = {
         frequency: PropTypes.string.isRequired,
         reward: PropTypes.string
     }).isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired
 }
 
 export default HabitEdit

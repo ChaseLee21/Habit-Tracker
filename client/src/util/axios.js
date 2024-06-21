@@ -46,6 +46,15 @@ async function postHabit (id, habitData) {
     }
 }
 
+async function putHabit (habit) {
+    try {
+        const request = await axios.put('/api/habits/' + habit._id, habit)
+        return request.data
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 // Auth API calls
 async function checkToken () {
     try {
@@ -65,4 +74,4 @@ async function login (userData) {
     }
 }
 
-export { putAnalytic, getUser, putUser, postUser, checkToken, login, postHabit }
+export { putAnalytic, getUser, putUser, postUser, checkToken, login, postHabit, putHabit }
