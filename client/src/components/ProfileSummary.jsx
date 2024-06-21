@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 import PropTypes from 'prop-types'
 import HabitEdit from './HabitEdit'
-import { putHabit } from '../util/axios'
+import { putHabit, deleteHabit } from '../util/axios'
 
 function ProfileSummary (props) {
     const user = props.user
@@ -15,6 +15,14 @@ function ProfileSummary (props) {
         setEditHabit(null)
         await putHabit(habit)
         window.location.reload()
+    }
+
+    async function handleHabitDelete (habit) {
+        setEditHabit(null)
+        if (window.confirm('Are you sure you want to delete this habit?', habit.name)) {
+            await deleteHabit(habit)
+            window.location.reload()
+        }
     }
 
     return (
@@ -37,7 +45,13 @@ function ProfileSummary (props) {
                     </li>
                 })}
             </ul>}
-            {editHabit && editHabit._id && <HabitEdit habit={editHabit} onCancel={() => setEditHabit(null)} onSubmit={(habit) => handleEditHabitSubmit(habit)} />}
+            {editHabit &&
+            editHabit._id &&
+            <HabitEdit habit={editHabit}
+                onCancel={() => setEditHabit(null)}
+                onSubmit={(habit) => handleEditHabitSubmit(habit)}
+                onDelete={(habit) => handleHabitDelete(habit)}
+            />}
         </section>
     )
 }

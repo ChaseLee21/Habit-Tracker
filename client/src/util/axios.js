@@ -56,6 +56,15 @@ async function putHabit (habit) {
     }
 }
 
+async function deleteHabit (habit) {
+    try {
+        const request = await axios.delete('/api/habits/' + habit._id)
+        return request.data
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 // Auth API calls
 async function checkToken () {
     try {
@@ -75,4 +84,4 @@ async function login (userData) {
     }
 }
 
-export { putAnalytic, getUser, putUser, postUser, checkToken, login, postHabit, putHabit }
+export { putAnalytic, getUser, putUser, postUser, checkToken, login, postHabit, putHabit, deleteHabit }

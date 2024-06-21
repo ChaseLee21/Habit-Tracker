@@ -28,11 +28,6 @@ function HabitEdit (props) {
         setHabit({ ...habit, reward: e.target.value })
     }
 
-    const handleDelete = (e) => {
-        e.preventDefault()
-        console.log('Delete habit')
-    }
-
     return (
         <section>
             <form className='flex flex-col text-black'>
@@ -51,7 +46,7 @@ function HabitEdit (props) {
                 <div className='flex'>
                     <button type='button' onClick={() => props.onSubmit(habit)} className='bg-primaryBg text-primaryText rounded px-2 w-fit hover:underline mx-2'>Save</button>
                     <button type='button' onClick={() => props.onCancel()} className='bg-primaryBg text-primaryText rounded px-2 w-fit hover:underline mx-2'>Cancel</button>
-                    <button type='button' onClick={handleDelete} className='bg-red-600 text-primaryText rounded px-2 w-fit hover:underline mx-2'>Delete</button>
+                    <button type='button' onClick={() => props.onDelete(habit)} className='bg-red-600 text-primaryText rounded px-2 w-fit hover:underline mx-2'>Delete</button>
                 </div>
             </form>
         </section>
@@ -69,7 +64,8 @@ HabitEdit.propTypes = {
         reward: PropTypes.string
     }).isRequired,
     onCancel: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired
 }
 
 export default HabitEdit
