@@ -31,7 +31,7 @@ function ProfileSummary (props) {
                     </li>
                 })}
             </ul>}
-            {editHabit && editHabit._id && <HabitEdit habit={editHabit} />}
+            {editHabit && editHabit._id && <HabitEdit habit={editHabit} onCancel={() => setEditHabit(null)} />}
         </section>
     )
 }
