@@ -4,19 +4,19 @@ import PropTypes from 'prop-types'
 function HabitEdit (habit) {
     return (
         <section>
-            <form>
-                <label htmlFor='habitName'>Habit Name:</label>
-                <input id='habitName' type='text' defaultValue={habit.name}></input>
-                <label htmlFor='habitDescription'>Habit Description:</label>
-                <input id='habitDescription' type='text' defaultValue={habit.description}></input>
-                <label htmlFor='habitWhy'>Habit Why:</label>
-                <input id='habitWhy' type='text' defaultValue={habit.why}></input>
-                <label htmlFor='habitGoal'>Habit Goal:</label>
-                <input id='habitGoal' type='text' defaultValue={habit.goal}></input>
-                <label htmlFor='habitFrequency'>Habit Frequency:</label>
-                <input id='habitFrequency' type='text' defaultValue={habit.frequency}></input>
-                <label htmlFor='habitReward'>Habit Rewards:</label>
-                <input id='habitReward' type='text' defaultValue={habit.reward}></input>
+            <form className='flex flex-col text-black'>
+                <label htmlFor='habitName' className="text-secondaryText">Habit Name:</label>
+                <input id='habitName' type='text' defaultValue={habit.name} className="p-1 m-1 rounded-md"></input>
+                <label htmlFor='habitDescription' className="text-secondaryText">Habit Description:</label>
+                <input id='habitDescription' type='text' defaultValue={habit.description} className="p-1 m-1 rounded-md"></input>
+                <label htmlFor='habitWhy' className="text-secondaryText">Habit Why:</label>
+                <input id='habitWhy' type='text' defaultValue={habit.why} className="p-1 m-1 rounded-md"></input>
+                <label htmlFor='habitGoal' className="text-secondaryText">Habit Goal:</label>
+                <input id='habitGoal' type='text' defaultValue={habit.goal} className="p-1 m-1 rounded-md"></input>
+                <label htmlFor='habitFrequency' className="text-secondaryText">Habit Frequency:</label>
+                <input id='habitFrequency' type='text' defaultValue={habit.frequency} className="p-1 m-1 rounded-md"></input>
+                <label htmlFor='habitReward' className="text-secondaryText">Habit Rewards:</label>
+                <input id='habitReward' type='text' defaultValue={habit.reward} className="p-1 m-1 rounded-md"></input>
             </form>
         </section>
     )

@@ -1,11 +1,14 @@
-import { React } from 'react'
+import { React, useState } from 'react'
 import PropTypes from 'prop-types'
+import HabitEdit from './HabitEdit'
 
 function ProfileSummary (props) {
     const user = props.user
+    const [editHabit, setEditHabit] = useState(null)
 
     function handleEditHabit (habit) {
         console.log('Edit habit: ', habit)
+        setEditHabit(habit)
     }
 
     return (
@@ -13,7 +16,7 @@ function ProfileSummary (props) {
             <p>Username: {user.name}</p>
             <p>Email: {user.email}</p>
             <p>Timezone: {user.timezone}</p>
-            <ul>
+            {!editHabit && <ul>
                 {user.habits && user.habits.map(habit => {
                     return <li className='bg-primaryBg text-primaryText rounded p-2 my-2 w-fit' key={habit._id}>
                         <div className='flex justify-between'>
@@ -27,7 +30,8 @@ function ProfileSummary (props) {
                         {habit.reward && <p>Reward: {habit.reward}</p>}
                     </li>
                 })}
-            </ul>
+            </ul>}
+            {editHabit && editHabit._id && <HabitEdit habit={editHabit} />}
         </section>
     )
 }
