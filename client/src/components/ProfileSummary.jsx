@@ -14,6 +14,7 @@ function ProfileSummary (props) {
     async function handleEditHabitSubmit (habit) {
         setEditHabit(null)
         await putHabit(habit)
+        window.location.reload()
     }
 
     return (

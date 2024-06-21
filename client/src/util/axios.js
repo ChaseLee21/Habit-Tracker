@@ -48,6 +48,7 @@ async function postHabit (id, habitData) {
 
 async function putHabit (habit) {
     try {
+        console.log(habit)
         const request = await axios.put('/api/habits/' + habit._id, habit)
         return request.data
     } catch (err) {
