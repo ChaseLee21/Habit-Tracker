@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-// Analytic API calls
-async function putAnalytic (analytic) {
+// Day API calls
+async function putDay (day) {
     try {
-        const request = await axios.put('/api/analytics/' + analytic._id, analytic)
+        const request = await axios.put('/api/days/' + day._id, day)
         return request.data
     } catch (err) {
         console.log(err)
@@ -84,4 +84,4 @@ async function login (userData) {
     }
 }
 
-export { putAnalytic, getUser, putUser, postUser, checkToken, login, postHabit, putHabit, deleteHabit }
+export { putDay, getUser, putUser, postUser, checkToken, login, postHabit, putHabit, deleteHabit }
