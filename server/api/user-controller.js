@@ -1,5 +1,5 @@
 const { User } = require('../models/index')
-const { createAnalyticsForToday } = require('../utils/user-helpers')
+const { createAnalyticsForToday } = require('../utils/helpers')
 const router = require('express').Router()
 const { signToken } = require('../utils/auth')
 
