@@ -15,7 +15,11 @@ const habitSchema = new Schema({
 
 habitSchema.on('init', async function () {
     this.streak = 0
-    const firstWeek = await Week.create({ habit: this._id, user: this.user })
+    const firstWeek = await Week.create(
+        {
+            habit: this._id,
+            user: this.user
+        })
     this.weeks.push(firstWeek)
 })
 
