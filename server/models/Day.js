@@ -6,4 +6,4 @@ const daySchema = new Schema({
     completed: { type: Boolean, required: true }
 })
 
-module.exports = model('Analytics', daySchema)
+module.exports = model('Day', daySchema)

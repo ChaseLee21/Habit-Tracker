@@ -16,4 +16,4 @@ weekSchema.on('init', function () {
     this.frequency = this.habit.frequency
 })
 
-module.exports = model('Habit', weekSchema)
+module.exports = model('Week', weekSchema)
