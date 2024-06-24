@@ -60,15 +60,19 @@ function setEndDate (timezone) {
 
 async function setDaysArray (endDate, weekId) {
     const days = []
+    const Day = mongoose.model('Day')
+    let currentDate = new Date(endDate)
+
     for (let i = 0; i < 7; i++) {
-        const Day = mongoose.model('Day')
-        const newDay = await Day.create(
-            {
-                date: new Date(endDate.setDate(endDate.getDate() - i)).toLocaleDateString(),
-                completed: false,
-                week: weekId
-            })
+        const newDay = await Day.create({
+            date: currentDate.toISOString().split('T')[0],
+            completed: false,
+            week: weekId
+        })
         days.push(newDay._id)
+
+        // Decrement the date by one day for the next iteration
+        currentDate = new Date(currentDate.setDate(currentDate.getDate() - 1))
     }
     return days
 }
