@@ -8,7 +8,6 @@ const habitSchema = new Schema({
     goal: { type: String, required: true },
     reward: { type: String, required: false },
     frequency: { type: Number, required: true },
-    longestStreak: { type: Number, required: false },
     streak: { type: Number, required: false },
     weeks: [{ type: Schema.Types.ObjectId, ref: 'Week' }]
 })
