@@ -1,5 +1,4 @@
-const { Schema, model } = require('mongoose')
-const { Week } = require('./index')
+const { Schema, model, default: mongoose } = require('mongoose')
 
 const habitSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
@@ -13,8 +12,12 @@ const habitSchema = new Schema({
     weeks: [{ type: Schema.Types.ObjectId, ref: 'Week' }]
 })
 
-habitSchema.on('init', async function () {
+habitSchema.pre('save', async function () {
+    if (!this.isNew) {
+        return
+    }
     this.streak = 0
+    const Week = mongoose.model('Week')
     const firstWeek = await Week.create(
         {
             habit: this._id,
