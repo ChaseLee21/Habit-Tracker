@@ -1,17 +1,6 @@
 const { Day, Week } = require('../models')
 
 async function endOfWeek (user) {
-    for (const habit of user.habits) {
-        if (EndDatePassed(habit)) {
-            // Check if frequency was met and update streak
-            await updateStreak(habit)
-            // Create new week document
-            await createNewWeek(habit, user.timezone)
-            // Save habit
-            await habit.save()
-        }
-    }
-
     // helper functions
     function EndDatePassed (habit) {
         return habit.weeks[habit.weeks.length - 1].endDate < new Date()
@@ -34,6 +23,19 @@ async function endOfWeek (user) {
         const newWeek = await Week.create({ habit: habit._id, user: user._id })
         habit.weeks.push(newWeek)
     }
+
+    for (const habit of user.habits) {
+        if (EndDatePassed(habit)) {
+            // Check if frequency was met and update streak
+            await updateStreak(habit)
+            // Create new week document
+            await createNewWeek(habit, user.timezone)
+            // Save habit
+            await habit.save()
+        }
+    }
+
+    await user.save()
 }
 
 function setEndDate (timezone) {
