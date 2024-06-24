@@ -12,10 +12,8 @@ function Profile (props) {
     useEffect(() => {
         async function fetchUser () {
             try {
-                console.log(userId)
                 const userData = await getUser(userId)
                 if (userData) {
-                    console.log(userData)
                     setUser(userData)
                 } else {
                     console.log('No user data found')
