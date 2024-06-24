@@ -34,8 +34,6 @@ async function endOfWeek (user) {
             await habit.save()
         }
     }
-
-    await user.save()
 }
 
 function setEndDate (timezone) {
