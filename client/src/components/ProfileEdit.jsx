@@ -40,7 +40,7 @@ function ProfileEdit (props) {
 
     return (
         <section>
-            <form className="flex flex-col m-2 p-2 bg-secondaryBg rounded-md shadow-xl" onSubmit={handleUpdateProfileSubmit}>
+            <form className="flex flex-col" onSubmit={handleUpdateProfileSubmit}>
                 <label htmlFor="email" className="text-secondaryText">Email:</label>
                 <input type="email" id="email" name="email" autoComplete='email' defaultValue={user.email} className="p-1 m-1 rounded-md" />
                 <label htmlFor="username" className="text-secondaryText">Username:</label>
@@ -79,18 +79,6 @@ function ProfileEdit (props) {
                     <button type="submit" className="bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1">Update</button>
                 </div>
             </form>
-            <ul>
-                {user.habits && user.habits.map(habit => {
-                    return <li className='bg-primaryBg text-primaryText rounded p-2 w-fit' key={habit._id}>
-                        <p>{habit.name}</p>
-                        <p>{habit.description}</p>
-                        <p>{habit.why}</p>
-                        <p>{habit.goal}</p>
-                        <p>{habit.frequency} times a week</p>
-                        {habit.reward && <p>Reward: {habit.reward}</p>}
-                    </li>
-                })}
-            </ul>
         </section>
     )
 }
