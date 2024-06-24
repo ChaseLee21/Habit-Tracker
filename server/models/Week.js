@@ -10,12 +10,13 @@ const weekSchema = new Schema({
 })
 
 // 0 is Sunday, 6 is Saturday
-weekSchema.pre('save', function () {
+weekSchema.pre('save', async function () {
     if (!this.isNew) {
         return
     }
     this.endDate = setEndDate(this.user.timezone)
-    this.days = setDaysArray(this.endDate, this._id)
+    this.days = await setDaysArray(this.endDate, this._id)
+    console.log('this.days', this.days)
     this.frequency = this.habit.frequency
 })
 

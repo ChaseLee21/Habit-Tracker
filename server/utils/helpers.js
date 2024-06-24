@@ -68,8 +68,9 @@ async function setDaysArray (endDate, weekId) {
                 completed: false,
                 week: weekId
             })
-        days.push(newDay)
+        days.push(newDay._id)
     }
+    console.log('days', days)
     return days
 }
 
