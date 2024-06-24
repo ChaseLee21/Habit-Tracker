@@ -27,12 +27,15 @@ function Habits (props) {
         fetchUser()
     }, [])
 
-    function handleDayCompleteSubmit (habit) {
-        // trigger axios putDay request
+    async function handleDayCompleteSubmit (habit) {
+        const day = findDay(habit)
+        day.completed = !day.completed
+        console.log('day', day)
+        await putDay(day)
+        // update state
     }
 
     function findDay (habit) {
-        // return today's day object for the habit's week array
         const week = habit.weeks[habit.weeks.length - 1]
         const day = week.days.find(day => day.date === today)
         return day
@@ -49,9 +52,8 @@ function Habits (props) {
                                 <h3>{habit.name}</h3>
                             </div>
                             {/* habit completed form */}
-                            <form onSubmit={handleDayCompleteSubmit}>
-                                <input type="hidden" name="habitId" value={habit._id} />
-                                <button type="submit" className="rounded-md p-1">
+                            <form>
+                                <button onClick={() => handleDayCompleteSubmit(habit)} type="button" className="rounded-md p-1">
                                     {findDay(habit).completed ? '✅' : '❌'}
                                 </button>
                             </form>
