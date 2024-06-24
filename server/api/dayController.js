@@ -1,7 +1,7 @@
 const { Day } = require('../models/index')
 const router = require('express').Router()
 
-//  PUT analytic by id (used to update the completed status)
+//  PUT day by id (used to update the completed status)
 router.put('/:id', async (req, res) => {
     const id = req.params.id
     const dayData = req.body
