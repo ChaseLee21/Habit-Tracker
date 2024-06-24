@@ -5,7 +5,8 @@ import PropTypes from 'prop-types'
 function Habits (props) {
     const userId = props.user.user.id || ''
     const timezone = props.user.user.timezone || 'America/Los_Angeles'
-    const today = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
+    const localDay = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
+    const today = new Date(localDay).toISOString().split('T')[0]
     const [user, setUser] = useState({})
 
     useEffect(() => {
@@ -32,9 +33,8 @@ function Habits (props) {
 
     function findDay (habit) {
         // return today's day object for the habit's week array
-        const day = habit.weeks[habit.weeks.length - 1].days.find(day => day.date === today)
-        console.log('day', day)
-        console.log('habit.weeks', habit.weeks)
+        const week = habit.weeks[habit.weeks.length - 1]
+        const day = week.days.find(day => day.date === today)
         return day
     }
 
