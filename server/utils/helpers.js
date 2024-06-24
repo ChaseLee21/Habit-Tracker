@@ -1,4 +1,4 @@
-const { Day, Week } = require('../models')
+const mongoose = require('mongoose')
 
 async function endOfWeek (user) {
     // helper functions
@@ -20,6 +20,7 @@ async function endOfWeek (user) {
     }
 
     async function createNewWeek (habit, timezone) {
+        const Week = mongoose.model('Week')
         const newWeek = await Week.create({ habit: habit._id, user: user._id })
         habit.weeks.push(newWeek)
     }
@@ -56,13 +57,14 @@ function setEndDate (timezone) {
 async function setDaysArray (endDate, weekId) {
     const days = []
     for (let i = 0; i < 7; i++) {
-        const day = await Day.create(
+        const Day = mongoose.model('Day')
+        const newDay = await Day.create(
             {
                 date: endDate.getDate() - i,
                 completed: false,
                 week: weekId
             })
-        days.push(day)
+        days.push(newDay)
     }
     return days
 }
