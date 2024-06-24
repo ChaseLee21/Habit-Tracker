@@ -1,11 +1,12 @@
 import { useEffect, useState, React } from 'react'
-import { putAnalytic, getUser } from '../util/axios'
+import { putDay, getUser } from '../util/axios'
 import PropTypes from 'prop-types'
 
 function Habits (props) {
     const userId = props.user.user.id || ''
     const timezone = props.user.user.timezone || 'America/Los_Angeles'
-    const today = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
+    const localDay = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
+    const today = new Date(localDay).toISOString().split('T')[0]
     const [user, setUser] = useState({})
 
     useEffect(() => {
@@ -26,47 +27,31 @@ function Habits (props) {
         fetchUser()
     }, [])
 
-    async function handleAnalyticsSubmit (e) {
-        try {
-            e.preventDefault()
-            const habitId = e.target.habitId.value
-            const habitIndex = user.habits.findIndex(habit => habit._id === habitId)
-            const analyticIndex = user.habits[habitIndex].analytics.findIndex(analytic => analytic.date === today)
-            let analytic = user.habits[habitIndex].analytics[analyticIndex]
-            analytic = await putCompletedAnalytic(analytic)
-            updateUserAnalyticsState(analytic, habitIndex, analyticIndex)
-        } catch (err) {
-            console.log(err)
+    async function handleDayCompleteSubmit (habit) {
+        const day = { ...findDay(habit) }
+        day.completed = !day.completed
+        const updatedDay = await putDay(day)
+        // Clone the current user state to avoid direct mutation
+        const updatedUser = { ...user }
+        // Find the habit in the cloned state
+        const habitToUpdate = updatedUser.habits.find(h => h._id === habit._id)
+        if (habitToUpdate) {
+            // Find the week in the habit
+            const weekToUpdate = habitToUpdate.weeks[habitToUpdate.weeks.length - 1]
+            if (weekToUpdate) {
+                // Find the day in the week and update its completed status
+                const dayToUpdate = weekToUpdate.days.find(d => d.date === today)
+                dayToUpdate.completed = updatedDay.completed
+            }
         }
+
+        setUser(updatedUser)
     }
 
-    async function putCompletedAnalytic (analytic) {
-        try {
-            analytic.completed = !analytic.completed
-            return await putAnalytic(analytic)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    function updateUserAnalyticsState (analytic, habitIndex, analyticIndex) {
-        try {
-            const updatedUser = { ...user }
-            updatedUser.habits[habitIndex].analytics[analyticIndex] = analytic
-            setUser(updatedUser)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    function findHabitAnalyticForToday (habit) {
-        try {
-            const analytic = habit.analytics.find(analytic => analytic.date === today)
-            return analytic
-        } catch (err) {
-            console.log(err)
-            return { streak: 0 }
-        }
+    function findDay (habit) {
+        const week = habit.weeks[habit.weeks.length - 1]
+        const day = week.days.find(day => day.date === today)
+        return day
     }
 
     return (
@@ -78,13 +63,11 @@ function Habits (props) {
                         <div className="flex justify-between">
                             <div className="flex">
                                 <h3>{habit.name}</h3>
-                                <p>: {findHabitAnalyticForToday(habit).streak}</p>
                             </div>
                             {/* habit completed form */}
-                            <form onSubmit={handleAnalyticsSubmit}>
-                                <input type="hidden" name="habitId" value={habit._id} />
-                                <button type="submit" className="rounded-md p-1">
-                                    {findHabitAnalyticForToday(habit).completed ? '✅' : '❌'}
+                            <form>
+                                <button onClick={() => handleDayCompleteSubmit(habit)} type="button" className="rounded-md p-1">
+                                    {findDay(habit).completed ? '✅' : '❌'}
                                 </button>
                             </form>
                         </div>
