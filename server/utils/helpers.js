@@ -1,46 +1,38 @@
-const { Analytics, Day } = require('../models')
+const { Day, Week } = require('../models')
 
-async function createAnalyticsForToday (habit, userId, timezone) {
-    const today = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
-    const yesterday = new Date(Date.now() - 864e5).toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
-    if (!existingTodaysAnalytic()) {
-        const newAnalytic = {
-            user: userId,
-            habit: habit._id,
-            date: today,
-            completed: false,
-            streak: 0,
-            yesterdayStreak: 0
-        }
-        setAnalyticStreak(newAnalytic)
-        await createAnalytic(newAnalytic)
-    }
-
-    // Helper functions
-    function setAnalyticStreak (analytic) {
-        const yesterdaysAnalytic = habit.analytics.find(analytic => {
-            return analytic.date === yesterday
-        })
-        if (yesterdaysAnalytic && yesterdaysAnalytic.streak > 0 && yesterdaysAnalytic.completed) {
-            analytic.streak = yesterdaysAnalytic.streak
-            analytic.yesterdayStreak = yesterdaysAnalytic.streak
-        }
-    }
-
-    function existingTodaysAnalytic () {
-        return habit.analytics.find(analytic => {
-            return analytic.date === today
-        })
-    }
-
-    async function createAnalytic (analytic) {
-        try {
-            const newAnalytic = await Analytics.create(analytic)
-            habit.analytics.push(newAnalytic)
+async function endOfWeek (user) {
+    for (const habit of user.habits) {
+        if (EndDatePassed(habit)) {
+            // Check if frequency was met and update streak
+            await updateStreak(habit)
+            // Create new week document
+            await createNewWeek(habit, user.timezone)
+            // Save habit
             await habit.save()
-        } catch (err) {
-            console.log(err)
         }
+    }
+
+    // helper functions
+    function EndDatePassed (habit) {
+        return habit.weeks[habit.weeks.length - 1].endDate < new Date()
+    }
+
+    function updateStreak (habit) {
+        const lastWeek = habit.weeks[habit.weeks.length - 1]
+        let daysCompleted = 0
+        for (const day of lastWeek.days) {
+            if (day.completed) {
+                daysCompleted++
+            }
+        }
+        if (daysCompleted < lastWeek.frequency) {
+            habit.streak = 0
+        }
+    }
+
+    async function createNewWeek (habit, timezone) {
+        const newWeek = await Week.create({ habit: habit._id, user: user._id })
+        habit.weeks.push(newWeek)
     }
 }
 
@@ -75,4 +67,4 @@ async function setDaysArray (endDate, weekId) {
     return days
 }
 
-module.exports = { createAnalyticsForToday, setEndDate, setDaysArray }
+module.exports = { endOfWeek, setEndDate, setDaysArray }
