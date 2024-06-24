@@ -1,4 +1,4 @@
-const { Analytics } = require('../models')
+const { Analytics, Day } = require('../models')
 
 async function createAnalyticsForToday (habit, userId, timezone) {
     const today = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
@@ -44,4 +44,30 @@ async function createAnalyticsForToday (habit, userId, timezone) {
     }
 }
 
-module.exports = { createAnalyticsForToday }
+function setEndDate (timezone) {
+    // set now to today in the user's timezone
+    const now = new Date(new Date().toLocaleString('en-US', { timeZone: timezone }))
+    const today = now.getDay()
+
+    // number of days til next the next Saturday, if today is Saturday, it will be 7
+    const daysUntilNextSaturday = (6 - today + 7) % 7 || 7
+
+    // nextSaturday is the date of the next Saturday
+    const nextSaturday = new Date(now)
+    nextSaturday.setDate(now.getDate() + daysUntilNextSaturday)
+    nextSaturday.setHours(0, 0, 0, 0)
+
+    // set endDate to the next Saturday
+    return nextSaturday
+}
+
+async function setDaysArray (endDate) {
+    const days = []
+    for (let i = 0; i < 7; i++) {
+        const day = await Day.create({ date: endDate.getDate() - i })
+        days.push(day)
+    }
+    return days
+}
+
+module.exports = { createAnalyticsForToday, setEndDate, setDaysArray }
