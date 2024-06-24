@@ -3,21 +3,6 @@ const { createAnalyticsForToday } = require('../utils/helpers')
 const router = require('express').Router()
 const { signToken } = require('../utils/auth')
 
-// GET all users (for testing)
-router.get('/', (req, res) => {
-    User.find({})
-        .then((users) => {
-            if (!users || users.length === 0) {
-                res.status(404).json({ message: 'No users were found' })
-                return
-            }
-            res.json(users)
-        })
-        .catch((err) => {
-            res.status(400).json(err)
-        })
-})
-
 // GET one user by id => populate habits => populate analytics => create new analytics if one is not found for today's date
 // TODO: look into a possible bug where a new analytics is created with only a streak and _id property when this route is hit
 router.get('/:id', async (req, res) => {
