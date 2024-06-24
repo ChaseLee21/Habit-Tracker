@@ -64,13 +64,12 @@ async function setDaysArray (endDate, weekId) {
         const Day = mongoose.model('Day')
         const newDay = await Day.create(
             {
-                date: endDate.getDate() - i,
+                date: new Date(endDate.setDate(endDate.getDate() - i)).toLocaleDateString(),
                 completed: false,
                 week: weekId
             })
         days.push(newDay._id)
     }
-    console.log('days', days)
     return days
 }
 
