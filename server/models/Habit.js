@@ -9,7 +9,8 @@ const habitSchema = new Schema({
     reward: { type: String, required: false },
     frequency: { type: String, required: true },
     longestStreak: { type: Number, required: false },
-    analytics: [{ type: Schema.Types.ObjectId, ref: 'Analytics' }]
+    analytics: [{ type: Schema.Types.ObjectId, ref: 'Analytics' }],
+    weeks: [{ type: Schema.Types.ObjectId, ref: 'Week' }]
 })
 
 module.exports = model('Habit', habitSchema)
