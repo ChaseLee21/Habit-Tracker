@@ -3,7 +3,11 @@ const mongoose = require('mongoose')
 async function endOfWeek (user) {
     // helper functions
     function EndDatePassed (habit) {
-        return habit.weeks[habit.weeks.length - 1].endDate < new Date()
+        const endDate = habit.weeks[habit.weeks.length - 1].endDate
+        endDate.setHours(0, 0, 0, 0)
+        const now = new Date()
+        now.setHours(0, 0, 0, 0)
+        return endDate < new Date()
     }
 
     function updateStreak (habit) {
