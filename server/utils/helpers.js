@@ -61,10 +61,15 @@ function setEndDate (timezone) {
     return nextSaturday
 }
 
-async function setDaysArray (endDate) {
+async function setDaysArray (endDate, weekId) {
     const days = []
     for (let i = 0; i < 7; i++) {
-        const day = await Day.create({ date: endDate.getDate() - i })
+        const day = await Day.create(
+            {
+                date: endDate.getDate() - i,
+                completed: false,
+                week: weekId
+            })
         days.push(day)
     }
     return days

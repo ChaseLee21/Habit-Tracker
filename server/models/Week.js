@@ -12,7 +12,7 @@ const weekSchema = new Schema({
 // 0 is Sunday, 6 is Saturday
 weekSchema.on('init', function () {
     this.endDate = setEndDate(this.user.timezone)
-    this.days = setDaysArray(this.endDate)
+    this.days = setDaysArray(this.endDate, this._id)
     this.frequency = this.habit.frequency
 })
 
