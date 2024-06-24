@@ -26,6 +26,18 @@ function Habits (props) {
         fetchUser()
     }, [])
 
+    function handleDayCompleteSubmit (habit) {
+        // trigger axios putDay request
+    }
+
+    function findDay (habit) {
+        // return today's day object for the habit's week array
+        const day = habit.weeks[habit.weeks.length - 1].days.find(day => day.date === today)
+        console.log('day', day)
+        console.log('habit.weeks', habit.weeks)
+        return day
+    }
+
     return (
         <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
             <h2>Habit Progress</h2>
@@ -37,12 +49,12 @@ function Habits (props) {
                                 <h3>{habit.name}</h3>
                             </div>
                             {/* habit completed form */}
-                            {/* <form onSubmit={handleAnalyticsSubmit}>
+                            <form onSubmit={handleDayCompleteSubmit}>
                                 <input type="hidden" name="habitId" value={habit._id} />
                                 <button type="submit" className="rounded-md p-1">
-                                    {findHabitAnalyticForToday(habit).completed ? '✅' : '❌'}
+                                    {findDay(habit).completed ? '✅' : '❌'}
                                 </button>
-                            </form> */}
+                            </form>
                         </div>
                         <p className="text-sm">{habit.goal}</p>
                     </li>
