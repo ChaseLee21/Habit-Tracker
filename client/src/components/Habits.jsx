@@ -28,11 +28,24 @@ function Habits (props) {
     }, [])
 
     async function handleDayCompleteSubmit (habit) {
-        const day = findDay(habit)
+        const day = { ...findDay(habit) }
         day.completed = !day.completed
-        console.log('day', day)
-        await putDay(day)
-        // update state
+        const updatedDay = await putDay(day)
+        // Clone the current user state to avoid direct mutation
+        const updatedUser = { ...user }
+        // Find the habit in the cloned state
+        const habitToUpdate = updatedUser.habits.find(h => h._id === habit._id)
+        if (habitToUpdate) {
+            // Find the week in the habit
+            const weekToUpdate = habitToUpdate.weeks[habitToUpdate.weeks.length - 1]
+            if (weekToUpdate) {
+                // Find the day in the week and update its completed status
+                const dayToUpdate = weekToUpdate.days.find(d => d.date === today)
+                dayToUpdate.completed = updatedDay.completed
+            }
+        }
+
+        setUser(updatedUser)
     }
 
     function findDay (habit) {
