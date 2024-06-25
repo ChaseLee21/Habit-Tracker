@@ -1,5 +1,6 @@
 const { Day } = require('../models/index')
 const router = require('express').Router()
+const mongoose = require('mongoose')
 
 //  PUT day by id (used to update the completed status)
 router.put('/:id', async (req, res) => {
@@ -12,7 +13,14 @@ router.put('/:id', async (req, res) => {
             return
         }
         if (day.completed === true) {
-            // Using the week the day is in, find the habit and increment the streak
+            const Week = mongoose.model('Week')
+            const Habit = mongoose.model('Habit')
+            const week = await Week.findOne({ _id: day.week })
+            const habit = await Habit.findOne({ _id: week.habit })
+            if (habit.streak) {
+                habit.streak++
+                habit.save()
+            }
         }
         await day.save()
         res.status(200).json(day)
