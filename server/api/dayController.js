@@ -1,6 +1,7 @@
 const { Day } = require('../models/index')
 const router = require('express').Router()
 const mongoose = require('mongoose')
+const Habit = mongoose.model('Habit')
 
 //  PUT day by id (used to update the completed status)
 router.put('/:id', async (req, res) => {
@@ -12,16 +13,14 @@ router.put('/:id', async (req, res) => {
             res.status(404).json({ message: 'No day was found with that id' })
             return
         }
-        if (day.completed === true) {
-            const Week = mongoose.model('Week')
-            const Habit = mongoose.model('Habit')
-            const week = await Week.findOne({ _id: day.week })
-            const habit = await Habit.findOne({ _id: week.habit })
-            if (habit.streak) {
-                habit.streak++
-                habit.save()
-            }
+        // Update the streak
+        const habit = await Habit.findOne({ _id: day.habit })
+        if (day.completed === true && habit.streak !== undefined) {
+            habit.streak++
+        } else if (day.completed === false && habit.streak !== undefined) {
+            habit.streak--
         }
+        await habit.save()
         await day.save()
         res.status(200).json(day)
     } catch (err) {
