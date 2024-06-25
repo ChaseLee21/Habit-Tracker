@@ -10,6 +10,7 @@ function HabitSummary ({ habit, handleSaveHabit }) {
             <p>Goal: {habit.goal}</p>
             <p>Frequency: {habit.frequency} times a week</p>
             {habit.reward && <p>Reward: {habit.reward}</p>}
+            <p>Emoji: {habit.emoji}</p>
             <button className='bg-primaryBg text-primaryText rounded w-fit p-1 my-2' onClick={() => handleSaveHabit()}>Save</button>
         </div>
     )
@@ -22,7 +23,8 @@ HabitSummary.propTypes = {
         why: PropTypes.string.isRequired,
         goal: PropTypes.string.isRequired,
         frequency: PropTypes.number.isRequired,
-        reward: PropTypes.string.isRequired
+        reward: PropTypes.string.isRequired,
+        emoji: PropTypes.string.isRequired
     }).isRequired,
     handleSaveHabit: PropTypes.func.isRequired
 }

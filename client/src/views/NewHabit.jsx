@@ -205,6 +205,7 @@ function NewHabit (props) {
         })
     }
     const setHabitFrequency = (frequency) => {
+        frequency = parseInt(frequency)
         setHabit({ ...habit, frequency })
         setShowFrequencySelection(false)
         setShowRewardSelection(true)
