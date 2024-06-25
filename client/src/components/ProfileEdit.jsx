@@ -75,8 +75,8 @@ function ProfileEdit (props) {
                     <option value="Pacific/Auckland">Pacific/Auckland</option>
                 </select>
                 <div className='flex'>
-                    <button type="button" className="bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1" onClick={() => props.onEditCancel()}>Cancel</button>
                     <button type="submit" className="bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1">Update</button>
+                    <button type="button" className="bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1" onClick={() => props.onEditCancel()}>Cancel</button>
                 </div>
             </form>
         </section>
