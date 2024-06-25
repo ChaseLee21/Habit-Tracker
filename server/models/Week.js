@@ -15,7 +15,7 @@ weekSchema.pre('save', async function () {
         return
     }
     this.endDate = setEndDate(this.user.timezone)
-    this.days = await setDaysArray(this.endDate, this._id)
+    this.days = await setDaysArray(this.endDate, this._id, this.habit._id)
     this.frequency = this.habit.frequency
 })
 
