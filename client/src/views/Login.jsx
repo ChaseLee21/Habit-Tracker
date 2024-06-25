@@ -19,6 +19,7 @@ function Login () {
                         window.location.href = '/'
                     } else {
                         document.cookie = 'habitTrackerToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+                        setError('Your session has expired. Please login again.')
                     }
                 }
             } catch (err) {
