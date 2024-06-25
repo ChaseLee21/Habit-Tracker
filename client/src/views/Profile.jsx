@@ -25,6 +25,10 @@ function Profile (props) {
         fetchUser()
     }, [])
 
+    useEffect(() => {
+        document.title = 'Profile | Habit Tracker'
+    }, [])
+
     function onEditCancel () {
         setEdit(false)
     }
