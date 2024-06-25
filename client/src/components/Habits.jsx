@@ -43,6 +43,12 @@ function Habits (props) {
                 const dayToUpdate = weekToUpdate.days.find(d => d.date === today)
                 dayToUpdate.completed = updatedDay.completed
             }
+            // Update the streak
+            if (day.completed === true && habitToUpdate.streak !== undefined) {
+                habitToUpdate.streak++
+            } else if (day.completed === false && habitToUpdate.streak !== undefined) {
+                habitToUpdate.streak--
+            }
         }
 
         setUser(updatedUser)
