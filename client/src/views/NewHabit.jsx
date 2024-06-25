@@ -1,14 +1,14 @@
 import { React, useState, useEffect } from 'react'
 import { postHabit } from '../util/axios'
 import PropTypes from 'prop-types'
-import HabitSelection from '../components/HabitSelection'
-import DescriptionSelection from '../components/DescriptionSelection'
+import HabitSelection from '../components/new-habit/HabitSelection'
+import DescriptionSelection from '../components/new-habit/DescriptionSelection'
 import SectionHeader from '../components/SectionHeader'
-import WhySelection from '../components/WhySelection'
-import GoalSelection from '../components/GoalSelection'
-import FrequencySelection from '../components/FrequencySelection'
-import RewardSelection from '../components/RewardSelection'
-import HabitSummary from '../components/HabitSummary'
+import WhySelection from '../components/new-habit/WhySelection'
+import GoalSelection from '../components/new-habit/GoalSelection'
+import FrequencySelection from '../components/new-habit/FrequencySelection'
+import RewardSelection from '../components/new-habit/RewardSelection'
+import HabitSummary from '../components/new-habit/HabitSummary'
 
 function NewHabit (props) {
     // Variables
