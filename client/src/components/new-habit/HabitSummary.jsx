@@ -21,7 +21,7 @@ HabitSummary.propTypes = {
         description: PropTypes.string.isRequired,
         why: PropTypes.string.isRequired,
         goal: PropTypes.string.isRequired,
-        frequency: PropTypes.string.isRequired,
+        frequency: PropTypes.number.isRequired,
         reward: PropTypes.string.isRequired
     }).isRequired,
     handleSaveHabit: PropTypes.func.isRequired

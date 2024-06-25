@@ -24,10 +24,10 @@ function DescriptionSelection ({ descriptions, onItemClick }) {
             </div>
             <div>
                 {!descriptions &&
-                <form>
+                <div className='flex flex-col'>
                     <input className='rounded w-full px-1' id='descriptionInput' type='text' max='100' onChange={handleInputChange}></input>
-                    <button className='bg-primaryBg text-primaryText rounded w-fit p-1 my-2' onClick={() => onItemClick(descriptionInput)}>Next</button>
-                </form>
+                    <button type='button' className='bg-primaryBg text-primaryText rounded w-fit p-1 my-2' onClick={() => onItemClick(descriptionInput)}>Next</button>
+                </div>
                 }
             </div>
         </section>
