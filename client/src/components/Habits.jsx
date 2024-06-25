@@ -43,6 +43,12 @@ function Habits (props) {
                 const dayToUpdate = weekToUpdate.days.find(d => d.date === today)
                 dayToUpdate.completed = updatedDay.completed
             }
+            // Update the streak
+            if (day.completed === true && habitToUpdate.streak !== undefined) {
+                habitToUpdate.streak++
+            } else if (day.completed === false && habitToUpdate.streak !== undefined) {
+                habitToUpdate.streak--
+            }
         }
 
         setUser(updatedUser)
@@ -62,7 +68,7 @@ function Habits (props) {
                     <li key={habit._id} className="m-2">
                         <div className="flex justify-between">
                             <div className="flex">
-                                <h3>{habit.name}</h3>
+                                <h3>{habit.streak}{habit.emoji} {habit.name}</h3>
                             </div>
                             {/* habit completed form */}
                             <form>

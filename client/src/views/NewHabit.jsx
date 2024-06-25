@@ -143,7 +143,7 @@ function NewHabit (props) {
 
     // Lifecycle Methods
     useEffect(() => {
-        document.title = 'Create a New Habit - Habit Tracker'
+        document.title = 'Create Habit - Habit Tracker'
         const localStorageHabit = JSON.parse(localStorage.getItem('newHabit'))
         if (localStorageHabit) {
             const contiueWithHabit = window.confirm(`You left off creating a new habit in progress. Do you want to continue with ${localStorageHabit.name}?`)

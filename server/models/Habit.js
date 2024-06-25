@@ -9,7 +9,8 @@ const habitSchema = new Schema({
     reward: { type: String, required: false },
     frequency: { type: Number, required: true },
     streak: { type: Number, required: false },
-    weeks: [{ type: Schema.Types.ObjectId, ref: 'Week' }]
+    weeks: [{ type: Schema.Types.ObjectId, ref: 'Week' }],
+    emoji: { type: String, required: false }
 })
 
 habitSchema.pre('save', async function () {
