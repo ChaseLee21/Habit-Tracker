@@ -2,7 +2,7 @@ import { React, useState } from 'react'
 import PropTypes from 'prop-types'
 
 function FrequencySelection ({ onItemClick }) {
-    const [frequency, setFrequency] = useState('')
+    const [frequency, setFrequency] = useState('1')
     const handleInputChange = (e) => {
         setFrequency(e.target.value)
     }
