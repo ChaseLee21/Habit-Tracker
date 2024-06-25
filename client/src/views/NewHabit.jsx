@@ -9,6 +9,7 @@ import WhySelection from '../components/new-habit/WhySelection'
 import GoalSelection from '../components/new-habit/GoalSelection'
 import FrequencySelection from '../components/new-habit/FrequencySelection'
 import RewardSelection from '../components/new-habit/RewardSelection'
+import EmojiSelection from '../components/new-habit/EmojiSelection'
 import HabitSummary from '../components/new-habit/HabitSummary'
 
 function NewHabit (props) {
@@ -141,6 +142,7 @@ function NewHabit (props) {
     const [ShowGoalSelection, setShowGoalSelection] = useState(false)
     const [showFrequencySelection, setShowFrequencySelection] = useState(false)
     const [showRewardSelection, setShowRewardSelection] = useState(false)
+    const [showEmojiSelection, setShowEmojiSelection] = useState(false)
     const [showHabitSummary, setShowHabitSummary] = useState(false)
 
     // Lifecycle Methods
@@ -214,6 +216,15 @@ function NewHabit (props) {
     const setHabitReward = (reward) => {
         setHabit({ ...habit, reward })
         setShowRewardSelection(false)
+        setShowEmojiSelection(true)
+        setSectionHeader({
+            title: 'Emoji',
+            subtext: 'Choose an emoji to represent your new habit!'
+        })
+    }
+    const setHabitEmoji = (emoji) => {
+        setHabit({ ...habit, emoji })
+        setShowEmojiSelection(false)
         setShowHabitSummary(true)
         setSectionHeader({
             title: 'Habit Summary',
@@ -237,6 +248,7 @@ function NewHabit (props) {
             {ShowGoalSelection && <GoalSelection onItemClick={setHabitGoal} />}
             {showFrequencySelection && <FrequencySelection onItemClick={setHabitFrequency} />}
             {showRewardSelection && <RewardSelection onItemClick={setHabitReward} />}
+            {showEmojiSelection && <EmojiSelection onItemClick={setHabitEmoji} />}
             {showHabitSummary && <HabitSummary habit={habit} handleSaveHabit={saveHabit}/>}
         </section>
     )
