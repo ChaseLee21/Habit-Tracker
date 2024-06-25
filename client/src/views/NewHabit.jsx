@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react'
 import { postHabit } from '../util/axios'
 import PropTypes from 'prop-types'
 import HabitSelection from '../components/new-habit/HabitSelection'
+import NameSelection from '../components/new-habit/NameSelection'
 import DescriptionSelection from '../components/new-habit/DescriptionSelection'
 import SectionHeader from '../components/SectionHeader'
 import WhySelection from '../components/new-habit/WhySelection'
@@ -121,7 +122,7 @@ function NewHabit (props) {
             icon: '🎸'
         },
         {
-            name: 'Create a new habit',
+            name: 'Create a habit of your own',
             descriptionOptions: [],
             icon: '🚀'
         }
@@ -134,6 +135,7 @@ function NewHabit (props) {
         subtext: 'To help accelerate the process of creating a new habit we gave you some starting points. You will make goals and define your habit soon, this is just a starting point to get you going!'
     })
     const [ShowHabitSelection, setShowHabitSelection] = useState(true)
+    const [showNameSelection, setShowNameSelection] = useState(false)
     const [showDescriptionSelection, setShowDescriptionSelection] = useState(false)
     const [showWhySelection, setShowWhySelection] = useState(false)
     const [ShowGoalSelection, setShowGoalSelection] = useState(false)
@@ -148,12 +150,29 @@ function NewHabit (props) {
 
     // Event Handlers
     const setHabitSelection = (newHabit) => {
-        setHabit(newHabit)
         setShowHabitSelection(false)
+        if (newHabit.name === 'Create a habit of your own') {
+            setShowNameSelection(true)
+            setSectionHeader({
+                title: 'Name Your Habit',
+                subtext: 'Make it simple and easy to remember, like "Exercise" or "Read". What will you call your new habit?'
+            })
+        } else {
+            setShowDescriptionSelection(true)
+            setHabit(newHabit)
+            setSectionHeader({
+                title: newHabit.name,
+                subtext: `You have taken the first step! Now let's define your habit. What will you do to ${newHabit.name}?`
+            })
+        }
+    }
+    const setHabitName = (name) => {
+        setHabit({ ...habit, name })
+        setShowNameSelection(false)
         setShowDescriptionSelection(true)
         setSectionHeader({
-            title: newHabit.name,
-            subtext: `You have taken the first step! Now let's define your habit. What will you do to ${newHabit.name}?`
+            title: name,
+            subtext: `You have taken the first step! Now let's define your habit. What will you do for ${name}?`
         })
     }
     const setHabitDescription = (description) => {
@@ -212,6 +231,7 @@ function NewHabit (props) {
         <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 shadow-xl">
             <SectionHeader title={sectionHeader.title} subtext={sectionHeader.subtext} />
             {ShowHabitSelection && <HabitSelection defaultHabits={defaultHabits} onItemClick={setHabitSelection} />}
+            {showNameSelection && <NameSelection onItemClick={setHabitName} />}
             {showDescriptionSelection && <DescriptionSelection descriptions={habit.descriptionOptions} onItemClick={setHabitDescription} />}
             {showWhySelection && <WhySelection onItemClick={setHabitWhy} />}
             {ShowGoalSelection && <GoalSelection onItemClick={setHabitGoal} />}
