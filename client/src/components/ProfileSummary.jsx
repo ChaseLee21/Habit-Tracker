@@ -27,14 +27,19 @@ function ProfileSummary (props) {
 
     return (
         <section>
-            <p>Username: {user.name}</p>
-            <p>Email: {user.email}</p>
-            <p>Timezone: {user.timezone}</p>
-            {!editHabit && <ul>
+            {!editHabit && <div className='bg-white text-black rounded p-2 my-2 w-full'>
+                <div className='flex justify-between'>
+                    <p>Username: {user.name}</p>
+                    <button className='bg-primaryBg text-primaryText rounded px-2 w-fit' onClick={() => props.onEditClick()}>Edit</button>
+                </div>
+                <p>Email: {user.email}</p>
+                <p>Timezone: {user.timezone}</p>
+            </div>}
+            {!editHabit && <ul className='flex flex-col'>
                 {user.habits && user.habits.map(habit => {
-                    return <li className='bg-primaryBg text-primaryText rounded p-2 my-2 w-fit' key={habit._id}>
+                    return <li className='bg-white text-black rounded p-2 my-2 w-full' key={habit._id}>
                         <div className='flex justify-between'>
-                            <p>{habit.name}</p>
+                            <p>{habit.emoji}{habit.name}</p>
                             <button className='bg-primaryBg text-primaryText rounded px-2 w-fit hover:underline' onClick={() => handleEditHabit(habit)}>Edit</button>
                         </div>
                         <p>{habit.description}</p>
@@ -67,10 +72,12 @@ ProfileSummary.propTypes = {
             description: PropTypes.string.isRequired,
             why: PropTypes.string.isRequired,
             goal: PropTypes.string.isRequired,
-            frequency: PropTypes.string.isRequired,
-            reward: PropTypes.string
+            frequency: PropTypes.number.isRequired,
+            reward: PropTypes.string,
+            emoji: PropTypes.string
         }))
-    }).isRequired
+    }).isRequired,
+    onEditClick: PropTypes.func.isRequired
 }
 
 export default ProfileSummary
