@@ -78,9 +78,10 @@ async function login (userData) {
     try {
         const request = await axios.post('/api/login', userData, { withCredentials: true })
         console.log(request)
-        return request.data
+        return request
     } catch (err) {
         console.log(err)
+        return err.response
     }
 }
 
