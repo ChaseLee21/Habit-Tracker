@@ -144,22 +144,7 @@ function NewHabit (props) {
     // Lifecycle Methods
     useEffect(() => {
         document.title = 'Create Habit - Habit Tracker'
-        const localStorageHabit = JSON.parse(localStorage.getItem('newHabit'))
-        if (localStorageHabit) {
-            const contiueWithHabit = window.confirm(`You left off creating a new habit in progress. Do you want to continue with ${localStorageHabit.name}?`)
-            if (contiueWithHabit) {
-                setHabit(localStorageHabit)
-                // TODO: when user confirms to continue, set the page to show the next step they were on
-                ShowHabitSelection(false)
-            } else {
-                localStorage.removeItem('newHabit')
-                ShowHabitSelection(true)
-            }
-        }
     }, [])
-    useEffect(() => {
-        localStorage.setItem('newHabit', JSON.stringify(habit))
-    }, [habit])
 
     // Event Handlers
     const setHabitSelection = (newHabit) => {
@@ -217,7 +202,10 @@ function NewHabit (props) {
         })
     }
     const saveHabit = async () => {
-        await postHabit(userId, { ...habit, user: userId })
+        const newHabit = await postHabit(userId, { ...habit, user: userId })
+        if (newHabit !== null) {
+            window.location.href = '/'
+        }
     }
 
     return (
