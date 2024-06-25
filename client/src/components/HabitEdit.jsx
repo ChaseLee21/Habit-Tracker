@@ -43,10 +43,12 @@ function HabitEdit (props) {
                 <input id='habitFrequency' type='text' defaultValue={habit.frequency} className="p-1 m-1 rounded-md" onChange={updateFrequency}></input>
                 <label htmlFor='habitReward' className="text-secondaryText">Habit Rewards:</label>
                 <input id='habitReward' type='text' defaultValue={habit.reward} className="p-1 m-1 rounded-md" onChange={updateReward}></input>
-                <div className='flex'>
-                    <button type='button' onClick={() => props.onSubmit(habit)} className='bg-primaryBg text-primaryText rounded px-2 w-fit hover:underline mx-2'>Save</button>
-                    <button type='button' onClick={() => props.onCancel()} className='bg-primaryBg text-primaryText rounded px-2 w-fit hover:underline mx-2'>Cancel</button>
-                    <button type='button' onClick={() => props.onDelete(habit)} className='bg-red-600 text-primaryText rounded px-2 w-fit hover:underline mx-2'>Delete</button>
+                <div className='flex justify-between'>
+                    <div>
+                        <button type='button' onClick={() => props.onSubmit(habit)} className='bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1'>Save</button>
+                        <button type='button' onClick={() => props.onCancel()} className='bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1'>Cancel</button>
+                    </div>
+                    <button type='button' onClick={() => props.onDelete(habit)} className='bg-red-600 text-primaryText w-fit p-2 rounded-md m-1'>Delete</button>
                 </div>
             </form>
         </section>
