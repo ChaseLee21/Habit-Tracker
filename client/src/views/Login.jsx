@@ -1,9 +1,14 @@
 import { validateEmail, validateLoginPassword } from '../util/validate-helpers'
-import { React, useEffect } from 'react'
+import { React, useEffect, useState } from 'react'
 import { login, checkToken } from '../util/axios'
 import { Link } from 'react-router-dom'
+import ErrorAlert from '../components/ErrorAlert'
 
 function Login () {
+    // Variables
+    const [error, setError] = useState('')
+
+    // Lifecycle methods
     useEffect(() => {
         async function checkExpiredToken () {
             try {
@@ -23,6 +28,7 @@ function Login () {
         checkExpiredToken()
     }, [])
 
+    // Functions
     const handleLoginSubmit = async (e) => {
         e.preventDefault()
         const email = e.target.email.value
@@ -30,20 +36,18 @@ function Login () {
         if (validateForm(email, password)) {
             const userData = { email, password }
             const user = await login(userData)
-            console.log('User LoggedIn: ', user)
-            window.location.href = '/'
+            console.log(user)
+            if (user.status === 401 || !user) {
+                setError('Invalid email or password')
+            } else if (user.status === 200 || user.statusText === 'OK') {
+                window.location.href = '/'
+            }
         }
     }
 
     function validateForm (email, password) {
-        if (!validateEmail(email)) {
-            alert('Invalid email')
-            console.log('Invalid email')
-            return false
-        }
-        if (!validateLoginPassword(password)) {
-            alert('Invalid password')
-            console.log('Invalid password')
+        if (!validateEmail(email) || !validateLoginPassword(password)) {
+            setError('Please input a valid email and password')
             return false
         }
         return true
@@ -52,6 +56,7 @@ function Login () {
     return (
         <>
             <h2 className="flex rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">Login</h2>
+            {error && <ErrorAlert message={error} handleCloseAlert={() => setError(null)}/>}
             <form className="flex flex-col m-2 p-2 bg-secondaryBg rounded-md shadow-xl" onSubmit={handleLoginSubmit}>
                 <label htmlFor="email" className="text-secondaryText">Email:</label>
                 <input type="email" id="email" name="email" autoComplete='email' className="p-1 m-1 rounded-md" />
