@@ -14,7 +14,7 @@ function Home (props) {
             <Day {...props}/>
             <Habits {...props} />
             {/* <Todos /> */}
-            <Progress />
+            {/* <Progress /> */}
         </>
     )
 }
