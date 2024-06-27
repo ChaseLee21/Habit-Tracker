@@ -56,15 +56,15 @@ function Login () {
 
     return (
         <>
-            <h2 className="flex rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">Login</h2>
+            <h2 className="flex rounded-md bg-colorBg text-colortext p-2 text-2xl">Login</h2>
             {error && <ErrorAlert message={error} handleCloseAlert={() => setError(null)}/>}
-            <form className="flex flex-col m-2 p-2 bg-secondaryBg rounded-md shadow-xl" onSubmit={handleLoginSubmit}>
-                <label htmlFor="email" className="text-secondaryText">Email:</label>
-                <input type="email" id="email" name="email" autoComplete='email' className="p-1 m-1 rounded-md" />
-                <label htmlFor="password" className="text-secondaryText">Password:</label>
-                <input type="password" id="password" name="password" autoComplete='current-password' className="p-1 m-1 rounded-md" />
-                <button type="submit" className="bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1">Login</button>
-                <p>Do not have an account? <Link to={'/register'} className='text-blue-800 underline'>Click here to register</Link></p>
+            <form className="flex flex-col m-2 p-2 bg-colorBgAlt rounded shadow-md shadow-colorShadow " onSubmit={handleLoginSubmit}>
+                <label htmlFor="email" className="text-lg p-1 mx-2">Email:</label>
+                <input type="email" id="email" name="email" autoComplete='email' className="p-1 m-2 rounded-md" />
+                <label htmlFor="password" className="text-lg p-1 mx-2">Password:</label>
+                <input type="password" id="password" name="password" autoComplete='current-password' className="p-1 m-2 rounded-md" />
+                <button type="submit" className="bg-colorButtonBg text-colorButtonText w-fit p-2 rounded-md m-2">Login</button>
+                <p>Do not have an account? <Link to={'/register'} className='text-colorLink hover:text-colorLinkHover underline'>Click here to register</Link></p>
             </form>
         </>
     )
