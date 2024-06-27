@@ -7,9 +7,9 @@ function WhySelection ({ onItemClick }) {
         setWhy(e.target.value)
     }
     return (
-        <div className='flex flex-col'>
+        <div className='p-2 bg-colorBgAlt rounded-md cursor-pointer '>
             <input className='rounded w-full px-1' id='whyInput' type='text' max='100' onInput={handleInputChange}></input>
-            <button className='bg-primaryBg text-primaryText rounded w-fit p-1 my-2' onClick={() => onItemClick(why)}>Next</button>
+            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => onItemClick(why)}>Next</button>
         </div>
     )
 }

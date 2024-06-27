@@ -168,7 +168,7 @@ function NewHabit (props) {
         setShowDescriptionSelection(true)
         setSectionHeader({
             title: name,
-            subtext: `You have taken the first step! Now let's define your habit. What will you do for ${name}?`
+            subtext: `Perfect, You've choosen ${name.toLowerCase()}! Define the habit a little more. What will you do?`
         })
     }
     const setHabitDescription = (description) => {
@@ -176,8 +176,8 @@ function NewHabit (props) {
         setShowDescriptionSelection(false)
         setShowWhySelection(true)
         setSectionHeader({
-            title: 'Why?',
-            subtext: 'Why do you want to create this new habit?'
+            title: 'Why',
+            subtext: `I will ${description} because... `
         })
     }
     const setHabitWhy = (why) => {
@@ -186,7 +186,7 @@ function NewHabit (props) {
         setShowGoalSelection(true)
         setSectionHeader({
             title: 'Create a Goal',
-            subtext: 'Remember when setting a new habit for the first time it is important to start small. A good rule of thumb when starting a new habit is to follow the 2 minute rule. Your goal should be so small that it takes less than 2 minutes to complete. In the future you will increase this goal.'
+            subtext: 'I finish my habit for the day when'
         })
     }
     const setHabitGoal = (goal) => {
@@ -194,7 +194,7 @@ function NewHabit (props) {
         setShowGoalSelection(false)
         setShowFrequencySelection(true)
         setSectionHeader({
-            title: 'How often will you do this habit?',
+            title: 'How many times per week will you do this habit?',
             subtext: ''
         })
     }
@@ -234,7 +234,7 @@ function NewHabit (props) {
     }
 
     return (
-        <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 shadow-xl">
+        <section className="flex flex-col rounded-md m-2 bg-colorBg text-colorText p-2">
             <SectionHeader title={sectionHeader.title} subtext={sectionHeader.subtext} />
             {ShowHabitSelection && <HabitSelection defaultHabits={defaultHabits} onItemClick={setHabitSelection} />}
             {showNameSelection && <NameSelection onItemClick={setHabitName} />}
