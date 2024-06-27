@@ -61,7 +61,7 @@ function Habits (props) {
     }
 
     return (
-        <section className="bg-colorBg text-colorText rounded p-2 w-full">
+        <section className="bg-colorBg text-colorText rounded p-2 w-fit">
             <h2 className='text-2xl'>My Habits</h2>
             <ul className="list-inside">
                 {user.habits && user.habits.map(habit => (

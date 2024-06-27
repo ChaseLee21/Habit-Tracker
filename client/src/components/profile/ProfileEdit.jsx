@@ -39,7 +39,7 @@ function ProfileEdit (props) {
     }
 
     return (
-        <section className='bg-colorBg text-colorText rounded w-full h-fit m-2'>
+        <section className='bg-colorBg text-colorText rounded h-fit m-2'>
             <form className="flex flex-col bg-colorBgAlt rounded shadow-md shadow-colorShadow text-lg" onSubmit={handleUpdateProfileSubmit}>
                 <h2 className='text-2xl p-1 mx-2'>Profile Settings</h2>
                 <label htmlFor="email" className="p-1 mx-2">Email:</label>

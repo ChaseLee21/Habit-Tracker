@@ -55,7 +55,7 @@ function Login () {
     }
 
     return (
-        <section className='bg-colorBg text-colorText rounded p-2 m-2 w-full h-fit'>
+        <section className='bg-colorBg text-colorText rounded p-2 m-2 h-fit'>
             <h2 className="text-2xl">Login</h2>
             {error && <ErrorAlert message={error} handleCloseAlert={() => setError(null)}/>}
             <form className="flex flex-col m-2 p-2 bg-colorBgAlt rounded shadow-md shadow-colorShadow text-lg" onSubmit={handleLoginSubmit}>

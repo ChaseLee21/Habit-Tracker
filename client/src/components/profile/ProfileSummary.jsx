@@ -28,18 +28,16 @@ function ProfileSummary (props) {
     return (
         <section>
             {!editHabit &&
-                <div className='bg-colorBg text-colorText rounded p-2 me-2 w-full'>
-                    <div className='flex justify-between'>
-                        <h2 className='text-2xl'>My Profile</h2>
-                        <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit hover:text-colorLinkHover' onClick={() => props.onEditClick()}>Edit</button>
-                    </div>
-                    <p>Username: {user.name}</p>
-                    <p>Email: {user.email}</p>
-                    <p>Timezone: {user.timezone}</p>
-                </div>
-            }
-            {!editHabit &&
-                <ul className='bg-colorBg text-colorText rounded w-full'>
+                <ul className='bg-colorBg text-colorText rounded w-fit'>
+                    <li className='bg-colorBg text-colorText rounded p-2 me-2 w-full'>
+                        <div className='flex justify-between'>
+                            <h2 className='text-2xl'>My Profile</h2>
+                            <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit hover:text-colorLinkHover' onClick={() => props.onEditClick()}>Edit</button>
+                        </div>
+                        <p>Username: {user.name}</p>
+                        <p>Email: {user.email}</p>
+                        <p>Timezone: {user.timezone}</p>
+                    </li>
                     {user.habits && user.habits.map(habit => {
                         return <li className='bg-colorBg text-colorText rounded my-2 p-2 w-full' key={habit._id}>
                             <div className='flex justify-between'>

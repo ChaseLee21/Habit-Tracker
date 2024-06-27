@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Header () {
     return (
-        <header className="flex flex-col justify-between bg-colorPrimary text-colorSecondary w-1/5 min-h-[100vh]">
+        <header className="flex flex-col justify-between bg-colorPrimary text-colorSecondary min-h-[100vh]">
             <div className="p-2">
                 <h1 className="text-colorSecondary hover:text-colorSecondaryDark text-2xl text-center">
                     <Link to={'/'}>Habit Tracker</Link>
