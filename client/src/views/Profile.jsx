@@ -38,9 +38,9 @@ function Profile (props) {
     }
 
     return (
-        <div className="flex flex-col rounded-md p-2 bg-colorBg text-colorText">
+        <div className="flex flex-col rounded-md m-2 p-2 bg-colorBg text-colorText">
             <header className='flex justify-between'>
-                <h2 className='text-2xl'>Your Profile</h2>
+                <h2 className='text-2xl'>My Profile</h2>
             </header>
             <main>
                 {user.name && !edit && <ProfileSummary user={user} onEditClick={() => setEdit(!edit)} />}
