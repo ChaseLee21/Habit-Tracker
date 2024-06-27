@@ -8,7 +8,6 @@ import SectionHeader from '../components/SectionHeader'
 import WhySelection from '../components/new-habit/WhySelection'
 import GoalSelection from '../components/new-habit/GoalSelection'
 import FrequencySelection from '../components/new-habit/FrequencySelection'
-import RewardSelection from '../components/new-habit/RewardSelection'
 import EmojiSelection from '../components/new-habit/EmojiSelection'
 import HabitSummary from '../components/new-habit/HabitSummary'
 
@@ -135,7 +134,6 @@ function NewHabit (props) {
     const [showWhySelection, setShowWhySelection] = useState(false)
     const [ShowGoalSelection, setShowGoalSelection] = useState(false)
     const [showFrequencySelection, setShowFrequencySelection] = useState(false)
-    const [showRewardSelection, setShowRewardSelection] = useState(false)
     const [showEmojiSelection, setShowEmojiSelection] = useState(false)
     const [showHabitSummary, setShowHabitSummary] = useState(false)
 
@@ -202,19 +200,10 @@ function NewHabit (props) {
         frequency = parseInt(frequency)
         setHabit({ ...habit, frequency })
         setShowFrequencySelection(false)
-        setShowRewardSelection(true)
-        setSectionHeader({
-            title: 'Reward',
-            subtext: 'Optionally, you can set a reward for completing the habit a certain amount of times in a row.'
-        })
-    }
-    const setHabitReward = (reward) => {
-        setHabit({ ...habit, reward })
-        setShowRewardSelection(false)
         setShowEmojiSelection(true)
         setSectionHeader({
             title: 'Emoji',
-            subtext: 'Choose an emoji to represent your new habit!'
+            subtext: 'Select an emoji to represent your habit. This will be represent your habit.'
         })
     }
     const setHabitEmoji = (emoji) => {
@@ -242,7 +231,6 @@ function NewHabit (props) {
             {showWhySelection && <WhySelection onItemClick={setHabitWhy} />}
             {ShowGoalSelection && <GoalSelection onItemClick={setHabitGoal} />}
             {showFrequencySelection && <FrequencySelection onItemClick={setHabitFrequency} />}
-            {showRewardSelection && <RewardSelection onItemClick={setHabitReward} />}
             {showEmojiSelection && <EmojiSelection onItemClick={setHabitEmoji} />}
             {showHabitSummary && <HabitSummary habit={habit} handleSaveHabit={saveHabit}/>}
         </section>
