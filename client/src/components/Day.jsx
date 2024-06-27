@@ -23,7 +23,7 @@ function Day (props) {
 
     return (
         <>
-            <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
+            <section className="flex flex-col rounded-md m-2 bg-colorBg text-colorText p-2 text-xl shadow-md">
                 <h2>Today is {days[weekDay]}, {months[month]} {numbers[date]}</h2>
                 <p>{ time }</p>
             </section>

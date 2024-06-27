@@ -61,14 +61,13 @@ function Habits (props) {
     }
 
     return (
-        <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">
-            <h2>Habit Progress</h2>
+        <section className="flex flex-col rounded-md m-2 p-2 bg-colorBg text-colorText shadow-md shadow-colorShadow">
             <ul className="list-inside">
                 {user.habits && user.habits.map(habit => (
                     <li key={habit._id} className="m-2">
                         <div className="flex justify-between">
                             <div className="flex">
-                                <h3>{habit.streak}{habit.emoji} {habit.name}</h3>
+                                <h3 className='text-xl'>{habit.streak}{habit.emoji} {habit.name}</h3>
                             </div>
                             {/* habit completed form */}
                             <form>
@@ -77,7 +76,7 @@ function Habits (props) {
                                 </button>
                             </form>
                         </div>
-                        <p className="text-sm">{habit.goal}</p>
+                        <p className="text-base">{habit.goal}</p>
                     </li>
                 ))}
             </ul>

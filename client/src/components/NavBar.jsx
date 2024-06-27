@@ -10,7 +10,7 @@ function Header () {
 
     return (
         <>
-            <header className="bg-colorBg text-colorText">
+            <header className="bg-colorPrimary text-colorText">
                 <div className="flex justify-between items-center p-2">
                     <button onClick={() => handleNavBarClick()}>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -19,7 +19,7 @@ function Header () {
                     </button>
                     <h1 className="text-primaryText text-2xl mx-2">Habit Builder</h1>
                 </div>
-                {showMenu && (<nav className="bg-colorBgAlt text-colorTextInverse">
+                {showMenu && (<nav className="bg-colorBg text-colorText">
                     <ul className="py-2 text-lg">
                         {document.cookie.includes('habitTrackerToken') &&
                             <li className="border-b p-1 ps-3 hover:text-highlight text-secondaryText">
