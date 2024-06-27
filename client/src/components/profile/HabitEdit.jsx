@@ -23,10 +23,6 @@ function HabitEdit (props) {
         setHabit({ ...habit, frequency: e.target.value })
     }
 
-    const updateReward = (e) => {
-        setHabit({ ...habit, reward: e.target.value })
-    }
-
     const updateEmoji = (emoji) => {
         setShowEmojis(false)
         setHabit({ ...habit, emoji })
@@ -34,19 +30,17 @@ function HabitEdit (props) {
 
     return (
         <section className='bg-colorBg text-colorText rounded w-full h-fit m-2'>
-            <h2 className="text-2xl">{habit.name}</h2>
             <form className="flex flex-col bg-colorBgAlt rounded shadow-md shadow-colorShadow text-lg">
-                <label htmlFor='habitDescription' className="p-1 mx-2">This habit is about:</label>
+                <h2 className="text-2xl p-1 mx-2">{habit.name}</h2>
+                <label htmlFor='habitDescription' className="p-1 mx-2">I will {habit.description}</label>
                 <input id='habitDescription' type='text' defaultValue={habit.description} className="p-1 m-1 rounded-md" onChange={updateDescription}></input>
-                <label htmlFor='habitWhy' className="p-1 mx-2">I want to make this habit apart of my life so:</label>
+                <label htmlFor='habitWhy' className="p-1 mx-2">Because {habit.why}</label>
                 <input id='habitWhy' type='text' defaultValue={habit.why} className="p-1 m-1 rounded-md" onChange={updateWhy}></input>
-                <label htmlFor='habitGoal' className="p-1 mx-2">I finish my habit for the day when:</label>
+                <label htmlFor='habitGoal' className="p-1 mx-2">I finish my habit for the day when {habit.goal}</label>
                 <input id='habitGoal' type='text' defaultValue={habit.goal} className="p-1 m-1 rounded-md" onChange={updateGoal}></input>
-                <label htmlFor='habitFrequency' className="p-1 mx-2">Times per week habit should be completed:</label>
+                <label htmlFor='habitFrequency' className="p-1 mx-2">I will do this habit {habit.frequency} time(s) this week</label>
                 <input id='habitFrequency' type='text' defaultValue={habit.frequency} className="p-1 m-1 rounded-md" onChange={updateFrequency}></input>
-                <label htmlFor='habitReward' className="p-1 mx-2">Rewards:</label>
-                <input id='habitReward' type='text' defaultValue={habit.reward} className="p-1 m-1 rounded-md" onChange={updateReward}></input>
-                <button className='bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1 hover:cursor-pointer' type='button' onClick={() => setShowEmojis(!showEmojis)}>Change Emoji: {habit.emoji}</button>
+                <button className='text-primaryText w-fit p-2 rounded-md m-1 hover:cursor-pointer' type='button' onClick={() => setShowEmojis(!showEmojis)}>Change Emoji: <span className='bg-white rounded p-1'>{habit.emoji}</span></button>
                 {showEmojis && <div className='flex flex-wrap'>
                     {emojis.map((emoji, index) => (
                         <button key={index} type='button' className='text-4xl m-1' onClick={() => updateEmoji(emoji)}>
@@ -56,10 +50,10 @@ function HabitEdit (props) {
                 </div>}
                 <div className='flex justify-between'>
                     <div>
-                        <button type='button' onClick={() => props.onSubmit(habit)} className='bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1'>Save</button>
-                        <button type='button' onClick={() => props.onCancel()} className='bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1'>Cancel</button>
+                        <button type='button' onClick={() => props.onSubmit(habit)} className='bg-colorButtonBgAlt text-colorButtonTextAlt w-fit p-2 rounded-md m-1'>Save</button>
+                        <button type='button' onClick={() => props.onCancel()} className='bg-colorButtonBgAlt text-colorButtonTextAlt w-fit p-2 rounded-md m-1'>Cancel</button>
                     </div>
-                    <button type='button' onClick={() => props.onDelete(habit)} className='bg-red-600 text-primaryText w-fit px-2 rounded-md m-1'>Delete</button>
+                    <button type='button' onClick={() => props.onDelete(habit)} className='bg-colorButtonBgAlt text-colorButtonTextAlt w-fit px-2 rounded-md m-1'>Delete</button>
                 </div>
             </form>
         </section>

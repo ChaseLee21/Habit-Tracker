@@ -79,7 +79,7 @@ function Habits (props) {
                         </div>
                         <p className="text-base">I will {habit.description}</p>
                         <p className="text-base">Because {habit.why}</p>
-                        <p className="text-base">I finish my habit when {habit.goal}</p>
+                        <p className="text-base">I finish my habit for the day when {habit.goal}</p>
                         {habit.frequency === 1 && <p className="text-base">I will do this habit {habit.frequency} time this week</p>}
                         {habit.frequency > 1 && <p className="text-base">I will do this habit {habit.frequency} times this week</p>}
                     </li>
