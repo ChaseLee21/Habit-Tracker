@@ -27,7 +27,7 @@ function ProfileSummary (props) {
 
     return (
         <section>
-            {!editHabit && <div className='bg-colorBgAlt text-colorText rounded p-2 my-2 w-full'>
+            {!editHabit && <div className='bg-colorBg text-colorText rounded p-2 my-2 w-full border-colorBorder border'>
                 <div className='flex justify-between'>
                     <p>Username: {user.name}</p>
                     <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit' onClick={() => props.onEditClick()}>Edit</button>
@@ -37,7 +37,7 @@ function ProfileSummary (props) {
             </div>}
             {!editHabit && <ul className='flex flex-col'>
                 {user.habits && user.habits.map(habit => {
-                    return <li className='bg-colorBgAlt text-colorText rounded p-2 my-2 w-full' key={habit._id}>
+                    return <li className='bg-colorBg text-colorText rounded p-2 my-2 w-full border-colorBorder border' key={habit._id}>
                         <div className='flex justify-between'>
                             <p>{habit.emoji}{habit.name}</p>
                             <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit hover:underline' onClick={() => handleEditHabit(habit)}>Edit</button>
