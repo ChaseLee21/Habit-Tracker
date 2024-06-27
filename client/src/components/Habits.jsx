@@ -68,7 +68,7 @@ function Habits (props) {
                     <li key={habit._id} className="m-2">
                         <div className="flex justify-between">
                             <div className="flex">
-                                <h3 className='text-xl'>{habit.streak}{habit.emoji} {habit.name}</h3>
+                                <h3 className='text-xl'>{habit.emoji} {habit.name}</h3>
                             </div>
                             {/* habit completed form */}
                             <form>
@@ -77,7 +77,11 @@ function Habits (props) {
                                 </button>
                             </form>
                         </div>
-                        <p className="text-base">{habit.goal}</p>
+                        <p className="text-base">I will {habit.description}</p>
+                        <p className="text-base">Because {habit.why}</p>
+                        <p className="text-base">I finish my habit when {habit.goal}</p>
+                        {habit.frequency === 1 && <p className="text-base">I will do this habit {habit.frequency} time this week</p>}
+                        {habit.frequency > 1 && <p className="text-base">I will do this habit {habit.frequency} times this week</p>}
                     </li>
                 ))}
             </ul>
