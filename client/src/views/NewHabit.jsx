@@ -19,113 +19,107 @@ function NewHabit (props) {
         {
             name: 'Exercise',
             descriptionOptions: [
-                'Go for a run, jog, or walk',
-                'Do some exercises at home',
-                'Do some yoga',
-                'Go to the gym'
+                'go for a run, jog, or walk',
+                'do exercises at home',
+                'do yoga',
+                'go to the gym'
             ],
-            icon: '🏋️‍♂️'
+            emoji: '🏋️‍♂️'
         },
         {
             name: 'Eat Healthy',
             descriptionOptions: [
-                'Cook more meals at home',
-                'Follow a meal plan or diet',
-                'Eat more fruits and vegetables'
+                'cook more meals at home',
+                'follow a meal plan or diet',
+                'eat more fruits and vegetables'
             ],
-            icon: '🥗'
+            emoji: '🥗'
         },
         {
             name: 'Meditation & Mindfulness',
             descriptionOptions: [
-                'Practice guided meditation',
-                'Practice deep breathing',
-                'Practice mindfulness',
-                'Practice gratitude',
-                'Practice mantra meditation'
+                'practice guided meditation',
+                'practice deep breathing',
+                'practice mindfulness',
+                'practice gratitude',
+                'practice mantra meditation'
             ],
-            icon: '🧘‍♂️'
+            emoji: '🧘‍♂️'
         },
         {
             name: 'Reading',
             descriptionOptions: [
-                'Read a book',
-                'Read an article',
-                'Read a blog post',
-                'General reading time'
+                'spend time reading',
+                'spend time reading a book',
+                'spend time reading an article',
+                'spend time reading a blog post'
             ],
-            icon: '📚'
+            emoji: '📚'
         },
         {
             name: 'Writing',
             descriptionOptions: [
-                'Journaling',
-                'Creative writing',
-                'General writing time',
-                'Write poetry',
-                'Write a blog post',
-                'Write a short story'
+                'spend time writing',
+                'spend time journaling',
+                'spend time creative writing',
+                'spend time writing poetry',
+                'spend time writing a blog post',
+                'spend time writing a short story'
             ],
-            icon: '📝'
+            emoji: '📝'
         },
         {
             name: 'Art & Drawing',
             descriptionOptions: [
-                'Draw',
-                'Paint',
-                'Sketch',
-                'Doodle',
-                'Color',
-                'Create digital art',
-                'Pottery',
-                'Other art forms'
+                'spend time drawing',
+                'spend time painting',
+                'spend time sketching',
+                'spend time doodling',
+                'spend time coloring',
+                'create digital art',
+                'spend time on pottery',
+                'practice misc art forms'
             ],
-            icon: '🎨'
+            emoji: '🎨'
         },
         {
             name: 'Coding',
             descriptionOptions: [
-                'Learn to code',
-                'Work on a project',
-                'Practice coding',
-                'Code for fun',
-                'Code for work',
-                'Code for school'
+                'spend time learning a new coding skill',
+                'work on a project',
+                'code for fun',
+                'code for work',
+                'code for school'
             ],
-            icon: '💻'
+            emoji: '💻'
         },
         {
             name: 'Learning a new language',
             descriptionOptions: [
-                'Practice speaking',
-                'Practice writing',
-                'Practice reading',
-                'Practice listening',
-                'Practice vocabulary',
-                'Practice grammar',
-                'Practice pronunciation',
-                'Practice via apps'
+                'practice speaking',
+                'practice writing',
+                'practice reading',
+                'practice listening',
+                'practice vocabulary',
+                'practice grammar',
+                'practice pronunciation',
+                'practice using apps'
             ],
-            icon: '🌐'
+            emoji: '🌐'
         },
         {
             name: 'Playing an instrument',
             descriptionOptions: [
-                'Practice playing an instrument',
-                'Learn a new song',
-                'Learn a new chord',
-                'Learn a new scale',
-                'Learn a new technique',
-                'Learn music theory',
-                'Learn to read music',
-                'Learn to play with others'
+                'practice playing an instrument',
+                'spend time learning music theory',
+                'practice playing with others'
             ],
-            icon: '🎸'
+            emoji: '🎸'
         },
         {
             name: 'Create a habit of your own',
             descriptionOptions: [],
-            icon: '🚀'
+            emoji: '🚀'
         }
     ]
 
@@ -164,7 +158,7 @@ function NewHabit (props) {
             setHabit(newHabit)
             setSectionHeader({
                 title: newHabit.name,
-                subtext: `You have taken the first step! Now let's define your habit. What will you do to ${newHabit.name}?`
+                subtext: `Perfect, You've choosen ${newHabit.name.toLowerCase()}! Define the habit a little more. What will you do?`
             })
         }
     }

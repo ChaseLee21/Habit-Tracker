@@ -6,8 +6,8 @@ function HabitSelection ({ defaultHabits, onItemClick }) {
         <ul>
             {defaultHabits.map((point, index) => {
                 return (
-                    <li key={index} className='m-2 p-2 bg-primaryBg text-primaryText rounded-md shadow-md cursor-pointer' onClick={() => onItemClick(point)}>
-                        <span className='mx-2'>{point.icon}</span>
+                    <li key={index} className='m-2 p-2 bg-colorButtonBg text-colorButtonText rounded-md shadow-md cursor-pointer hover:text-colorLinkHover' onClick={() => onItemClick(point)}>
+                        <span className='mx-2 '>{point.emoji}</span>
                         {point.name}
                     </li>
                 )
@@ -20,7 +20,7 @@ HabitSelection.propTypes = {
     defaultHabits: PropTypes.arrayOf(
         PropTypes.shape({
             name: PropTypes.string.isRequired,
-            icon: PropTypes.string.isRequired
+            emoji: PropTypes.string.isRequired
         })
     ).isRequired,
     onItemClick: PropTypes.func.isRequired
