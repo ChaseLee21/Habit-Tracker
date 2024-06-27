@@ -28,9 +28,21 @@ function App () {
 
     return (
         <>
-            {showMobile ? <NavBarMobile /> : <NavBarDesktop />}
-            <Outlet />
-            <Footer />
+            {showMobile && <div className=''>
+                <NavBarMobile />
+                <Outlet />
+                <Footer />
+            </div>}
+
+            {!showMobile &&
+            <div>
+                <div className='flex'>
+                    <NavBarDesktop />
+                    <Outlet />
+                    <Footer />
+                </div>
+            </div>
+            }
         </>
     )
 }
