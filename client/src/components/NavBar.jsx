@@ -17,37 +17,39 @@ function Header () {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
                         </svg>
                     </button>
-                    <h1 className="text-primaryText text-2xl mx-2">Habit Builder</h1>
+                    <h1 className="text-colorLink hover:text-colorLinkHover text-2xl mx-2">
+                        <Link to={'/'} onClick={() => handleNavBarClick()}>Habit Tracker</Link>
+                    </h1>
                 </div>
-                {showMenu && (<nav className="bg-colorBg text-colorText">
+                {showMenu && (<nav className="bg-colorBg text-colorLink">
                     <ul className="py-2 text-lg">
                         {document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-b p-1 ps-3 hover:text-highlight text-secondaryText">
+                            <li className="border-b p-1 ps-3 hover:text-colorLinkHover">
                                 <Link to={'/'} onClick={() => handleNavBarClick()}>Home</Link>
                             </li>
                         }
                         {document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-b p-1 ps-3 hover:text-highlight text-secondaryText">
+                            <li className="border-b p-1 ps-3 hover:text-colorLinkHover">
                                 <Link to={'/profile'} onClick={() => handleNavBarClick()}>My Profile</Link>
                             </li>
                         }
                         {document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-b p-1 ps-3 hover:text-highlight text-secondaryText">
+                            <li className="border-b p-1 ps-3 hover:text-colorLinkHover">
                                 <Link to={'/new-habit'} onClick={() => handleNavBarClick()}>New Habit</Link>
                             </li>
                         }
                         {!document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-b p-1 ps-3 hover:text-highlight text-secondaryText">
+                            <li className="border-b p-1 ps-3 hover:text-colorLinkHover">
                                 <Link to={'/register'} onClick={() => handleNavBarClick()}>Register</Link>
                             </li>
                         }
                         {!document.cookie.includes('habitTrackerToken') &&
-                        <li className="p-1 ps-3 hover:text-highlight text-secondaryText">
+                        <li className="p-1 ps-3 hover:text-colorLinkHover">
                             <Link to={'/login'} onClick={() => handleNavBarClick()}>Login</Link>
                         </li>
                         }
                         {document.cookie.includes('habitTrackerToken') &&
-                            <li className="p-1 ps-3 hover:text-highlight text-secondaryText">
+                            <li className="p-1 ps-3 hover:text-colorLinkHover">
                                 <Link to={'/logout'} onClick={() => handleNavBarClick()}>Logout</Link>
                             </li>
                         }

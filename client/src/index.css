@@ -8,8 +8,8 @@
     --color-primary-dark: #FDC10D;
     --color-primary-light: #FEE085;
 
-    --color-secondary: #009fb7;
-    --color-secondary-dark: #008DA3;
+    --color-secondary: #007C8F;
+    --color-secondary-dark: #214d6e;
     --color-secondary-light: #00C2E0;
 
     --color-bg: #F5F5F5;
@@ -19,14 +19,14 @@
     --color-text-secondary: #EF8354;
     --color-text-inverse: #F5F5F5;
 
-    --color-border: #1F1F1F;
+    --color-border: #EF8354;
     --color-shadow: #1f1f1f4f;
 
     --color-button-bg: #EF8354;
     --color-button-text: #1F1F1F;
 
     --color-link: #007C8F;
-    --color-link-hover: #0ADEFF;
+    --color-link-hover: #214d6e;
 
     --color-success: #88fa95;
     --color-warning: #d0e300;
