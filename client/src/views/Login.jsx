@@ -58,10 +58,10 @@ function Login () {
         <section className='bg-colorBg text-colorText rounded p-2 m-2 w-full h-fit'>
             <h2 className="text-2xl">Login</h2>
             {error && <ErrorAlert message={error} handleCloseAlert={() => setError(null)}/>}
-            <form className="flex flex-col m-2 p-2 bg-colorBgAlt rounded shadow-md shadow-colorShadow " onSubmit={handleLoginSubmit}>
-                <label htmlFor="email" className="text-lg p-1 mx-2">Email:</label>
+            <form className="flex flex-col m-2 p-2 bg-colorBgAlt rounded shadow-md shadow-colorShadow text-lg" onSubmit={handleLoginSubmit}>
+                <label htmlFor="email" className="p-1 mx-2">Email:</label>
                 <input type="email" id="email" name="email" autoComplete='email' className="p-1 m-2 rounded-md" />
-                <label htmlFor="password" className="text-lg p-1 mx-2">Password:</label>
+                <label htmlFor="password" className="p-1 mx-2">Password:</label>
                 <input type="password" id="password" name="password" autoComplete='current-password' className="p-1 m-2 rounded-md" />
                 <button type="submit" className="bg-colorButtonBgAlt text-colorButtonTextAlt w-fit p-2 rounded-md m-2">Login</button>
                 <p>Do not have an account? <Link to={'/register'} className='text-colorLink hover:text-colorLinkHover underline'>Click here to register</Link></p>
