@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { getUser } from '../util/axios'
-import ProfileSummary from '../components/ProfileSummary'
-import ProfileEdit from '../components/ProfileEdit'
+import ProfileSummary from '../components/profile/ProfileSummary'
+import ProfileEdit from '../components/profile/ProfileEdit'
 
 function Profile (props) {
     const userId = props.user.user.id || ''
@@ -38,15 +38,10 @@ function Profile (props) {
     }
 
     return (
-        <div className="flex flex-col rounded-md p-2 bg-colorBg text-colorText">
-            <header className='flex justify-between'>
-                <h2 className='text-2xl'>Your Profile</h2>
-            </header>
-            <main>
-                {user.name && !edit && <ProfileSummary user={user} onEditClick={() => setEdit(!edit)} />}
-                {user.name && edit && <ProfileEdit user={user} onEditCancel={onEditCancel} onEditSave={onEditSave} />}
-            </main>
-        </div>
+        <main className="flex flex-col bg-colorBg text-colorText">
+            {user.name && !edit && <ProfileSummary user={user} onEditClick={() => setEdit(!edit)} />}
+            {user.name && edit && <ProfileEdit user={user} onEditCancel={onEditCancel} onEditSave={onEditSave} />}
+        </main>
     )
 }
 

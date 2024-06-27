@@ -8,7 +8,7 @@ function Home (props) {
     }, [])
 
     return (
-        <main className='flex flex-col w-full min-h-screen'>
+        <main className="flex flex-col bg-colorBg text-colorText">
             <Day {...props}/>
             <Habits {...props} />
         </main>

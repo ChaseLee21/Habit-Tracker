@@ -18,7 +18,7 @@ function Header () {
                         </svg>
                     </button>
                     <h1 className="text-colorSecondary hover:text-colorSecondaryDark text-2xl mx-2">
-                        <Link to={'/'} onClick={() => handleNavBarClick()}>Habit Tracker</Link>
+                        <Link to={'/'} onClick={() => setShowMenu(false)}>Habit Tracker</Link>
                     </h1>
                 </div>
                 {showMenu && (<nav className="bg-colorBg text-colorLinktext-lg">

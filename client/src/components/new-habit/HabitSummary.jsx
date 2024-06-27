@@ -3,15 +3,16 @@ import PropTypes from 'prop-types'
 
 function HabitSummary ({ habit, handleSaveHabit }) {
     return (
-        <div className='flex flex-col text-lg'>
-            <h2 className='text-2xl underline'>{habit.name}</h2>
-            <p>Description: {habit.description}</p>
-            <p>Why: {habit.why}</p>
-            <p>Goal: {habit.goal}</p>
-            <p>Frequency: {habit.frequency} times a week</p>
-            {habit.reward && <p>Reward: {habit.reward}</p>}
-            <p>Emoji: {habit.emoji}</p>
-            <button className='bg-primaryBg text-primaryText rounded w-fit p-1 my-2' onClick={() => handleSaveHabit()}>Save</button>
+        <div className='p-2 bg-colorBgAlt rounded-md cursor-pointer'>
+            <div className='flex justify-between'>
+                <h3 className='text-xl'>{habit.emoji} {habit.name}</h3>
+            </div>
+            <p>I will {habit.description}</p>
+            <p>Because {habit.why}</p>
+            <p>I finish my habit for the day when {habit.goal}</p>
+            {habit.frequency === 1 && <p>I will do this habit {habit.frequency} time a week</p>}
+            {habit.frequency > 1 && <p>I will do this habit {habit.frequency} times a week</p>}
+            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt rounded w-fit p-1 my-2' onClick={() => handleSaveHabit()}>Save</button>
         </div>
     )
 }
@@ -23,7 +24,6 @@ HabitSummary.propTypes = {
         why: PropTypes.string.isRequired,
         goal: PropTypes.string.isRequired,
         frequency: PropTypes.number.isRequired,
-        reward: PropTypes.string.isRequired,
         emoji: PropTypes.string.isRequired
     }).isRequired,
     handleSaveHabit: PropTypes.func.isRequired

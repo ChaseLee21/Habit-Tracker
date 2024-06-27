@@ -22,6 +22,8 @@ export default {
                 colorShadow: 'var(--color-shadow)',
                 colorButtonBg: 'var(--color-button-bg)',
                 colorButtonText: 'var(--color-button-text)',
+                colorButtonBgAlt: 'var(--color-button-bg-alt)',
+                colorButtonTextAlt: 'var(--color-button-text-alt)',
                 colorLink: 'var(--color-link)',
                 colorLinkHover: 'var(--color-link-hover)',
                 colorSuccess: 'var(--color-success)',

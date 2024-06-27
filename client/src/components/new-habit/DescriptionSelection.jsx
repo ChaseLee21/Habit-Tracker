@@ -15,8 +15,8 @@ function DescriptionSelection ({ descriptions, onItemClick }) {
                 <ul>
                     {descriptions.map((description, index) => {
                         return (
-                            <li key={index} className='m-2 p-2 bg-primaryBg text-primaryText rounded-md shadow-md cursor-pointer' onClick={() => onItemClick(description)}>
-                                {description}
+                            <li key={index} className='m-2 p-2 bg-colorButtonBg text-colorButtonText rounded-md cursor-pointer hover:text-colorLinkHover' onClick={() => onItemClick(description)}>
+                                I will {description}
                             </li>
                         )
                     })}
@@ -24,9 +24,12 @@ function DescriptionSelection ({ descriptions, onItemClick }) {
             </div>
             <div>
                 {!descriptions &&
-                <div className='flex flex-col'>
-                    <input className='rounded w-full px-1' id='descriptionInput' type='text' max='100' onChange={handleInputChange}></input>
-                    <button type='button' className='bg-primaryBg text-primaryText rounded w-fit p-1 my-2' onClick={() => onItemClick(descriptionInput)}>Next</button>
+                <div className='p-2 bg-colorBgAlt rounded-md cursor-pointer'>
+                    <div className='flex'>
+                        <label htmlFor='descriptionInput' className='min-w-fit mx-2'>I will </label>
+                        <input className='rounded w-full px-1' id='descriptionInput' type='text' max='100' onChange={handleInputChange}></input>
+                    </div>
+                    <button type='button' className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => onItemClick(descriptionInput)}>Next</button>
                 </div>
                 }
             </div>

@@ -1,7 +1,7 @@
 import { React } from 'react'
 import PropTypes from 'prop-types'
-import { putUser } from '../util/axios'
-import { validateEmail, validateTimezone, validateUsername } from '../util/validate-helpers'
+import { putUser } from '../../util/axios'
+import { validateEmail, validateTimezone, validateUsername } from '../../util/validate-helpers'
 
 function ProfileEdit (props) {
     const user = props.user
@@ -39,13 +39,14 @@ function ProfileEdit (props) {
     }
 
     return (
-        <section>
-            <form className="flex flex-col" onSubmit={handleUpdateProfileSubmit}>
-                <label htmlFor="email" className="text-secondaryText">Email:</label>
+        <section className='bg-colorBg text-colorText rounded h-fit m-2'>
+            <form className="flex flex-col bg-colorBgAlt rounded shadow-md shadow-colorShadow text-lg" onSubmit={handleUpdateProfileSubmit}>
+                <h2 className='text-2xl p-1 mx-2'>Profile Settings</h2>
+                <label htmlFor="email" className="p-1 mx-2">Email:</label>
                 <input type="email" id="email" name="email" autoComplete='email' defaultValue={user.email} className="p-1 m-1 rounded-md" />
-                <label htmlFor="username" className="text-secondaryText">Username:</label>
+                <label htmlFor="username" className="p-1 mx-2">Username:</label>
                 <input type="text" id="username" name="username" autoComplete='username' defaultValue={user.name} className="p-1 m-1 rounded-md" />
-                <label htmlFor="timezone" className="text-secondaryText">Timezone:</label>
+                <label htmlFor="timezone" className="p-1 mx-2">Timezone:</label>
                 <select type="text" id="timezone" name="timezone" defaultValue={user.timezone} className="p-1 m-1 rounded-md">
                     <option value="Pacific/Midway">Pacific/Midway</option>
                     <option value="Pacific/Honolulu">Pacific/Honolulu</option>
@@ -75,8 +76,8 @@ function ProfileEdit (props) {
                     <option value="Pacific/Auckland">Pacific/Auckland</option>
                 </select>
                 <div className='flex'>
-                    <button type="submit" className="bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1">Update</button>
-                    <button type="button" className="bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1" onClick={() => props.onEditCancel()}>Cancel</button>
+                    <button type="submit" className="bg-colorButtonBgAlt text-colorButtonTextAlt w-fit p-2 rounded-md m-1">Update</button>
+                    <button type="button" className="bg-colorButtonBgAlt text-colorButtonTextAlt w-fit p-2 rounded-md m-1" onClick={() => props.onEditCancel()}>Cancel</button>
                 </div>
             </form>
         </section>

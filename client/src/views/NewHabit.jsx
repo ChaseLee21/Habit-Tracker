@@ -8,7 +8,6 @@ import SectionHeader from '../components/SectionHeader'
 import WhySelection from '../components/new-habit/WhySelection'
 import GoalSelection from '../components/new-habit/GoalSelection'
 import FrequencySelection from '../components/new-habit/FrequencySelection'
-import RewardSelection from '../components/new-habit/RewardSelection'
 import EmojiSelection from '../components/new-habit/EmojiSelection'
 import HabitSummary from '../components/new-habit/HabitSummary'
 
@@ -19,113 +18,107 @@ function NewHabit (props) {
         {
             name: 'Exercise',
             descriptionOptions: [
-                'Go for a run, jog, or walk',
-                'Do some exercises at home',
-                'Do some yoga',
-                'Go to the gym'
+                'go for a run, jog, or walk',
+                'do exercises at home',
+                'do yoga',
+                'go to the gym'
             ],
-            icon: '🏋️‍♂️'
+            emoji: '🏋️‍♂️'
         },
         {
             name: 'Eat Healthy',
             descriptionOptions: [
-                'Cook more meals at home',
-                'Follow a meal plan or diet',
-                'Eat more fruits and vegetables'
+                'cook more meals at home',
+                'follow a meal plan or diet',
+                'eat more fruits and vegetables'
             ],
-            icon: '🥗'
+            emoji: '🥗'
         },
         {
             name: 'Meditation & Mindfulness',
             descriptionOptions: [
-                'Practice guided meditation',
-                'Practice deep breathing',
-                'Practice mindfulness',
-                'Practice gratitude',
-                'Practice mantra meditation'
+                'practice guided meditation',
+                'practice deep breathing',
+                'practice mindfulness',
+                'practice gratitude',
+                'practice mantra meditation'
             ],
-            icon: '🧘‍♂️'
+            emoji: '🧘‍♂️'
         },
         {
             name: 'Reading',
             descriptionOptions: [
-                'Read a book',
-                'Read an article',
-                'Read a blog post',
-                'General reading time'
+                'spend time reading',
+                'spend time reading a book',
+                'spend time reading an article',
+                'spend time reading a blog post'
             ],
-            icon: '📚'
+            emoji: '📚'
         },
         {
             name: 'Writing',
             descriptionOptions: [
-                'Journaling',
-                'Creative writing',
-                'General writing time',
-                'Write poetry',
-                'Write a blog post',
-                'Write a short story'
+                'spend time writing',
+                'spend time journaling',
+                'spend time creative writing',
+                'spend time writing poetry',
+                'spend time writing a blog post',
+                'spend time writing a short story'
             ],
-            icon: '📝'
+            emoji: '📝'
         },
         {
             name: 'Art & Drawing',
             descriptionOptions: [
-                'Draw',
-                'Paint',
-                'Sketch',
-                'Doodle',
-                'Color',
-                'Create digital art',
-                'Pottery',
-                'Other art forms'
+                'spend time drawing',
+                'spend time painting',
+                'spend time sketching',
+                'spend time doodling',
+                'spend time coloring',
+                'create digital art',
+                'spend time on pottery',
+                'practice misc art forms'
             ],
-            icon: '🎨'
+            emoji: '🎨'
         },
         {
             name: 'Coding',
             descriptionOptions: [
-                'Learn to code',
-                'Work on a project',
-                'Practice coding',
-                'Code for fun',
-                'Code for work',
-                'Code for school'
+                'spend time learning a new coding skill',
+                'work on a project',
+                'code for fun',
+                'code for work',
+                'code for school'
             ],
-            icon: '💻'
+            emoji: '💻'
         },
         {
             name: 'Learning a new language',
             descriptionOptions: [
-                'Practice speaking',
-                'Practice writing',
-                'Practice reading',
-                'Practice listening',
-                'Practice vocabulary',
-                'Practice grammar',
-                'Practice pronunciation',
-                'Practice via apps'
+                'practice speaking',
+                'practice writing',
+                'practice reading',
+                'practice listening',
+                'practice vocabulary',
+                'practice grammar',
+                'practice pronunciation',
+                'practice using apps'
             ],
-            icon: '🌐'
+            emoji: '🌐'
         },
         {
             name: 'Playing an instrument',
             descriptionOptions: [
-                'Practice playing an instrument',
-                'Learn a new song',
-                'Learn a new chord',
-                'Learn a new scale',
-                'Learn a new technique',
-                'Learn music theory',
-                'Learn to read music',
-                'Learn to play with others'
+                'practice playing an instrument',
+                'spend time learning music theory',
+                'practice playing with others'
             ],
-            icon: '🎸'
+            emoji: '🎸'
         },
         {
             name: 'Create a habit of your own',
             descriptionOptions: [],
-            icon: '🚀'
+            emoji: '🚀'
         }
     ]
 
@@ -141,7 +134,6 @@ function NewHabit (props) {
     const [showWhySelection, setShowWhySelection] = useState(false)
     const [ShowGoalSelection, setShowGoalSelection] = useState(false)
     const [showFrequencySelection, setShowFrequencySelection] = useState(false)
-    const [showRewardSelection, setShowRewardSelection] = useState(false)
     const [showEmojiSelection, setShowEmojiSelection] = useState(false)
     const [showHabitSummary, setShowHabitSummary] = useState(false)
 
@@ -164,7 +156,7 @@ function NewHabit (props) {
             setHabit(newHabit)
             setSectionHeader({
                 title: newHabit.name,
-                subtext: `You have taken the first step! Now let's define your habit. What will you do to ${newHabit.name}?`
+                subtext: `Perfect, You've choosen ${newHabit.name.toLowerCase()}! Define the habit a little more. What will you do?`
             })
         }
     }
@@ -174,7 +166,7 @@ function NewHabit (props) {
         setShowDescriptionSelection(true)
         setSectionHeader({
             title: name,
-            subtext: `You have taken the first step! Now let's define your habit. What will you do for ${name}?`
+            subtext: `Perfect, You've choosen ${name.toLowerCase()}! Define the habit a little more. What will you do?`
         })
     }
     const setHabitDescription = (description) => {
@@ -182,8 +174,8 @@ function NewHabit (props) {
         setShowDescriptionSelection(false)
         setShowWhySelection(true)
         setSectionHeader({
-            title: 'Why?',
-            subtext: 'Why do you want to create this new habit?'
+            title: 'Why',
+            subtext: `I will ${description} because... `
         })
     }
     const setHabitWhy = (why) => {
@@ -192,7 +184,7 @@ function NewHabit (props) {
         setShowGoalSelection(true)
         setSectionHeader({
             title: 'Create a Goal',
-            subtext: 'Remember when setting a new habit for the first time it is important to start small. A good rule of thumb when starting a new habit is to follow the 2 minute rule. Your goal should be so small that it takes less than 2 minutes to complete. In the future you will increase this goal.'
+            subtext: 'I finish my habit for the day when'
         })
     }
     const setHabitGoal = (goal) => {
@@ -200,7 +192,7 @@ function NewHabit (props) {
         setShowGoalSelection(false)
         setShowFrequencySelection(true)
         setSectionHeader({
-            title: 'How often will you do this habit?',
+            title: 'How many times per week will you do this habit?',
             subtext: ''
         })
     }
@@ -208,19 +200,10 @@ function NewHabit (props) {
         frequency = parseInt(frequency)
         setHabit({ ...habit, frequency })
         setShowFrequencySelection(false)
-        setShowRewardSelection(true)
-        setSectionHeader({
-            title: 'Reward',
-            subtext: 'Optionally, you can set a reward for completing the habit a certain amount of times in a row.'
-        })
-    }
-    const setHabitReward = (reward) => {
-        setHabit({ ...habit, reward })
-        setShowRewardSelection(false)
         setShowEmojiSelection(true)
         setSectionHeader({
             title: 'Emoji',
-            subtext: 'Choose an emoji to represent your new habit!'
+            subtext: 'Select an emoji to represent your habit. This will be represent your habit.'
         })
     }
     const setHabitEmoji = (emoji) => {
@@ -240,7 +223,7 @@ function NewHabit (props) {
     }
 
     return (
-        <section className="flex flex-col rounded-md m-2 bg-secondaryBg text-secondaryText p-2 shadow-xl">
+        <section className="flex flex-col rounded-md m-2 bg-colorBg text-colorText p-2">
             <SectionHeader title={sectionHeader.title} subtext={sectionHeader.subtext} />
             {ShowHabitSelection && <HabitSelection defaultHabits={defaultHabits} onItemClick={setHabitSelection} />}
             {showNameSelection && <NameSelection onItemClick={setHabitName} />}
@@ -248,7 +231,6 @@ function NewHabit (props) {
             {showWhySelection && <WhySelection onItemClick={setHabitWhy} />}
             {ShowGoalSelection && <GoalSelection onItemClick={setHabitGoal} />}
             {showFrequencySelection && <FrequencySelection onItemClick={setHabitFrequency} />}
-            {showRewardSelection && <RewardSelection onItemClick={setHabitReward} />}
             {showEmojiSelection && <EmojiSelection onItemClick={setHabitEmoji} />}
             {showHabitSummary && <HabitSummary habit={habit} handleSaveHabit={saveHabit}/>}
         </section>

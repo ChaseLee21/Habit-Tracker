@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 import PropTypes from 'prop-types'
 import HabitEdit from './HabitEdit'
-import { putHabit, deleteHabit } from '../util/axios'
+import { putHabit, deleteHabit } from '../../util/axios'
 
 function ProfileSummary (props) {
     const user = props.user
@@ -27,29 +27,32 @@ function ProfileSummary (props) {
 
     return (
         <section>
-            {!editHabit && <div className='bg-colorBgAlt text-colorText rounded p-2 my-2 w-full'>
-                <div className='flex justify-between'>
-                    <p>Username: {user.name}</p>
-                    <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit' onClick={() => props.onEditClick()}>Edit</button>
-                </div>
-                <p>Email: {user.email}</p>
-                <p>Timezone: {user.timezone}</p>
-            </div>}
-            {!editHabit && <ul className='flex flex-col'>
-                {user.habits && user.habits.map(habit => {
-                    return <li className='bg-colorBgAlt text-colorText rounded p-2 my-2 w-full' key={habit._id}>
+            {!editHabit &&
+                <ul className='bg-colorBg text-colorText rounded w-fit'>
+                    <li className='bg-colorBg text-colorText rounded p-2 me-2 w-full'>
                         <div className='flex justify-between'>
-                            <p>{habit.emoji}{habit.name}</p>
-                            <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit hover:underline' onClick={() => handleEditHabit(habit)}>Edit</button>
+                            <h2 className='text-2xl'>My Profile</h2>
+                            <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit hover:text-colorLinkHover' onClick={() => props.onEditClick()}>Edit</button>
                         </div>
-                        <p>{habit.description}</p>
-                        <p>{habit.why}</p>
-                        <p>{habit.goal}</p>
-                        <p>{habit.frequency} times a week</p>
-                        {habit.reward && <p>Reward: {habit.reward}</p>}
+                        <p>Username: {user.name}</p>
+                        <p>Email: {user.email}</p>
+                        <p>Timezone: {user.timezone}</p>
                     </li>
-                })}
-            </ul>}
+                    {user.habits && user.habits.map(habit => {
+                        return <li className='bg-colorBg text-colorText rounded my-2 p-2 w-full' key={habit._id}>
+                            <div className='flex justify-between'>
+                                <h3 className='text-xl'>{habit.emoji} {habit.name}</h3>
+                                <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit hover:text-colorLinkHover' onClick={() => handleEditHabit(habit)}>Edit</button>
+                            </div>
+                            <p className="text-base">I will {habit.description}</p>
+                            <p className="text-base">Because {habit.why}</p>
+                            <p className="text-base">I finish my habit for the day when {habit.goal}</p>
+                            {habit.frequency === 1 && <p className="text-base">I will do this habit {habit.frequency} time a week</p>}
+                            {habit.frequency > 1 && <p className="text-base">I will do this habit {habit.frequency} times a week</p>}
+                        </li>
+                    })}
+                </ul>
+            }
             {editHabit &&
             editHabit._id &&
             <HabitEdit habit={editHabit}
