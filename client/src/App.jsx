@@ -39,7 +39,6 @@ function App () {
                 <div className='flex'>
                     <NavBarDesktop />
                     <Outlet />
-                    <Footer />
                 </div>
             </div>
             }
