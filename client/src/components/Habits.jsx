@@ -61,11 +61,11 @@ function Habits (props) {
     }
 
     return (
-        <section className="bg-colorBg text-colorText rounded p-2 m-2 w-full border-colorBorder border">
+        <section className="bg-colorBg text-colorText rounded p-2 w-full">
             <h2 className='text-2xl'>My Habits</h2>
             <ul className="list-inside">
                 {user.habits && user.habits.map(habit => (
-                    <li key={habit._id} className="m-2">
+                    <li key={habit._id} className="my-2">
                         <div className="flex justify-between">
                             <div className="flex">
                                 <h3 className='text-xl'>{habit.emoji} {habit.name}</h3>

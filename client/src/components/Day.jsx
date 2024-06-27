@@ -23,8 +23,9 @@ function Day (props) {
 
     return (
         <>
-            <section className="bg-colorBg text-colorText rounded p-2 m-2 w-full border-colorBorder border">
-                <h2 className='text-2xl'>Today is {days[weekDay]}, {months[month]} {numbers[date]} { time }</h2>
+            <section className="bg-colorBg text-colorText rounded p-2 w-full text-2xl">
+                <h2>Today is {days[weekDay]}, {months[month]} {numbers[date]} </h2>
+                <p>{ time }</p>
             </section>
         </>
     )
