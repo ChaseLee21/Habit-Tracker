@@ -1,7 +1,7 @@
 import { React } from 'react'
 import PropTypes from 'prop-types'
-import { putUser } from '../util/axios'
-import { validateEmail, validateTimezone, validateUsername } from '../util/validate-helpers'
+import { putUser } from '../../util/axios'
+import { validateEmail, validateTimezone, validateUsername } from '../../util/validate-helpers'
 
 function ProfileEdit (props) {
     const user = props.user

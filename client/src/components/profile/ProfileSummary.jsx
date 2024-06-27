@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 import PropTypes from 'prop-types'
 import HabitEdit from './HabitEdit'
-import { putHabit, deleteHabit } from '../util/axios'
+import { putHabit, deleteHabit } from '../../util/axios'
 
 function ProfileSummary (props) {
     const user = props.user
@@ -28,7 +28,7 @@ function ProfileSummary (props) {
     return (
         <section>
             {!editHabit &&
-                <div className='bg-colorBg text-colorText rounded p-2 m-2 w-full border-colorBorder border'>
+                <div className='bg-colorBg text-colorText rounded p-2 me-2 w-full'>
                     <div className='flex justify-between'>
                         <h2 className='text-2xl'>My Profile</h2>
                         <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit hover:text-colorLinkHover' onClick={() => props.onEditClick()}>Edit</button>
@@ -39,9 +39,9 @@ function ProfileSummary (props) {
                 </div>
             }
             {!editHabit &&
-                <ul className='bg-colorBg text-colorText rounded p-2 m-2 w-full border-colorBorder border'>
+                <ul className='bg-colorBg text-colorText rounded w-full'>
                     {user.habits && user.habits.map(habit => {
-                        return <li className='bg-colorBg text-colorText rounded my-2 w-full' key={habit._id}>
+                        return <li className='bg-colorBg text-colorText rounded my-2 p-2 w-full' key={habit._id}>
                             <div className='flex justify-between'>
                                 <h3 className='text-xl'>{habit.emoji}{habit.name}</h3>
                                 <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit hover:text-colorLinkHover' onClick={() => handleEditHabit(habit)}>Edit</button>

@@ -1,15 +1,11 @@
 import { React, useState } from 'react'
 import PropTypes from 'prop-types'
-import { getEmojis } from '../util/emojis'
+import { getEmojis } from '../../util/emojis'
 
 function HabitEdit (props) {
     const [habit, setHabit] = useState(props.habit)
     const [showEmojis, setShowEmojis] = useState('')
     const emojis = getEmojis()
-
-    const updateName = (e) => {
-        setHabit({ ...habit, name: e.target.value })
-    }
 
     const updateDescription = (e) => {
         setHabit({ ...habit, description: e.target.value })
@@ -37,19 +33,18 @@ function HabitEdit (props) {
     }
 
     return (
-        <section>
-            <form className='flex flex-col text-black'>
-                <label htmlFor='habitName' className="text-secondaryText">Name of habit:</label>
-                <input id='habitName' type='text' defaultValue={habit.name} className="p-1 m-1 rounded-md" onChange={updateName}></input>
-                <label htmlFor='habitDescription' className="text-secondaryText">This habit is about:</label>
+        <section className='bg-colorBg text-colorText rounded w-full h-fit m-2'>
+            <h2 className="text-2xl">{habit.name}</h2>
+            <form className="flex flex-col bg-colorBgAlt rounded shadow-md shadow-colorShadow text-lg">
+                <label htmlFor='habitDescription' className="p-1 mx-2">This habit is about:</label>
                 <input id='habitDescription' type='text' defaultValue={habit.description} className="p-1 m-1 rounded-md" onChange={updateDescription}></input>
-                <label htmlFor='habitWhy' className="text-secondaryText">I want to make this habit apart of my life so:</label>
+                <label htmlFor='habitWhy' className="p-1 mx-2">I want to make this habit apart of my life so:</label>
                 <input id='habitWhy' type='text' defaultValue={habit.why} className="p-1 m-1 rounded-md" onChange={updateWhy}></input>
-                <label htmlFor='habitGoal' className="text-secondaryText">I finish my habit for the day when:</label>
+                <label htmlFor='habitGoal' className="p-1 mx-2">I finish my habit for the day when:</label>
                 <input id='habitGoal' type='text' defaultValue={habit.goal} className="p-1 m-1 rounded-md" onChange={updateGoal}></input>
-                <label htmlFor='habitFrequency' className="text-secondaryText">Times per week habit should be completed:</label>
+                <label htmlFor='habitFrequency' className="p-1 mx-2">Times per week habit should be completed:</label>
                 <input id='habitFrequency' type='text' defaultValue={habit.frequency} className="p-1 m-1 rounded-md" onChange={updateFrequency}></input>
-                <label htmlFor='habitReward' className="text-secondaryText">Rewards:</label>
+                <label htmlFor='habitReward' className="p-1 mx-2">Rewards:</label>
                 <input id='habitReward' type='text' defaultValue={habit.reward} className="p-1 m-1 rounded-md" onChange={updateReward}></input>
                 <button className='bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1 hover:cursor-pointer' type='button' onClick={() => setShowEmojis(!showEmojis)}>Change Emoji: {habit.emoji}</button>
                 {showEmojis && <div className='flex flex-wrap'>
@@ -64,7 +59,7 @@ function HabitEdit (props) {
                         <button type='button' onClick={() => props.onSubmit(habit)} className='bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1'>Save</button>
                         <button type='button' onClick={() => props.onCancel()} className='bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1'>Cancel</button>
                     </div>
-                    <button type='button' onClick={() => props.onDelete(habit)} className='bg-red-600 text-primaryText w-fit p-2 rounded-md m-1'>Delete</button>
+                    <button type='button' onClick={() => props.onDelete(habit)} className='bg-red-600 text-primaryText w-fit px-2 rounded-md m-1'>Delete</button>
                 </div>
             </form>
         </section>
