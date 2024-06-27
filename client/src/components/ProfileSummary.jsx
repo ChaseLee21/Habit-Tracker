@@ -27,29 +27,34 @@ function ProfileSummary (props) {
 
     return (
         <section>
-            {!editHabit && <div className='bg-colorBg text-colorText rounded p-2 m-2 w-full border-colorBorder border'>
-                <div className='flex justify-between'>
+            {!editHabit &&
+                <div className='bg-colorBg text-colorText rounded p-2 m-2 w-full border-colorBorder border'>
+                    <div className='flex justify-between'>
+                        <h2 className='text-2xl'>My Profile</h2>
+                        <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit hover:text-colorLinkHover' onClick={() => props.onEditClick()}>Edit</button>
+                    </div>
                     <p>Username: {user.name}</p>
-                    <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit' onClick={() => props.onEditClick()}>Edit</button>
+                    <p>Email: {user.email}</p>
+                    <p>Timezone: {user.timezone}</p>
                 </div>
-                <p>Email: {user.email}</p>
-                <p>Timezone: {user.timezone}</p>
-            </div>}
-            {!editHabit && <ul className='flex flex-col'>
-                {user.habits && user.habits.map(habit => {
-                    return <li className='bg-colorBg text-colorText rounded p-2 m-2 w-full border-colorBorder border' key={habit._id}>
-                        <div className='flex justify-between'>
-                            <p>{habit.emoji}{habit.name}</p>
-                            <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit hover:underline' onClick={() => handleEditHabit(habit)}>Edit</button>
-                        </div>
-                        <p>{habit.description}</p>
-                        <p>{habit.why}</p>
-                        <p>{habit.goal}</p>
-                        <p>{habit.frequency} times a week</p>
-                        {habit.reward && <p>Reward: {habit.reward}</p>}
-                    </li>
-                })}
-            </ul>}
+            }
+            {!editHabit &&
+                <ul className='bg-colorBg text-colorText rounded p-2 m-2 w-full border-colorBorder border'>
+                    {user.habits && user.habits.map(habit => {
+                        return <li className='bg-colorBg text-colorText rounded my-2 w-full' key={habit._id}>
+                            <div className='flex justify-between'>
+                                <h3 className='text-xl'>{habit.emoji}{habit.name}</h3>
+                                <button className='bg-colorButtonBg text-colorButtonText rounded px-2 w-fit hover:text-colorLinkHover' onClick={() => handleEditHabit(habit)}>Edit</button>
+                            </div>
+                            <p>{habit.description}</p>
+                            <p>{habit.why}</p>
+                            <p>{habit.goal}</p>
+                            <p>{habit.frequency} times a week</p>
+                            {habit.reward && <p>Reward: {habit.reward}</p>}
+                        </li>
+                    })}
+                </ul>
+            }
             {editHabit &&
             editHabit._id &&
             <HabitEdit habit={editHabit}
