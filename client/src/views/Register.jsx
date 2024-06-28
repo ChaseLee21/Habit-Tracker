@@ -38,21 +38,21 @@ function Register () {
     }
 
     return (
-        <>
-            <h2 className="flex rounded-md m-2 bg-secondaryBg text-secondaryText p-2 text-xl shadow-xl">Register</h2>
-            <form className="flex flex-col m-2 p-2 bg-secondaryBg rounded-md shadow-xl" onSubmit={handleRegisterSubmit}>
-                <label htmlFor="email" className="text-secondaryText">Email:</label>
+        <section className='bg-colorBg text-colorText rounded p-2 m-2 h-fit'>
+            <h2 className="text-2xl">Register</h2>
+            <form className="flex flex-col m-2 p-2 bg-colorBgAlt rounded shadow-md shadow-colorShadow text-lg" onSubmit={handleRegisterSubmit}>
+                <label htmlFor="email" className="p-1 mx-2">Email:</label>
                 <input type="email" id="email" name="email" autoComplete='email' className="p-1 m-1 rounded-md" />
-                <label htmlFor="username" className="text-secondaryText">Username:</label>
+                <label htmlFor="username" className="p-1 mx-2">Username:</label>
                 <input type="text" id="username" name="username" autoComplete='username' className="p-1 m-1 rounded-md" />
-                <label htmlFor="password" className="text-secondaryText">Password:</label>
+                <label htmlFor="password" className="p-1 mx-2">Password:</label>
                 <input type="password" id="password" name="password" autoComplete='new-password' className="p-1 m-1 rounded-md" />
-                <label htmlFor="confirmPassword" className="text-secondaryText">Confirm Password:</label>
+                <label htmlFor="confirmPassword" className="p-1 mx-2">Confirm Password:</label>
                 <input type="password" id="confirmPassword" name="confirmPassword" className="p-1 m-1 rounded-md" />
-                <button type="submit" className="bg-primaryBg text-primaryText w-fit p-2 rounded-md m-1">Register</button>
-                <p>Already have an account? <Link to={'/login'} className='text-blue-800 underline'>Click here to login</Link></p>
+                <button type="submit" className="bg-colorButtonBgAlt text-colorButtonTextAlt w-fit p-2 rounded-md m-1">Register</button>
+                <p className='m-2'>Already have an account? <Link to={'/login'} className='text-colorLink hover:text-colorLinkHover underline'>Click here to login</Link></p>
             </form>
-        </>
+        </section>
     )
 }
 
