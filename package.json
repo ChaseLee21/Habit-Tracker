@@ -6,8 +6,7 @@
   "scripts": {
     "start": "cd server && node server.js",
     "dev": "concurrently \"cd server && node server.js\" \"cd client && npm run dev\"",
-    "install-dependencies": "npm install && cd client && npm install && cd ../server && npm install && cd ..",
-    "build": "npm run install-dependencies cd client && npm run build"
+    "build": "npm install && cd client && npm install && cd ../server && npm install && cd .. && npm run build"
   },
   "author": "",
   "license": "ISC",
