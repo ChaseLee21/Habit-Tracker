@@ -17,5 +17,10 @@
     },
     "dependencies": {
         "dotenv": "^16.4.5"
-    }
+    },
+    "version": "1.0.0",
+    "description": "This project is a passion project that was inspired by the book \"Atomic Habits\" by James Clear. I am in no way affiliated with nor sponsor the author or any company he is associated with.",
+    "main": "index.js",
+    "author": "",
+    "license": "ISC"
 }
