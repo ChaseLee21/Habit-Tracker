@@ -1,4 +1,5 @@
 {
+    "name": "habit-tracker",
     "scripts": {
         "start": "cd server && node server.js",
         "dev": "concurrently \"cd server && node server.js\" \"cd client && npm run dev\""
@@ -13,5 +14,8 @@
         "eslint-plugin-promise": "^6.2.0",
         "eslint-plugin-react": "^7.34.2",
         "globals": "^15.6.0"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.5"
     }
 }
