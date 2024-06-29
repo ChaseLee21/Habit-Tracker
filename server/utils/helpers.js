@@ -4,10 +4,9 @@ async function endOfWeek (user) {
     // helper functions
     function EndDatePassed (habit) {
         const endDate = habit.weeks[habit.weeks.length - 1].endDate
-        endDate.setHours(0, 0, 0, 0)
-        const now = new Date()
-        now.setHours(0, 0, 0, 0)
-        return endDate < new Date()
+        const formattedEndDate = new Date(endDate).toLocaleDateString('en-US', { timeZone: user.timezone })
+        const now = new Date().toLocaleDateString('en-US', { timeZone: user.timezone })
+        return formattedEndDate < now
     }
 
     function updateStreak (habit) {
