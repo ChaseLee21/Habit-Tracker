@@ -50,9 +50,9 @@ function setEndDate (timezone) {
     const daysUntilNextSaturday = (6 - today + 7) % 7 || 7
 
     // nextSaturday is the date of the next Saturday
-    const nextSaturday = new Date(now)
-    nextSaturday.setDate(now.getDate() + daysUntilNextSaturday)
-    nextSaturday.setHours(0, 0, 0, 0)
+    let nextSaturday = new Date(now)
+    nextSaturday.setDate(now.getDate() + daysUntilNextSaturday + 1)
+    nextSaturday = nextSaturday.toISOString().split('T')[0]
 
     // set endDate to the next Saturday
     return nextSaturday

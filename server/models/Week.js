@@ -6,7 +6,7 @@ const weekSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     frequency: { type: Number },
     days: [{ type: Schema.Types.ObjectId, ref: 'Day' }],
-    endDate: { type: Date }
+    endDate: { type: String }
 })
 
 // 0 is Sunday, 6 is Saturday
