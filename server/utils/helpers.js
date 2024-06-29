@@ -46,15 +46,15 @@ function setEndDate (timezone) {
     const today = now.getDay()
 
     // number of days til next the next Saturday, if today is Saturday, it will be 7
-    const daysUntilNextSaturday = (6 - today + 7) % 7 || 7
+    const daysUntilNextSunday = (7 - today + 7) % 7 || 7
 
     // nextSaturday is the date of the next Saturday
-    let nextSaturday = new Date(now)
-    nextSaturday.setDate(now.getDate() + daysUntilNextSaturday + 1)
-    nextSaturday = nextSaturday.toISOString().split('T')[0]
+    let nextSunday = new Date(now)
+    nextSunday.setDate(now.getDate() + daysUntilNextSunday)
+    nextSunday = nextSunday.toISOString().split('T')[0]
 
     // set endDate to the next Saturday
-    return nextSaturday
+    return nextSunday
 }
 
 async function setDaysArray (endDate, weekId, habitId) {
