@@ -19,6 +19,7 @@ function setEndDate (timezone) {
 async function setDaysArray (endDate) {
     const days = []
     let currentDate = new Date(endDate)
+    currentDate = new Date(currentDate.setDate(currentDate.getDate() - 1))
     for (let i = 0; i < 7; i++) {
         let date = currentDate.toISOString().split('T')[0]
         days.push(date)
@@ -37,6 +38,6 @@ function endDatePassed (endDate, timezone = `America/Los_Angeles`) {
     return formattedEndDate < now
 }
 
-setEndDate('America/Los_Angeles')
-setDaysArray('2024-06-30')
-endDatePassed('2024-06-29')
+const endDate = setEndDate('America/Los_Angeles')
+setDaysArray(endDate)
+endDatePassed(endDate, 'America/Los_Angeles')
