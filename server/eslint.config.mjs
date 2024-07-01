@@ -9,6 +9,11 @@ export default [
   { languageOptions: { parserOptions: { ecmaFeatures: { jsx: true } } } },
   {files: ["**/*.js"], languageOptions: {sourceType: "commonjs"}},
   {languageOptions: { globals: globals.browser }},
+  {
+    "rules": {
+      "semi": ["error", "never"]
+    }
+  },
   pluginJs.configs.recommended,
   ...fixupConfigRules(pluginReactConfig),
 ];
