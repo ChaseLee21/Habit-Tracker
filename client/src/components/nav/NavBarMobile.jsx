@@ -35,7 +35,17 @@ function Header () {
                         }
                         {document.cookie.includes('habitTrackerToken') &&
                             <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
+                                <Link to={'/progress'} onClick={() => handleNavBarClick()}>My Progress</Link>
+                            </li>
+                        }
+                        {document.cookie.includes('habitTrackerToken') &&
+                            <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
                                 <Link to={'/new-habit'} onClick={() => handleNavBarClick()}>New Habit</Link>
+                            </li>
+                        }
+                        {document.cookie.includes('habitTrackerToken') &&
+                            <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
+                                <Link to={'/logout'} onClick={() => handleNavBarClick()}>Logout</Link>
                             </li>
                         }
                         {!document.cookie.includes('habitTrackerToken') &&
@@ -46,11 +56,6 @@ function Header () {
                         {!document.cookie.includes('habitTrackerToken') &&
                             <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
                                 <Link to={'/login'} onClick={() => handleNavBarClick()}>Login</Link>
-                            </li>
-                        }
-                        {document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
-                                <Link to={'/logout'} onClick={() => handleNavBarClick()}>Logout</Link>
                             </li>
                         }
                     </ul>
