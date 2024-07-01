@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { getUser } from '../util/axios'
+import Emoji from '../classes/emoji'
 
 function Progress (props) {
     const userId = props.user.user.id || ''
@@ -22,14 +23,69 @@ function Progress (props) {
         }
         fetchUser()
     }, [])
+    
+    useEffect(() => {
+        if (user.emojis) {
+            initCanvas()
+        }
+    }, [user.emojis])
 
     useEffect(() => {
         document.title = 'Progress | Habit Tracker'
     }, [])
 
+    function initCanvas () {
+        // Set up canvas
+        const canvas = document.querySelector('canvas')
+        const ctx = canvas.getContext('2d')
+        // Adjust for device pixel ratio
+        const dpr = window.devicePixelRatio || 1
+        const rect = canvas.getBoundingClientRect()
+        canvas.width = rect.width * dpr
+        canvas.height = rect.height * dpr
+        ctx.scale(dpr, dpr)
+        // Clear canvas and draw emojis
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+        const emojiArray = Array.from(user.emojis).filter((emoji, index) => index % 2 === 0 && emoji !== '')
+        drawEmojis(ctx, emojiArray)
+    }
+
+    function drawEmojis (ctx, emojiString) {
+        console.log(emojiString)
+        const x = ctx.canvas.width / 2
+        const y = ctx.canvas.height / 2
+        const velX = 0
+        const velY = -1
+        const size = 30
+        const emojis = emojiString.map(emoji => {
+            return new Emoji(emoji, x, y, velX, velY, size)
+        })
+        emojis.forEach(emoji => {
+            console.log(emoji)
+            emoji.update(ctx.canvas)
+            emoji.draw(ctx)
+            emoji.collisionDetect(emojis)
+        })
+        requestAnimationFrame(() => updateEmojis(ctx, emojis))
+    }
+
+    function updateEmojis (ctx, emojis) {
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+        emojis.forEach(emoji => {
+            emoji.update(ctx.canvas)
+            emoji.draw(ctx)
+            emoji.collisionDetect(emojis)
+        })
+        requestAnimationFrame(() => updateEmojis(ctx, emojis))
+    }
+
     return (
         <>
-            <h2>Your Habit Progress:</h2>
+            <main>
+                <canvas className='w-full h-full min-h-[80vh]'>
+
+                </canvas>
+            </main>
         </>
     )
 }

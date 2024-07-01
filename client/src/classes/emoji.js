@@ -1,16 +1,15 @@
 class Emoji {
-    constructor (emoji, x, y, velX, velY, color, size) {
+    constructor (emoji, x, y, velX, velY, size) {
         this.emoji = emoji
         this.x = x
         this.y = y
         this.velX = velX
         this.velY = velY
-        this.color = color
         this.size = size
+        this.gravity = 0.1
     }
 
     draw (ctx) {
-        ctx.fillStyle = this.color
         ctx.font = `${this.size}px "Segoe UI Emoji", sans-serif`
         ctx.fillText(this.emoji, this.x, this.y)
     }
@@ -22,6 +21,10 @@ class Emoji {
 
         if (this.y + this.size > canvas.height || this.y < 0) {
             this.velY = -this.velY
+        }
+
+        if (this.y + this.size < canvas.height) {
+            this.velY += this.gravity
         }
 
         this.x += this.velX
@@ -36,7 +39,10 @@ class Emoji {
                 const distance = Math.sqrt(dx * dx + dy * dy)
 
                 if (distance < this.size + emojis[j].size) {
-                    emojis[j].color = this.color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`
+                    emojis[j].velX = -emojis[j].velX
+                    emojis[j].velY = -emojis[j].velY
+                    this.velX = -this.velX
+                    this.velY = -this.velY
                 }
             }
         }
