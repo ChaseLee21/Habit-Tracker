@@ -77,4 +77,15 @@ async function setDaysArray (endDate, weekId, habitId) {
     return days
 }
 
-module.exports = { endOfWeek, setEndDate, setDaysArray }
+async function addEmoji (habit) {
+    console.log('Adding emoji', habit);
+    const User = mongoose.model('User');
+    const user = await User.findOne({ habits: habit._id });
+    console.log(user);
+}
+
+async function removeEmoji (habit) {
+    console.log('Removing emoji', habit);
+}
+
+module.exports = { endOfWeek, setEndDate, setDaysArray, addEmoji, removeEmoji}
