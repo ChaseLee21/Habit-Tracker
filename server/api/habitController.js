@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Habit, User } = require('../models/index')
+const { Habit, User, Week, Day } = require('../models/index')
 
 // POST a new habit
 router.post('/:userId', (req, res) => {
@@ -62,6 +62,26 @@ router.delete('/:id', (req, res) => {
                 .catch((err) => {
                     console.log(err)
                 })
+            Week.deleteMany({ habit: id })
+                .then((week) => {
+                    if (!week) {
+                        console.log('A habit was deleted but no week was not found with the habit id')
+                    }
+                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            Day.deleteMany({ habit: id })
+                    .then((day) => {
+                        if (!day) {
+                            console.log('A habit was deleted but no day was not found with the habit id')
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            
         })
         .catch((err) => {
             res.status(400).json(err)
