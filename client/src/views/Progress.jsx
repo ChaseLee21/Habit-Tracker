@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { getUser } from '../util/axios'
 import Emoji from '../classes/emoji'
+import { random } from '../util/helpers'
 
 function Progress (props) {
     const userId = props.user.user.id || ''
@@ -51,14 +52,10 @@ function Progress (props) {
     }
 
     function drawEmojis (ctx, emojiString) {
-        console.log(emojiString)
-        const x = ctx.canvas.width / 2
-        const y = ctx.canvas.height / 2
-        const velX = 0
-        const velY = -1
-        const size = 30
+        const y = ctx.canvas.height / 100
+        const size = 40
         const emojis = emojiString.map(emoji => {
-            return new Emoji(emoji, x, y, velX, velY, size)
+            return new Emoji(emoji, random(0, ctx.canvas.width), y, random(-1, 1), random(-1, 1), size)
         })
         emojis.forEach(emoji => {
             console.log(emoji)
@@ -72,9 +69,9 @@ function Progress (props) {
     function updateEmojis (ctx, emojis) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
         emojis.forEach(emoji => {
+            emoji.collisionDetect(emojis)
             emoji.update(ctx.canvas)
             emoji.draw(ctx)
-            emoji.collisionDetect(emojis)
         })
         requestAnimationFrame(() => updateEmojis(ctx, emojis))
     }
