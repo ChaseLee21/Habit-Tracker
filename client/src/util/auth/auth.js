@@ -2,6 +2,7 @@ import withAuth from './Hoc'
 import Home from '../../views/Home'
 import NewHabit from '../../views/NewHabit'
 import Profile from '../../views/Profile'
+import Progress from '../../views/Progress'
 
 function ProtectedRoute ({ component: Component }) {
     const component = withAuth(Component)
@@ -14,4 +15,6 @@ const ProtectedNewHabit = ProtectedRoute({ component: NewHabit })
 
 const ProtectedProfile = ProtectedRoute({ component: Profile })
 
-export { ProtectedHome, ProtectedNewHabit, ProtectedProfile }
+const ProtectedProgress = ProtectedRoute({ component: Progress })
+
+export { ProtectedHome, ProtectedNewHabit, ProtectedProfile, ProtectedProgress }
