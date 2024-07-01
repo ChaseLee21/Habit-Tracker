@@ -61,7 +61,7 @@ async function setDaysArray (endDate, weekId, habitId) {
     const days = []
     const Day = mongoose.model('Day')
     let currentDate = new Date(endDate)
-
+    currentDate = new Date(currentDate.setDate(currentDate.getDate() - 1))
     for (let i = 0; i < 7; i++) {
         const newDay = await Day.create({
             date: currentDate.toISOString().split('T')[0],
