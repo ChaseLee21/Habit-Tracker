@@ -1,8 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import { getUser } from '../util/axios'
 
 function Progress (props) {
-    // const userId = props.user.user.id || ''
+    const userId = props.user.user.id || ''
+    const [user, setUser] = useState({})
+
+    useEffect(() => {
+        async function fetchUser () {
+            try {
+                const userData = await getUser(userId)
+                if (userData) {
+                    setUser(userData)
+                    console.log(user)
+                } else {
+                    console.log('No user data found')
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        fetchUser()
+    }, [])
 
     useEffect(() => {
         document.title = 'Progress | Habit Tracker'
