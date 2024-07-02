@@ -12,8 +12,12 @@ class Emoji {
 
     draw(ctx) {
         // Draw the emoji
+        ctx.textBaseline = 'top'
         ctx.font = `${this.size}px "Segoe UI Emoji", sans-serif`
-        ctx.fillText(this.emoji, this.x, this.y)
+
+        const adjustX = this.size * 0.15
+
+        ctx.fillText(this.emoji, this.x - adjustX, this.y)
         // Set border color and thickness
         ctx.strokeStyle = 'black'
         ctx.lineWidth = 1 
