@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { getUser } from '../util/axios'
 import Emoji from '../classes/emoji'
-import { random } from '../util/helpers'
+import { random, splitEmoji } from '../util/helpers'
 
 function Progress (props) {
     const userId = props.user.user.id || ''
@@ -47,7 +47,7 @@ function Progress (props) {
         ctx.scale(dpr, dpr)
         // Clear canvas and draw emojis
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-        const emojiArray = Array.from(user.emojis).filter((emoji, index) => index % 2 === 0 && emoji !== '')
+        const emojiArray = splitEmoji(user.emojis)
         drawEmojis(ctx, emojiArray)
     }
 
@@ -58,7 +58,6 @@ function Progress (props) {
             return new Emoji(emoji, random(0, ctx.canvas.width), y, random(-1, 1), random(-1, 1), size)
         })
         emojis.forEach(emoji => {
-            console.log(emoji)
             emoji.update(ctx.canvas)
             emoji.draw(ctx)
             emoji.collisionDetect(emojis)

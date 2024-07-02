@@ -3,4 +3,6 @@ function random(min, max) {
     return num
 }
 
-export { random }
+const splitEmoji = (string) => [...new Intl.Segmenter().segment(string)].map(x => x.segment)
+
+export { random, splitEmoji }
