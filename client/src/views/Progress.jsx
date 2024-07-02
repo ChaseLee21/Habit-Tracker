@@ -10,6 +10,7 @@ function Progress (props) {
     // TODO: Set canvas width and height to be responsive
     const canvasWidth = window.innerWidth * 0.77
     const canvasHeight = window.innerHeight * 0.97
+    const testEmojis = '🍎🍏🍊🍋🍌🍉🍇🍓🍈🍒🍑🥭🍍🥥🥝🍅🍆🥑🥦🥒🌶🌽🥕🥔🍠🥐🍞🥖🥨🧀🥚🍳🥞🥓🥩🍗🍖🌭🍔🍟🍕🥪🥙🌮🌯🥗🥘🥫🍝🍜🍲🍛🍣🍱🥟🍤🍙🍚🍘🍥🥠🍢🍡🍧🍨🍦🥧🧁🍰🎂🍮🍭🍬🍫🍿🍩🍪🌰🥜🍯🥛🍼🍵🍶🍺🍻🥂🍷🥃🍸🍹🍾🥤🧃🧉🧊🥢🍽🍴🥄🔪🏺🌍🌎🌏🌐🗺🗾🧭🏔🌋🗻🏕🏖🏜🏝🏞🏟🏛🏗🧱🏘🏚🏠🏡🏢🏣🏤🏥🏦🏨🏩🏪🏫🏬🏭🏯🏰💒🗼🗽⛪🕌🛕🕍⛩🕋🛤🛣🗾🎑🏞🌅🌄🌠🎇🎆🌌🌉🌃🏙🌇🌆🏦🏪🏫🏭'
 
     useEffect(() => {
         async function fetchUser () {
@@ -51,15 +52,15 @@ function Progress (props) {
         ctx.scale(dpr, dpr)
         // Clear canvas and draw emojis
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-        const emojiArray = splitEmoji(user.emojis)
+        const emojiArray = splitEmoji(testEmojis)
         drawEmojis(ctx, emojiArray)
     }
 
     function drawEmojis (ctx, emojiString) {
-        const y = ctx.canvas.height / 100
+        const y = ctx.canvas.height / 6
         const size = 40
         const emojis = emojiString.map(emoji => {
-            return new Emoji(emoji, random(0, ctx.canvas.width), y, random(-1, 1), random(-1, 1), size)
+            return new Emoji(emoji, random(0, ctx.canvas.width), y, random(-.5, 5), random(-.5, .5), size)
         })
         emojis.forEach(emoji => {
             emoji.update(ctx.canvas)

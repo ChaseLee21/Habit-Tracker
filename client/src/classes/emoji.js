@@ -6,7 +6,7 @@ class Emoji {
         this.velX = velX
         this.velY = velY
         this.size = size
-        this.gravity = 0.9
+        this.gravity = 0.1
         this.friction = 0.9
     }
 
@@ -19,33 +19,34 @@ class Emoji {
 
         ctx.fillText(this.emoji, this.x - adjustX, this.y)
         // Set border color and thickness
-        ctx.strokeStyle = 'black'
-        ctx.lineWidth = 1 
-        const rectX = this.x
-        const rectY = this.y 
-        const rectWidth = this.size
-        const rectHeight = this.size
-        ctx.strokeRect(rectX, rectY, rectWidth, rectHeight)
+        // ctx.strokeStyle = 'black'
+        // ctx.lineWidth = 1 
+        // const rectX = this.x
+        // const rectY = this.y 
+        // const rectWidth = this.size
+        // const rectHeight = this.size
+        // ctx.strokeRect(rectX, rectY, rectWidth, rectHeight)
     }
 
     update (canvas) {
-        if (this.x + this.size > canvas.width || this.x < 0) {
+        if (this.x + this.size >= canvas.width || this.x < 0) {
             this.velX = -this.velX
-            if (this.velX === 0) {
-                this.velX += .03
-            }
         }
 
-        if (this.y + this.size > canvas.height || this.y < 0) {
-            this.velY = -this.velY
-            this.velY = this.velY * this.friction
+        if (this.y + this.size >= canvas.height || this.y < 0) {
+            this.velY = -this.velY * 0.5
         }
 
         if (this.y + this.size < canvas.height) {
             this.velY += this.gravity
-        } else if (this.y + this.size >= canvas.height){
-            // Friction applied to emojis X Velocity when emoji is on the ground
-            this.velX = this.velX * this.friction
+        } else {
+            // Adjust the y position and velocity when hitting the hard floor
+            this.y = canvas.height - this.size // Adjust y to not pass the bottom of the canvas
+            this.velY = 0 // Stop moving vertically by setting velocity to 0
+        }
+        
+        if (this.y + this.size >= canvas.height + this.size) {
+            this.y = canvas.height - this.size
         }
 
         this.x += this.velX
