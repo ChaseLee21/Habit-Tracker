@@ -7,6 +7,9 @@ import { random, splitEmoji } from '../util/helpers'
 function Progress (props) {
     const userId = props.user.user.id || ''
     const [user, setUser] = useState({})
+    // TODO: Set canvas width and height to be responsive
+    const canvasWidth = window.innerWidth * 0.77
+    const canvasHeight = window.innerHeight * 0.97
 
     useEffect(() => {
         async function fetchUser () {
@@ -42,6 +45,7 @@ function Progress (props) {
         // Adjust for device pixel ratio
         const dpr = window.devicePixelRatio || 1
         const rect = canvas.getBoundingClientRect()
+        console.log(rect)
         canvas.width = rect.width * dpr
         canvas.height = rect.height * dpr
         ctx.scale(dpr, dpr)
@@ -77,8 +81,8 @@ function Progress (props) {
 
     return (
         <>
-            <main>
-                <canvas className='w-full h-full min-h-[80vh]'>
+            <main id='canvasContainer' className='w-auto m-2 min-h-[98%] max-h-[100%]'>
+                <canvas width={canvasWidth} height={canvasHeight} className='border border-black' >
 
                 </canvas>
             </main>
