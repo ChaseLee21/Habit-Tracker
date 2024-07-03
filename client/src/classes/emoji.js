@@ -29,51 +29,78 @@ class Emoji {
     }
 
     update (canvas) {
-        if (this.x + this.size >= canvas.width || this.x < 0) {
-            this.velX = -this.velX
+        // Check for bottom boundary
+        if (this.y + this.size >= canvas.height) {
+            this.y = canvas.height - this.size;
+            this.velY *= -1; // Reverse velocity to bounce off the boundary
         }
 
-        if (this.y + this.size >= canvas.height || this.y < 0) {
-            this.velY = -this.velY * 0.5
+        // Add check for top boundary
+        if (this.y - this.size <= 0) {
+            this.y = this.size;
+            this.velY *= -1; // Reverse velocity to bounce off the boundary
         }
 
-        if (this.y + this.size < canvas.height) {
-            this.velY += this.gravity
-        } else {
-            // Adjust the y position and velocity when hitting the hard floor
-            this.y = canvas.height - this.size // Adjust y to not pass the bottom of the canvas
-            this.velY = 0 // Stop moving vertically by setting velocity to 0
-        }
-        
-        if (this.y + this.size >= canvas.height + this.size) {
-            this.y = canvas.height - this.size
+        // Add check for right boundary
+        if (this.x + this.size >= canvas.width) {
+            this.x = canvas.width - this.size;
+            this.velX *= -1; // Reverse velocity to bounce off the boundary
         }
 
-        this.x += this.velX
-        this.y += this.velY
+        // Add check for left boundary
+        if (this.x - this.size <= 0) {
+            this.x = this.size;
+            this.velX *= -1; // Reverse velocity to bounce off the boundary
+        }
+
+        this.x += this.velX;
+        this.y += this.velY;
     }
 
-    collisionDetect (emojis) {
+    collisionDetect(emojis, canvas) {
         for (let j = 0; j < emojis.length; j++) {
-            if (!(this === emojis[j])) {
-                const dx = this.x - emojis[j].x
-                const dy = this.y - emojis[j].y
-                const distance = Math.sqrt(dx * dx + dy * dy)
-
-                if (distance <= this.size) {
-                    // Reverse velocities
-                    this.velX = -this.velX
-                    emojis[j].velX = -emojis[j].velX
-                
-                    // Move emojis apart to reduce overlap
-                    const overlap = (this.size) - distance
-                    const adjustX = (overlap / 2) * (dx / distance)
-                    const adjustY = (overlap / 2) * (dy / distance)
-                
-                    this.x += adjustX
-                    this.y += adjustY
-                    emojis[j].x -= adjustX
-                    emojis[j].y -= adjustY
+            if (!(this === emojis[j]) && !emojis[j].cooldown) {
+                const dx = this.x - emojis[j].x;
+                const dy = this.y - emojis[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+    
+                if (distance < this.size + emojis[j].size) {
+                    // Elastic collision physics with reduced impact
+                    const nx = dx / distance;
+                    const ny = dy / distance;
+                    const p = 2 * (this.velX * nx + this.velY * ny - emojis[j].velX * nx - emojis[j].velY * ny) / (this.mass + emojis[j].mass) * 0.5; // Scale down the velocity change
+    
+                    this.velX -= p * this.mass * nx;
+                    this.velY -= p * this.mass * ny;
+                    emojis[j].velX += p * emojis[j].mass * nx;
+                    emojis[j].velY += p * emojis[j].mass * ny;
+    
+                    // Apply cooldown to prevent immediate recollision
+                    this.cooldown = true;
+                    emojis[j].cooldown = true;
+                    setTimeout(() => { this.cooldown = false; emojis[j].cooldown = false; }, 100);
+    
+                    // Velocity damping with reduced impact
+                    this.velX *= 0.9;
+                    this.velY *= 0.9;
+                    emojis[j].velX *= 0.9;
+                    emojis[j].velY *= 0.9;
+    
+                    // Adjust positions to ensure minimal overlap with careful adjustment
+                    const overlap = 0.5 * (this.size + emojis[j].size - distance); // Reduced overlap adjustment
+                    const adjustX = overlap * (dx / distance);
+                    const adjustY = overlap * (dy / distance);
+    
+                    this.x += adjustX;
+                    this.y += adjustY;
+                    emojis[j].x -= adjustX;
+                    emojis[j].y -= adjustY;
+    
+                    // Ensure emojis are within canvas bounds after adjustment
+                    this.x = Math.max(this.size, Math.min(this.x, canvas.width - this.size));
+                    this.y = Math.max(this.size, Math.min(this.y, canvas.height - this.size));
+                    emojis[j].x = Math.max(emojis[j].size, Math.min(emojis[j].x, canvas.width - emojis[j].size));
+                    emojis[j].y = Math.max(emojis[j].size, Math.min(emojis[j].y, canvas.height - emojis[j].size));
                 }
             }
         }

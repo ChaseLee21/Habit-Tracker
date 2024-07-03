@@ -56,24 +56,25 @@ function Progress (props) {
         drawEmojis(ctx, emojiArray)
     }
 
-    function drawEmojis (ctx, emojiString) {
-        const y = ctx.canvas.height / 6
-        const size = 40
+    function drawEmojis(ctx, emojiString) {
+        const y = ctx.canvas.height / 6;
+        const size = 40;
         const emojis = emojiString.map(emoji => {
-            return new Emoji(emoji, random(0, ctx.canvas.width), y, random(-.5, 5), random(-.5, .5), size)
-        })
+            return new Emoji(emoji, random(0, ctx.canvas.width), y, random(-0.5, 0.5), random(-0.5, 0.5), size);
+        });
+        console.log(emojis);
         emojis.forEach(emoji => {
-            emoji.update(ctx.canvas)
-            emoji.draw(ctx)
-            emoji.collisionDetect(emojis)
-        })
-        requestAnimationFrame(() => updateEmojis(ctx, emojis))
+            emoji.update(ctx.canvas);
+            emoji.draw(ctx);
+            emoji.collisionDetect(emojis, ctx.canvas);
+        });
+        requestAnimationFrame(() => updateEmojis(ctx, emojis));
     }
 
     function updateEmojis (ctx, emojis) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
         emojis.forEach(emoji => {
-            emoji.collisionDetect(emojis)
+            emoji.collisionDetect(emojis, ctx.canvas)
             emoji.update(ctx.canvas)
             emoji.draw(ctx)
         })
