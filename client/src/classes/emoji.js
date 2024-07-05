@@ -56,7 +56,7 @@ class Emoji {
         this.x += this.velX;
         this.y += this.velY;
     }
-
+        
     collisionDetect(emojis, canvas) {
         for (let j = 0; j < emojis.length; j++) {
             if (!(this === emojis[j]) && !emojis[j].cooldown) {
