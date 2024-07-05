@@ -8,9 +8,8 @@ function Progress (props) {
     const userId = props.user.user.id || ''
     const [user, setUser] = useState({})
     // TODO: Set canvas width and height to be responsive
-    const canvasWidth = window.innerWidth * 0.77
-    const canvasHeight = window.innerHeight * 0.97
-    const testEmojis = '🍎🍏🍊🍋🍌🍉🍇🍓🍈🍒🍑🥭🍍🥥🥝🍅🍆🥑🥦🥒🌶🌽🥕🥔🍠🥐🍞🥖🥨🧀🥚🍳🥞🥓🥩🍗🍖🌭🍔🍟🍕🥪🥙🌮🌯🥗🥘🥫🍝🍜🍲🍛🍣🍱🥟🍤🍙🍚🍘🍥🥠🍢🍡🍧🍨🍦🥧🧁🍰🎂🍮🍭🍬🍫🍿🍩🍪🌰🥜🍯🥛🍼🍵🍶🍺🍻🥂🍷🥃🍸🍹🍾🥤🧃🧉🧊🥢🍽🍴🥄🔪🏺🌍🌎🌏🌐🗺🗾🧭🏔🌋🗻🏕🏖🏜🏝🏞🏟🏛🏗🧱🏘🏚🏠🏡🏢🏣🏤🏥🏦🏨🏩🏪🏫🏬🏭🏯🏰💒🗼🗽⛪🕌🛕🕍⛩🕋🛤🛣🗾🎑🏞🌅🌄🌠🎇🎆🌌🌉🌃🏙🌇🌆🏦🏪🏫🏭'
+    
+    const testEmojis = '🍎🍏🍊🍋🍌🍉🍇🍓🍈🍒🍑🥭🍍🥥🧀🥚🍳🥞🥓🥩🍗🍖🌭🍔🍟🍕🥪🥙🌮🌯🥗🥘🥫🍝🍜🍲🍛🍣🍱🥟🍤🍙🍚🍘🍥🥠🍢🍡🍧🍨🍦🥧🧁🍰🎂🍮🍭🍬🍫🍿🍩🍪🌰🥜🍯🥛🍼🍵🍶🍺🍻🥂🍷🥃🍸🍹🍾🥤🧃🧉🧊🥢🍽🍴🥄🔪🏺🌍🌎🌏🌐🗺🗾🧭'
 
     useEffect(() => {
         async function fetchUser () {
@@ -43,12 +42,17 @@ function Progress (props) {
         // Set up canvas
         const canvas = document.querySelector('canvas')
         const ctx = canvas.getContext('2d')
+        // Set canvas width and height
+        const canvasContainer = document.getElementById('canvasContainer')
+        const canvasWidth = canvasContainer ? canvasContainer.offsetWidth : window.innerWidth * 0.97
+        const canvasHeight = canvasContainer ? canvasContainer.offsetHeight : window.innerHeight * 0.97
+        console.log(canvasWidth, canvasHeight, canvasContainer.offsetWidth, canvasContainer.offsetHeight, canvasContainer)
         // Adjust for device pixel ratio
         const dpr = window.devicePixelRatio || 1
         const rect = canvas.getBoundingClientRect()
         console.log(rect)
-        canvas.width = rect.width * dpr
-        canvas.height = rect.height * dpr
+        canvas.width = canvasWidth * dpr
+        canvas.height = canvasHeight * dpr
         ctx.scale(dpr, dpr)
         // Clear canvas and draw emojis
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
@@ -82,13 +86,11 @@ function Progress (props) {
     }
 
     return (
-        <>
-            <main id='canvasContainer' className='w-auto m-2 min-h-[98%] max-h-[100%]'>
-                <canvas width={canvasWidth} height={canvasHeight} className='border border-black' >
+        <main id='canvasContainer' className='m-2 grid grid-cols-5'>
+            <canvas className='border border-black col-span-5' >
 
-                </canvas>
-            </main>
-        </>
+            </canvas>
+        </main>
     )
 }
 
