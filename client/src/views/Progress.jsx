@@ -7,8 +7,6 @@ import { random, splitEmoji } from '../util/helpers'
 function Progress (props) {
     const userId = props.user.user.id || ''
     const [user, setUser] = useState({})
-    // TODO: Set canvas width and height to be responsive
-    
     const testEmojis = '🍎🍏🍊🍋🍌🍉🍇🍓🍈🍒🍑🥭🍍🥥🧀🥚🍳🥞🥓🥩🍗🍖🌭🍔🍟🍕🥪🥙🌮🌯🥗🥘🥫🍝🍜🍲🍛🍣🍱🥟🍤🍙🍚🍘🍥🥠🍢🍡🍧🍨🍦🥧🧁🍰🎂🍮🍭🍬🍫🍿🍩🍪🌰🥜🍯🥛🍼🍵🍶🍺🍻🥂🍷🥃🍸🍹🍾🥤🧃🧉🧊🥢🍽🍴🥄🔪🏺🌍🌎🌏🌐🗺🗾🧭'
 
     useEffect(() => {
@@ -17,7 +15,6 @@ function Progress (props) {
                 const userData = await getUser(userId)
                 if (userData) {
                     setUser(userData)
-                    console.log(userData)
                 } else {
                     console.log('No user data found')
                 }
@@ -51,8 +48,10 @@ function Progress (props) {
         const dpr = window.devicePixelRatio || 1
         const rect = canvas.getBoundingClientRect()
         console.log(rect)
+        // TODO: fix canvas width and height to match container which is being resized too big because of dpr
         canvas.width = canvasWidth * dpr
         canvas.height = canvasHeight * dpr
+        console.log(canvas.width, canvas.height, dpr);
         ctx.scale(dpr, dpr)
         // Clear canvas and draw emojis
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
