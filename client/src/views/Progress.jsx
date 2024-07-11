@@ -11,9 +11,7 @@ function Progress (props) {
     // useState hooks
     const [user, setUser] = useState({})
 
-
     // UseEffect hooks
-    // Retrieve user data
     useEffect(() => {
         async function fetchUser () {
             try {
@@ -28,30 +26,24 @@ function Progress (props) {
             }
         }
         fetchUser()
-    }, [])
-
-    // Set page title
+    }, []) // Retrieve user data
     useEffect(() => {
         document.title = 'Progress | Habit Tracker'
-    }, [])
-
-    // Initialize canvas after user data is retrieved
+    }, []) // Set page title
     useEffect(() => {
         if (user.emojis) {
             initCanvas()
         }
-    }, [user.emojis])
-
-    // debugging
+    }, [user.emojis]) // Initialize canvas after user data is retrieved
 
     function initCanvas () {
-        // canvas dimensions
+        // Setting canvas dimensions
         const canvasWidth = document.getElementById('canvasContainer').offsetWidth
         const canvasHeight = document.getElementById('canvasContainer').offsetHeight
         console.log(canvasWidth, canvasHeight)
         console.log(document.getElementById('canvasContainer'))
 
-        // create engine
+        // Creating engine
         const engine = Engine.create()
         const world = engine.world
         const render = Render.create({
@@ -66,19 +58,11 @@ function Progress (props) {
         })
         Render.run(render)
         
-        // create runner
+        // Creating runner
         var runner = Runner.create()
         Runner.run(runner, engine)
         
-        let renderEmojis = []
-        for (let emoji of testEmojis) {
-            const spriteUrl = `https://emojicdn.elk.sh/${encodeURIComponent(emoji)}`
-            const x = Math.random() * canvasWidth
-            const y = 0
-            renderEmojis.push(Bodies.circle(x, y, 20, {render: {sprite: {texture: spriteUrl, xScale: 0.25, yScale: 0.25}}}))
-        }
-        
-        // walls
+        // Creating walls
         const wallThickness = 10
         Composite.add(world, [
             // top
@@ -91,10 +75,17 @@ function Progress (props) {
             Bodies.rectangle(canvasWidth, canvasHeight/2, wallThickness, canvasHeight, { isStatic: true }),
         ])
 
-        //emojis
+        // Creating emojis
+        let renderEmojis = []
+        for (let emoji of testEmojis) {
+            const spriteUrl = `https://emojicdn.elk.sh/${encodeURIComponent(emoji)}`
+            const x = Math.random() * canvasWidth
+            const y = 0
+            renderEmojis.push(Bodies.circle(x, y, 20, {render: {sprite: {texture: spriteUrl, xScale: 0.25, yScale: 0.25}}}))
+        }
         Composite.add(world, renderEmojis)
 
-        // fit the render viewport to the scene
+        // Centering the render viewport to the scene
         Render.lookAt(render, {
             min: { x: 0, y: 0 },
             max: { x: canvasWidth, y: canvasHeight }
