@@ -67,13 +67,13 @@ function Progress (props) {
         const wallThickness = 10
         Composite.add(world, [
             // top
-            Bodies.rectangle(canvasWidth/2, 0, canvasWidth, wallThickness, { isStatic: true }),
+            Bodies.rectangle(canvasWidth/2, 0, canvasWidth, wallThickness, { isStatic: true, render: { opacity: 0 }}),
             // bottom
-            Bodies.rectangle(canvasWidth/2, canvasHeight, canvasWidth, wallThickness, { isStatic: true }),
+            Bodies.rectangle(canvasWidth/2, canvasHeight, canvasWidth, wallThickness, { isStatic: true, render: { opacity: 0 } }),
             // left
-            Bodies.rectangle(0, canvasHeight/2, wallThickness, canvasHeight, { isStatic: true }),
+            Bodies.rectangle(0, canvasHeight/2, wallThickness, canvasHeight, { isStatic: true, render: { opacity: 0 } }),
             // right
-            Bodies.rectangle(canvasWidth, canvasHeight/2, wallThickness, canvasHeight, { isStatic: true }),
+            Bodies.rectangle(canvasWidth, canvasHeight/2, wallThickness, canvasHeight, { isStatic: true, render: { opacity: 0 } }),
         ])
 
         // Creating emojis
