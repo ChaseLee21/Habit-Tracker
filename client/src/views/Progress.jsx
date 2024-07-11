@@ -82,12 +82,12 @@ function Progress (props) {
             const spriteUrl = `https://emojicdn.elk.sh/${encodeURIComponent(emoji)}`
             const x = Math.random() * canvasWidth
             const y = 0
-            renderEmojis.push(Bodies.circle(x, y, 25, {
+            renderEmojis.push(Bodies.circle(x, y, canvasHeight/40, {
                 render: {
                     sprite: {
                         texture: spriteUrl, 
-                        xScale: 0.30, 
-                        yScale: 0.30
+                        xScale: canvasHeight/3000,
+                        yScale: canvasHeight/3000
                     }
                 },
                 restitution: .9,
