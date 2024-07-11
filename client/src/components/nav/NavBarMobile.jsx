@@ -10,18 +10,20 @@ function Header () {
 
     return (
         <>
-            <header className="bg-colorPrimary text-colorSecondary">
-                <div className="flex justify-between items-center p-2">
+            <header className="bg-colorPrimary text-colorSecondary h-full">
+                {/* Menu Button and Title */}
+                <div className="flex justify-between p-2 h-full">
                     <button onClick={() => handleNavBarClick()}>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 mx-2 text-colorSecondary hover:text-colorSecondaryDark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
                         </svg>
                     </button>
-                    <h1 className="text-colorSecondary hover:text-colorSecondaryDark text-2xl mx-2">
+                    <h1 className="text-colorSecondary hover:text-colorSecondaryDark text-2xl font-bold mx-2 my-auto ">
                         <Link to={'/'} onClick={() => setShowMenu(false)}>Habit Tracker</Link>
                     </h1>
                 </div>
-                {showMenu && (<nav className="bg-colorBg text-colorLinktext-lg">
+                {/* Nav Dropdown */}
+                {showMenu && (<nav className="bg-colorBg text-colorLinktext-lg absolute w-full h-full">
                     <ul>
                         {document.cookie.includes('habitTrackerToken') &&
                             <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">

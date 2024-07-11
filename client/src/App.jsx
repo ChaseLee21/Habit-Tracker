@@ -28,10 +28,16 @@ function App () {
 
     return (
         <>
-            {showMobile && <div className=''>
-                <NavBarMobile />
-                <Outlet />
-                <Footer />
+            {showMobile && <div className='grid grid-flow-row grid-rows-12'>
+                <div className='row-span-1'>
+                    <NavBarMobile />
+                </div>
+                <div className='row-span-10'>
+                    <Outlet />
+                </div>
+                <div className='row-span-1'>
+                    <Footer />
+                </div>
             </div>}
 
             {!showMobile &&
