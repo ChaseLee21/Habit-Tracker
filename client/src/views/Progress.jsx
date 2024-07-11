@@ -51,7 +51,7 @@ function Progress (props) {
         // TODO: fix canvas width and height to match container which is being resized too big because of dpr
         canvas.width = canvasWidth * dpr
         canvas.height = canvasHeight * dpr
-        console.log(canvas.width, canvas.height, dpr);
+        console.log(canvas.width, canvas.height, dpr)
         ctx.scale(dpr, dpr)
         // Clear canvas and draw emojis
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
@@ -60,18 +60,18 @@ function Progress (props) {
     }
 
     function drawEmojis(ctx, emojiString) {
-        const y = ctx.canvas.height / 6;
-        const size = 40;
+        const y = ctx.canvas.height / 6
+        const size = 40
         const emojis = emojiString.map(emoji => {
-            return new Emoji(emoji, random(0, ctx.canvas.width), y, random(-0.5, 0.5), random(-0.5, 0.5), size);
-        });
-        console.log(emojis);
+            return new Emoji(emoji, random(0, ctx.canvas.width), y, random(-0.5, 0.5), random(-0.5, 0.5), size)
+        })
+        console.log(emojis)
         emojis.forEach(emoji => {
-            emoji.update(ctx.canvas);
-            emoji.draw(ctx);
-            emoji.collisionDetect(emojis, ctx.canvas);
-        });
-        requestAnimationFrame(() => updateEmojis(ctx, emojis));
+            emoji.update(ctx.canvas)
+            emoji.draw(ctx)
+            emoji.collisionDetect(emojis, ctx.canvas)
+        })
+        requestAnimationFrame(() => updateEmojis(ctx, emojis))
     }
 
     function updateEmojis (ctx, emojis) {
