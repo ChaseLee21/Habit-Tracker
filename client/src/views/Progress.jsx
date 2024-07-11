@@ -46,6 +46,7 @@ function Progress (props) {
         // Creating engine
         const engine = Engine.create()
         const world = engine.world
+        engine.gravity.y = 0.5
         const render = Render.create({
             element: document.querySelector('#canvas'),
             engine: engine,
@@ -53,7 +54,7 @@ function Progress (props) {
                 width: canvasWidth,
                 height: canvasHeight,
                 background: '#FFF',
-                wireframes: true
+                wireframes: false
             }
         })
         Render.run(render)
@@ -66,13 +67,13 @@ function Progress (props) {
         const wallThickness = 10
         Composite.add(world, [
             // top
-            Bodies.rectangle(canvasWidth/2, 0, canvasWidth, wallThickness, { isStatic: true }),
+            Bodies.rectangle(canvasWidth/2, 0, canvasWidth, wallThickness, { isStatic: true, restitution: 1, slop: 1 }),
             // bottom
-            Bodies.rectangle(canvasWidth/2, canvasHeight, canvasWidth, wallThickness, { isStatic: true }),
+            Bodies.rectangle(canvasWidth/2, canvasHeight, canvasWidth, wallThickness, { isStatic: true, restitution: 1, slop: 1 }),
             // left
-            Bodies.rectangle(0, canvasHeight/2, wallThickness, canvasHeight, { isStatic: true }),
+            Bodies.rectangle(0, canvasHeight/2, wallThickness, canvasHeight, { isStatic: true, restitution: 1, slop: 1 }),
             // right
-            Bodies.rectangle(canvasWidth, canvasHeight/2, wallThickness, canvasHeight, { isStatic: true }),
+            Bodies.rectangle(canvasWidth, canvasHeight/2, wallThickness, canvasHeight, { isStatic: true, restitution: 1, slop: 1 }),
         ])
 
         // Creating emojis
@@ -81,7 +82,16 @@ function Progress (props) {
             const spriteUrl = `https://emojicdn.elk.sh/${encodeURIComponent(emoji)}`
             const x = Math.random() * canvasWidth
             const y = 0
-            renderEmojis.push(Bodies.circle(x, y, 20, {render: {sprite: {texture: spriteUrl, xScale: 0.25, yScale: 0.25}}}))
+            renderEmojis.push(Bodies.circle(x, y, 25, {
+                render: {
+                    sprite: {
+                        texture: spriteUrl, 
+                        xScale: 0.30, 
+                        yScale: 0.30
+                    }
+                },
+                restitution: .9,
+            }))
         }
         Composite.add(world, renderEmojis)
 
