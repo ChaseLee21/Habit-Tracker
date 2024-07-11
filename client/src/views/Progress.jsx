@@ -39,6 +39,9 @@ function Progress (props) {
 
 
     function initCanvas () {
+        const canvasWidth = 1200
+        const canvasHeight = 600
+        const wallThickness = 10
         // create engine
         const engine = Engine.create()
         const world = engine.world
@@ -46,10 +49,10 @@ function Progress (props) {
             element: document.querySelector('#canvas'),
             engine: engine,
             options: {
-                width: 800,
-                height: 600,
+                width: canvasWidth,
+                height: canvasHeight,
                 background: '#FFF',
-                wireframes: false
+                wireframes: true
             }
         })
         Render.run(render)
@@ -61,17 +64,21 @@ function Progress (props) {
         let renderEmojis = []
         for (let emoji of testEmojis) {
             const spriteUrl = `https://emojicdn.elk.sh/${encodeURIComponent(emoji)}`
-            const x = Math.random() * 800
+            const x = Math.random() * canvasWidth
             const y = 0
             renderEmojis.push(Bodies.circle(x, y, 20, {render: {sprite: {texture: spriteUrl, xScale: 0.25, yScale: 0.25}}}))
         }
 
         // walls
         Composite.add(world, [
-            Bodies.rectangle(400, 0, 800, 50, { isStatic: true }),
-            Bodies.rectangle(400, 600, 800, 50, { isStatic: true }),
-            Bodies.rectangle(800, 300, 50, 600, { isStatic: true }),
-            Bodies.rectangle(0, 300, 50, 600, { isStatic: true }),
+            // top
+            Bodies.rectangle(canvasWidth/2, 0, canvasWidth, wallThickness, { isStatic: true }),
+            // bottom
+            Bodies.rectangle(canvasWidth/2, canvasHeight, canvasWidth, wallThickness, { isStatic: true }),
+            // left
+            Bodies.rectangle(0, canvasHeight/2, wallThickness, canvasHeight, { isStatic: true }),
+            // right
+            Bodies.rectangle(canvasWidth, canvasHeight/2, wallThickness, canvasHeight, { isStatic: true }),
         ])
 
         //emojis
@@ -80,12 +87,12 @@ function Progress (props) {
         // fit the render viewport to the scene
         Render.lookAt(render, {
             min: { x: 0, y: 0 },
-            max: { x: 800, y: 600 }
+            max: { x: canvasWidth, y: canvasHeight }
         })
     }
 
     return (
-        <main id='canvas' className='m-2 grid grid-cols-5'>
+        <main id='canvas'>
         
         </main>
 
