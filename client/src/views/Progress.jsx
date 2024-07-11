@@ -10,8 +10,7 @@ function Progress (props) {
     
     // useState hooks
     const [user, setUser] = useState({})
-    const [canvasWidth, setCanvasWidth] = useState(1200)
-    const [canvasHeight, setCanvasHeight] = useState(800)
+
 
     // UseEffect hooks
     // Retrieve user data
@@ -39,8 +38,6 @@ function Progress (props) {
     // Initialize canvas after user data is retrieved
     useEffect(() => {
         if (user.emojis) {
-            setCanvasHeight(800)
-            setCanvasWidth(1200)
             initCanvas()
         }
     }, [user.emojis])
@@ -48,6 +45,12 @@ function Progress (props) {
     // debugging
 
     function initCanvas () {
+        // canvas dimensions
+        const canvasWidth = document.getElementById('canvasContainer').offsetWidth
+        const canvasHeight = document.getElementById('canvasContainer').offsetHeight
+        console.log(canvasWidth, canvasHeight)
+        console.log(document.getElementById('canvasContainer'))
+
         // create engine
         const engine = Engine.create()
         const world = engine.world
@@ -99,9 +102,11 @@ function Progress (props) {
     }
 
     return (
-        <main id='canvas'>
-        
-        </main>
+        <div id='canvasContainer' className='h-full w-full'>
+            <main id='canvas'>
+            
+            </main>
+        </div>
     )
 }
 
