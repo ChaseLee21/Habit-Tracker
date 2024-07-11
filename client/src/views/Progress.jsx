@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { getUser } from '../util/axios'
-import { Engine, Render, Runner, Composites, MouseConstraint, Mouse, Composite, Bodies } from 'matter-js'
+import { Engine, Render, Runner, Composite, Bodies } from 'matter-js'
 
 function Progress (props) {
+    // constants
     const userId = props.user.user.id || ''
-    const [user, setUser] = useState({})
     const testEmojis = '🍎🍏🍊🍋🍌🍉🍇🍓🍈🍒🍑🥭🍍🥥🧀🥚🍳🥞🥓🥩🍗🍖🌭🍔🍟🍕🥪🥙🌮🌯🥗🥘🥫🍝🍜🍲🍛🍣🍱🥟🍤🍙🍚🍘🍥🥠🍢🍡🍧🍨🍦🥧🧁🍰🎂🍮🍭🍬🍫🍿🍩🍪🌰🥜🍯🥛🍼🍵🍶🍺🍻🥂🍷🥃🍸🍹🍾🥤🧃🧉🧊🥢🍽🍴🥄🔪🏺🌍🌎🌏🌐🗺🗾🧭'
+    
+    // useState hooks
+    const [user, setUser] = useState({})
+    const [canvasWidth, setCanvasWidth] = useState(1200)
+    const [canvasHeight, setCanvasHeight] = useState(800)
 
+    // UseEffect hooks
     // Retrieve user data
     useEffect(() => {
         async function fetchUser () {
@@ -29,19 +35,19 @@ function Progress (props) {
     useEffect(() => {
         document.title = 'Progress | Habit Tracker'
     }, [])
-    
+
     // Initialize canvas after user data is retrieved
     useEffect(() => {
         if (user.emojis) {
+            setCanvasHeight(800)
+            setCanvasWidth(1200)
             initCanvas()
         }
     }, [user.emojis])
 
+    // debugging
 
     function initCanvas () {
-        const canvasWidth = 1200
-        const canvasHeight = 600
-        const wallThickness = 10
         // create engine
         const engine = Engine.create()
         const world = engine.world
@@ -56,11 +62,11 @@ function Progress (props) {
             }
         })
         Render.run(render)
-
+        
         // create runner
         var runner = Runner.create()
         Runner.run(runner, engine)
-
+        
         let renderEmojis = []
         for (let emoji of testEmojis) {
             const spriteUrl = `https://emojicdn.elk.sh/${encodeURIComponent(emoji)}`
@@ -68,8 +74,9 @@ function Progress (props) {
             const y = 0
             renderEmojis.push(Bodies.circle(x, y, 20, {render: {sprite: {texture: spriteUrl, xScale: 0.25, yScale: 0.25}}}))
         }
-
+        
         // walls
+        const wallThickness = 10
         Composite.add(world, [
             // top
             Bodies.rectangle(canvasWidth/2, 0, canvasWidth, wallThickness, { isStatic: true }),
@@ -95,7 +102,6 @@ function Progress (props) {
         <main id='canvas'>
         
         </main>
-
     )
 }
 
