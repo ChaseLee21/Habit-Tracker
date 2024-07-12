@@ -11,8 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "eslint": "^9.6.0"
+    "concurrently": "^8.2.2"
   },
   "dependencies": {
     "dotenv": "^16.4.5"

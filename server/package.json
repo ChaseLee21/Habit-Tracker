@@ -10,5 +10,12 @@
     "mongoose": "^8.3.0",
     "shortid": "^2.2.16",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@eslint/compat": "^1.1.0",
+    "@eslint/js": "^9.6.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.3",
+    "globals": "^15.7.0"
   }
 }
