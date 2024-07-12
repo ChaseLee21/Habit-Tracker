@@ -1,11 +1,9 @@
 import { React, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { getEmojis } from '../../util/emojis'
 import 'emoji-picker-element'
 
 function EmojiSelection ({ onItemClick }) {
     const [emoji, setEmoji] = useState('')
-    const emojis = getEmojis()
 
     useEffect(() => {
         const emojiInput = document.getElementById('emojiInput')
