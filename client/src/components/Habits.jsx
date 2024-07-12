@@ -15,6 +15,7 @@ function Habits (props) {
                 const userData = await getUser(userId)
                 if (userData) {
                     setUser(userData)
+                    console.log(userData)
                 } else {
                     console.log('No user data found')
                 }

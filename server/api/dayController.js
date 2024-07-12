@@ -2,6 +2,7 @@ const { Day } = require('../models/index')
 const router = require('express').Router()
 const mongoose = require('mongoose')
 const Habit = mongoose.model('Habit')
+const { addEmoji, removeEmoji } = require('../utils/helpers')
 
 //  PUT day by id (used to update the completed status)
 router.put('/:id', async (req, res) => {
@@ -17,8 +18,10 @@ router.put('/:id', async (req, res) => {
         const habit = await Habit.findOne({ _id: day.habit })
         if (day.completed === true && habit.streak !== undefined) {
             habit.streak++
+            addEmoji(habit)
         } else if (day.completed === false && habit.streak !== undefined) {
             habit.streak--
+            removeEmoji(habit)
         }
         await habit.save()
         await day.save()
