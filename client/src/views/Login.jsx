@@ -1,4 +1,4 @@
-import { validateEmail, validateLoginPassword } from '../util/validate-helpers'
+import { validateEmail, validateLoginPassword } from '../util/helpers'
 import { React, useEffect, useState } from 'react'
 import { login, checkToken } from '../util/axios'
 import { Link } from 'react-router-dom'
