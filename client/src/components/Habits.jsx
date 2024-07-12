@@ -1,6 +1,7 @@
 import { useEffect, useState, React } from 'react'
 import { putDay, getUser } from '../util/axios'
 import PropTypes from 'prop-types'
+import { findDay, findWeek, findNumberOfDaysCompleted } from '../util/helpers'
 
 function Habits (props) {
     const userId = props.user.user.id || ''
@@ -27,7 +28,7 @@ function Habits (props) {
     }, [])
 
     async function handleDayCompleteSubmit (habit) {
-        const day = { ...findDay(habit) }
+        const day = { ...findDay(findWeek(habit), timezone) }
         day.completed = !day.completed
         const updatedDay = await putDay(day)
         // Clone the current user state to avoid direct mutation
@@ -53,12 +54,6 @@ function Habits (props) {
         setUser(updatedUser)
     }
 
-    function findDay (habit) {
-        const week = habit.weeks[habit.weeks.length - 1]
-        const day = week.days.find(day => day.date === today)
-        return day
-    }
-
     return (
         <section className="bg-colorBg text-colorText rounded p-2 w-fit">
             <h2 className='text-2xl'>My Habits</h2>
@@ -71,7 +66,13 @@ function Habits (props) {
                             </div>
                             {/* habit completed form */}
                             <form>
-                                <input onChange={() => handleDayCompleteSubmit(habit)} type="checkbox" defaultChecked={findDay(habit).completed} className="large-checkbox"></input>
+                                <label htmlFor='habitCompleteInput' className='mx-1'>
+                                    {findNumberOfDaysCompleted(findWeek(habit))} / {habit.frequency} 
+                                </label>
+                                <input id='habitCompleteInput' type="checkbox" className="large-checkbox"
+                                onChange={() => handleDayCompleteSubmit(habit)} 
+                                defaultChecked={findDay(findWeek(habit), timezone).completed} 
+                                />
                             </form>
                         </div>
                         <p className="text-base">I will {habit.description}</p>
