@@ -16,11 +16,11 @@ Below is a technical walkthrough of the application. This is not a user guide bu
 
 Handling authentication was the first big hurdle in this project. I know what I didn't want to use a third party service or extensive authentication library. I wanted to build a system that shows I understand the basics of authentication within web applications. I decided to use json web tokens (JWT). When a user registers an account the password is hashed using node.js built in crypto package and stored in the database. When a user logs in a JWT token is generated on the sever side and gets stored in the users local browser storage. The token is sent to the server with requests that require authentication and the server uses the token to verify the users identity before sending back a response.
 
-### Habits & Storing Data & MongoDb
+### Data Schema
 
 It is impossible to talk about the habit system of the app without bringing up how the data schema is structured. I would also be lying if I said I nailed the data schema on my first try. It took several tweaks and one big redesign before I got the system working how I like it.
 
-#### Summary
+#### Summary / TLDR
 
 The original design of the data schema was limited by a design that relied on daily completion of every habit. This design only allowed for habits that the user wanted to do 7 days a week. The data schema was redesigned to fix this by creating a system that allowed for habits that only needed to be completed 1-6 times a week.
 
@@ -45,6 +45,22 @@ A fourth data type: 'Week'. My fix for this entire data schema problem was to ad
 #### Bonus
 
 A bonus feature of redesigning the data schema is that I can prompt the user at the end of the week to either raise or lower their goal for their habit based on their performance that week. This was a feature I wanted to implement when I first started envisioning this project but ran into roadblocks created by my inefficient database design. This feature was now possible with the newly structured database.
+
+
+### Habits 
+
+The habit system is pretty straight forward once the data schema was figured out. 
+
+1. The user creates a habit using the step by step habit creator. That habit is now linked to their account. 
+2. When the habit is being created the user creates a goal (defines when that habit can be marked as completed for the day) as well as a frequency (the amount of times they want to do that habit each week) and finally an emoji that will represent the habit.
+3. Everyday the user logs in and marks off each habit they completed that day. Everytime a habit is completed the streak for that habit increments by 1. The emoji that represents that habit will also be added the progress page.
+4. At the end of the week the app determines if the user successfully reached their frequency for the habit. If yes the app will ask them if they want to increase the goal. If no the app resets their streak and asks if they want to lower their goal.
+
+### Progress Page
+
+Each user has their own progress page they can view at any given time. Everytime a user marks their habit as completed the emoji that represents that habit is pushed into a string that is stored in the users data schema. When a user visits the progress page they can see every emoji that they have "earned" so far on their journey. Over time this progress page can fill up a lot. I believe this was the best way to showcase a users progress and motivate them to continue earning those emojis.
+
+The progress page was created using matter.js. I originally tried coding this page from scratch with no library but very quickly realized I was wasting my time. Matter.js is a robust 2d physics engine library and I highly reccommend checking it out if you ever want to code physics using javascript.
 
 ## Technology Stack
 
