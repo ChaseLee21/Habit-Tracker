@@ -60,12 +60,10 @@ function Habits (props) {
             <ul className="list-inside">
                 {user.habits && user.habits.map(habit => (
                     <li key={habit._id} className="my-2">
-                        <div className="flex justify-between">
-                            <div className="flex">
-                                <h3 className='text-xl'>{habit.emoji}{habit.streak} {habit.name}</h3>
-                            </div>
-                            {/* habit completed form */}
-                            <form>
+                        {/* habit completed form and habit title */}
+                        <div className="grid grid-flow-col grid-cols-6">
+                            <h3 className='text-xl col-span-4'>{habit.emoji}{habit.streak} {habit.name}</h3>
+                            <form className='col-span-2 flex justify-end'>
                                 <label htmlFor='habitCompleteInput' className='mx-1'>
                                     {findNumberOfDaysCompleted(findWeek(habit))} / {habit.frequency} 
                                 </label>
