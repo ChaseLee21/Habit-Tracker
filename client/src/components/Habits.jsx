@@ -71,9 +71,7 @@ function Habits (props) {
                             </div>
                             {/* habit completed form */}
                             <form>
-                                <button onClick={() => handleDayCompleteSubmit(habit)} type="button" className="rounded-md p-1">
-                                    {findDay(habit).completed ? '✅' : '❌'}
-                                </button>
+                                <input onChange={() => handleDayCompleteSubmit(habit)} type="checkbox" defaultChecked={findDay(habit).completed} className="large-checkbox"></input>
                             </form>
                         </div>
                         <p className="text-base">I will {habit.description}</p>
