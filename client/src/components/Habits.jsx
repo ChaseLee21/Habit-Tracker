@@ -62,7 +62,7 @@ function Habits (props) {
                     <li key={habit._id} className="my-2">
                         {/* habit completed form and habit title */}
                         <div className="grid grid-flow-col grid-cols-6">
-                            <h3 className='text-xl col-span-4'>{habit.emoji}{habit.streak} {habit.name}</h3>
+                            <h3 className='text-xl col-span-4'>{habit.emoji} {habit.name}</h3>
                             <form className='col-span-2 flex justify-end'>
                                 <label htmlFor='habitCompleteInput' className='mx-1'>
                                     {findNumberOfDaysCompleted(findWeek(habit))} / {habit.frequency} 
@@ -78,6 +78,7 @@ function Habits (props) {
                         <p className="text-base">I finish my habit for the day when {habit.goal}</p>
                         {habit.frequency === 1 && <p className="text-base">I will do this habit {habit.frequency} time a week</p>}
                         {habit.frequency > 1 && <p className="text-base">I will do this habit {habit.frequency} times a week</p>}
+                        {habit.streak !== undefined && <p className="text-base">My current streak is {habit.streak} days</p>}
                     </li>
                 ))}
             </ul>
