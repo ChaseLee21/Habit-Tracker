@@ -1,5 +1,7 @@
 # Habit Tracker
 
+https://habit-tracker-jukt.onrender.com
+
 ## Disclaimer
 
 This project is a passion project that was inspired by the book "Atomic Habits" by James Clear. I am in no way affiliated with nor sponsored by the author or any company he is associated with.
@@ -8,9 +10,26 @@ This project is a passion project that was inspired by the book "Atomic Habits" 
 
 Habit Tracker is exactly what it sounds like. A way motivate myself to create new habits, track my progress, and encourage change. I wanted to apply my knowledge of full-stack web development to create something more than just a React.js youtube tutorial (no hate to youtube). I wanted to create something that I actually care about and could use in my daily life. I hope you enjoy this project as much as I enjoyed creating it. 
 
+## About Me
+
+My name is Chase Seeberger and I am a junior web developer just starting out in the developer world. I am mostly self taught although I have had professional education via a full stack web development bootcamp. This project has its flaws and as I continue to grow as a developer I plan on updating this project. Below is a link to my portfolio website.
+
+- https://calm-moxie-8e318a.netlify.app/
+
+## Technology Stack
+
+- React
+- Node
+- Express
+- MongoDB
+- Mongoose
+- Tailwind CSS
+- JSON Web Token
+- Matter.js
+
 ## Walkthrough
 
-Below is a technical walkthrough of the application. This is not a user guide but a technical walkthrough of the features and how they are implemented.
+Below is a technical walkthrough of the application. This is not a user guide but a technical walkthrough of the features, my thought process of creating the project, what problems I ran into, and how I solved them.
 
 ### Login, Registration, and Authentication
 
@@ -62,12 +81,3 @@ Each user has their own progress page they can view at any given time. Everytime
 
 The progress page was created using matter.js. I originally tried coding this page from scratch with no library but very quickly realized I was wasting my time. Matter.js is a robust 2d physics engine library and I highly reccommend checking it out if you ever want to code physics using javascript.
 
-## Technology Stack
-
-- React
-- Node.js
-- Express
-- MongoDB
-- Mongoose
-- Tailwind CSS
-- JWT for authentication
