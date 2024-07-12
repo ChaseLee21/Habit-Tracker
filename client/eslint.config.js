@@ -11,6 +11,9 @@ export default [
   {
     "rules": {
       "semi": ["error", "never"]
+    },
+    "globals": {
+      "Intl": "readonly",
     }
   },
   pluginJs.configs.recommended,

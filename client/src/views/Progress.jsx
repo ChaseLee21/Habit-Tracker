@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { getUser } from '../util/axios'
 import { Engine, Render, Runner, Composite, Bodies } from 'matter-js'
+import { splitEmoji } from '../util/helpers'
 
 function Progress (props) {
     // constants
     const userId = props.user.user.id || ''
-    const testEmojis = '🍎🍏🍊🍋🍌🍉🍇🍓🍈🍒🍑🥭🍍🥥🧀🥚🍳🥞🥓🥩🍗🍖🌭🍔🍟🍕🥪🥙🌮🌯🥗🥘🥫🍝🍜🍲🍛🍣🍱🥟🍤🍙🍚🍘🍥🥠🍢🍡🍧🍨🍦🥧🧁🍰🎂🍮🍭🍬🍫🍿🍩🍪🌰🥜🍯🥛🍼🍵🍶🍺🍻🥂🍷🥃🍸🍹🍾🥤🧃🧉🧊🥢🍽🍴🥄🔪🏺🌍🌎🌏🌐🗺🗾🧭'
     
     // useState hooks
     const [user, setUser] = useState({})
@@ -37,6 +37,7 @@ function Progress (props) {
     }, [user.emojis]) // Initialize canvas after user data is retrieved
 
     function initCanvas () {
+        if (!user.emojis || user.emojis.length < 1) return
         // Setting canvas dimensions
         const canvasWidth = document.getElementById('canvasContainer').offsetWidth
         const canvasHeight = document.getElementById('canvasContainer').offsetHeight
@@ -53,7 +54,7 @@ function Progress (props) {
             options: {
                 width: canvasWidth,
                 height: canvasHeight,
-                background: '#FFF',
+                background: '#F5F5F5',
                 wireframes: false
             }
         })
@@ -78,7 +79,7 @@ function Progress (props) {
 
         // Creating emojis
         let renderEmojis = []
-        for (let emoji of testEmojis) {
+        for (let emoji of splitEmoji(user.emojis)) {
             const spriteUrl = `https://emojicdn.elk.sh/${encodeURIComponent(emoji)}`
             const x = Math.random() * canvasWidth
             const y = 0
@@ -101,6 +102,7 @@ function Progress (props) {
             max: { x: canvasWidth, y: canvasHeight }
         })
     }
+
 
     return (
         <div id='canvasContainer' className='h-full w-full'>
