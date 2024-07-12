@@ -8,7 +8,8 @@ const userSchema = new Schema({
     salt: { type: String, required: false },
     habits: [{ type: Schema.Types.ObjectId, ref: 'Habit' }],
     todos: [{ type: String, required: false }],
-    timezone: { type: String, required: true, default: 'America/Los_Angeles' }
+    timezone: { type: String, required: true, default: 'America/Los_Angeles' },
+    emojis: { type: String, required: false, default: '☀️' }
 })
 
 // Method to check the password

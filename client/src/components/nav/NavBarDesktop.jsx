@@ -23,7 +23,17 @@ function Header () {
                     }
                     {document.cookie.includes('habitTrackerToken') &&
                         <li className="p-2">
+                            <Link className='hover:text-colorLinkHover' to={'/progress'}>My Progress</Link>
+                        </li>
+                    }
+                    {document.cookie.includes('habitTrackerToken') &&
+                        <li className="p-2">
                             <Link className='hover:text-colorLinkHover' to={'/new-habit'}>New Habit</Link>
+                        </li>
+                    }
+                    {document.cookie.includes('habitTrackerToken') &&
+                        <li className="p-2">
+                            <Link className='hover:text-colorLinkHover' to={'/logout'}>Logout</Link>
                         </li>
                     }
                     {!document.cookie.includes('habitTrackerToken') &&
@@ -34,11 +44,6 @@ function Header () {
                     {!document.cookie.includes('habitTrackerToken') &&
                         <li className="p-2">
                             <Link className='hover:text-colorLinkHover' to={'/login'}>Login</Link>
-                        </li>
-                    }
-                    {document.cookie.includes('habitTrackerToken') &&
-                        <li className="p-2">
-                            <Link className='hover:text-colorLinkHover' to={'/logout'}>Logout</Link>
                         </li>
                     }
                 </ul>
