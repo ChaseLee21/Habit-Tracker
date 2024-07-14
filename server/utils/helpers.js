@@ -57,10 +57,10 @@ function setEndDate (timezone) {
     return nextSunday
 }
 
-async function setDaysArray (endDate, weekId, habitId) {
+async function setDaysArray (endDate, weekId, habitId, timezone) {
     const days = []
     const Day = mongoose.model('Day')
-    let currentDate = new Date(endDate)
+    let currentDate = new Date(endDate.toLocaleString('en-US', { timeZone: timezone }))
     currentDate = new Date(currentDate.setDate(currentDate.getDate() - 1))
     for (let i = 0; i < 7; i++) {
         const newDay = await Day.create({
