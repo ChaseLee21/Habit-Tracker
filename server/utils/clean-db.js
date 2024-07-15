@@ -27,10 +27,19 @@ db.once('open', async () => {
         if (!user) console.log('habit with no user', habit)
     }
 
+    // users with habits that no longer exists
     // users without habits
     const users = await User.find()
     for (let user of users) {
         if (!user.habits.length || user.habits.length < 1) console.log('user with no habit', user._id, user.name, user.email)
+        for (let habit of user.habits) {
+            let habitDoc = await Habit.findOne({ _id: habit })
+            if (!habitDoc) {
+                console.log('user with a habit that no longer exists', user._id, user.name, user.email, habit)
+                user.habits = user.habits.filter(h => h !== habit)
+                await user.save()
+            } 
+        }
     }
 
     // weeks / days without a habit
