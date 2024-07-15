@@ -19,19 +19,30 @@ app.use(express.urlencoded({ extended: true }))
 // Connect to MongoDB
 db.once('open', async () => {
     console.log('Connected to MongoDB')
+    console.log('----------------------')
 
     // habits without a user
+    console.log('checking habits without a user')
     const habits = await Habit.find()
     for (let habit of habits) {
         let user = await User.findOne({ _id: habit.user })
         if (!user) console.log('habit with no user', habit)
     }
+    console.log('----------------------')
 
     // users with habits that no longer exists
     // users without habits
+    // users that have 'test' or 'asd' in their name or email
+    console.log('checking users with habits that no longer exists, users without habits, users with test or asd in name or email')
     const users = await User.find()
     for (let user of users) {
-        if (!user.habits.length || user.habits.length < 1) console.log('user with no habit', user._id, user.name, user.email)
+        if (!user.habits.length || user.habits.length < 1) console.log(user.name, user.email, 'no habit')
+        if (user.name.includes('test') || user.email.includes('test') || user.name.includes('asd') || user.email.includes('asd')) {
+            console.log(user.name, user.email, 'test or asd in name or email')
+            await Habit.deleteMany({ user: user._id })
+            await User.deleteOne({ _id: user._id })
+            continue
+        }
         for (let habit of user.habits) {
             let habitDoc = await Habit.findOne({ _id: habit })
             if (!habitDoc) {
@@ -41,6 +52,7 @@ db.once('open', async () => {
             } 
         }
     }
+    console.log('----------------------')
 
     // weeks / days without a habit
     console.log('checking weeks & days without a habit')
@@ -58,6 +70,7 @@ db.once('open', async () => {
             }
         }
     }
+    console.log('----------------------')
 
     db.close()
 })
