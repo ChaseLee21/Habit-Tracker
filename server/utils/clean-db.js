@@ -2,6 +2,7 @@ const express = require('express')
 const db = require('../config/connection.js')
 const cors = require('cors')
 const { User, Habit, Week, Day } = require('../models/index.js')
+const { deleteDay, deleteWeek } = require('../utils/helpers.js')
 
 // Create an Express app
 const app = express()
@@ -32,26 +33,22 @@ db.once('open', async () => {
         if (!user.habits.length || user.habits.length < 1) console.log('user with no habit', user._id, user.name, user.email)
     }
 
-    // weeks without a habit
+    // weeks / days without a habit
     console.log('checking weeks & days without a habit')
     const weeks = await Week.find()
     for (let week of weeks) {
         let habit = await Habit.findOne({ _id: week.habit })
         if (!habit) {
-            console.log('week without a habit', week._id, week.endDate)
+            deleteWeek(week)
             for (let day of week.days) {
                 let dayDoc = await Day.findOne({ _id: day })
                 if (dayDoc) {
                     habit = await Habit.findOne({ _id: dayDoc.habit })
-                    if (!habit) console.log('day without a habit', dayDoc._id, dayDoc.date)
+                    if (!habit) deleteDay(dayDoc)
                 }
             }
         }
     }
-
-    // days without a week
-
-    // days without a habit
 
     db.close()
 })

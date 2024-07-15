@@ -91,4 +91,24 @@ async function removeEmoji (habit) {
     await user.save()
 }
 
-module.exports = { endOfWeek, setEndDate, setDaysArray, addEmoji, removeEmoji}
+async function deleteDay (day) {
+    try {
+        console.log('day without a habit', day._id, day.date)
+        const Day = mongoose.model('Day')
+        await Day.deleteOne({ _id: day._id })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+async function deleteWeek (week) {
+    try {
+        console.log('week without a habit', week._id, week.endDate)
+        const Week = mongoose.model('Week')
+        await Week.deleteOne({ _id: week._id })
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+module.exports = { endOfWeek, setEndDate, setDaysArray, addEmoji, removeEmoji, deleteDay, deleteWeek }
