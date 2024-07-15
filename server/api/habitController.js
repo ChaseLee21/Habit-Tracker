@@ -55,7 +55,7 @@ router.delete('/:id', (req, res) => {
             User.findOneAndUpdate({ habits: id }, { $pull: { habits: id } })
                 .then((user) => {
                     if (!user) {
-                        console.log('A habit was deleted but no user was not found with the habit id')
+                        console.log('A habit was deleted but a user was not found with the habit id')
                     }
                     res.status(200).json({ message: 'Habit deleted successfully', habit })
                 })
@@ -65,7 +65,7 @@ router.delete('/:id', (req, res) => {
             Week.deleteMany({ habit: id })
                 .then((week) => {
                     if (!week) {
-                        console.log('A habit was deleted but no week was not found with the habit id')
+                        console.log('A habit was deleted but a week was not found with the habit id')
                     }
                     
                 })
@@ -75,7 +75,7 @@ router.delete('/:id', (req, res) => {
             Day.deleteMany({ habit: id })
                     .then((day) => {
                         if (!day) {
-                            console.log('A habit was deleted but no day was not found with the habit id')
+                            console.log('A habit was deleted but a day was not found with the habit id')
                         }
                     })
                     .catch((err) => {
