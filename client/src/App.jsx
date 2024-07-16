@@ -40,7 +40,7 @@ function App () {
                 <div className='fixed col-span-1'>
                     <NavBarDesktop />
                 </div>
-                <div className='col-span-4 col-start-2'>
+                <div className='col-span-4 col-start-2 mx-2'>
                     <Outlet />
                 </div>
             </div>}
