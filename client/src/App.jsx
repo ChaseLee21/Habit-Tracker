@@ -32,24 +32,19 @@ function App () {
                 <div className='row-span-1'>
                     <NavBarMobile />
                 </div>
-                <div className='row-span-10'>
+                <div className='row-span-11'>
                     <Outlet />
-                </div>
-                <div className='row-span-1'>
-                    <Footer />
                 </div>
             </div>}
 
-            {!showMobile &&
-                <div className='grid grid-cols-5'>
-                    <div className='fixed col-span-1'>
-                        <NavBarDesktop />
-                    </div>
-                    <div className='col-span-4 col-start-2'>
-                        <Outlet />
-                    </div>
+            {!showMobile && <div className='grid grid-cols-5'>
+                <div className='fixed col-span-1'>
+                    <NavBarDesktop />
                 </div>
-            }
+                <div className='col-span-4 col-start-2'>
+                    <Outlet />
+                </div>
+            </div>}
         </>
     )
 }
