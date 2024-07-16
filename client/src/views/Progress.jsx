@@ -105,8 +105,9 @@ function Progress (props) {
 
 
     return (
-        <div id='canvasContainer' className='h-full w-full'>
-            <main id='canvas'>
+        <div id='canvasContainer' className='w-full h-full'>
+            <p className='leading-loose text-center tracking-widest fixed text-3xl p-2 opacity-50 h-full'>"Every action you take is a vote for the type of person you wish to become" -James Clear</p>
+            <main id='canvas' className='w-full h-full'>
             
             </main>
         </div>

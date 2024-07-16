@@ -23,45 +23,56 @@ function Header () {
                     </h1>
                 </div>
                 {/* Nav Dropdown */}
-                {showMenu && (<nav className="bg-colorBg text-colorLinktext-lg absolute w-full h-full">
-                    <ul>
-                        {document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
-                                <Link to={'/'} onClick={() => handleNavBarClick()}>Home</Link>
-                            </li>
-                        }
-                        {document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
-                                <Link to={'/profile'} onClick={() => handleNavBarClick()}>My Profile</Link>
-                            </li>
-                        }
-                        {document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
-                                <Link to={'/progress'} onClick={() => handleNavBarClick()}>My Progress</Link>
-                            </li>
-                        }
-                        {document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
-                                <Link to={'/new-habit'} onClick={() => handleNavBarClick()}>New Habit</Link>
-                            </li>
-                        }
-                        {document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
-                                <Link to={'/logout'} onClick={() => handleNavBarClick()}>Logout</Link>
-                            </li>
-                        }
-                        {!document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
-                                <Link to={'/register'} onClick={() => handleNavBarClick()}>Register</Link>
-                            </li>
-                        }
-                        {!document.cookie.includes('habitTrackerToken') &&
-                            <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
-                                <Link to={'/login'} onClick={() => handleNavBarClick()}>Login</Link>
-                            </li>
-                        }
-                    </ul>
-                </nav>)}
+                {showMenu && (
+                    <div className="bg-colorBg text-colorLinktext-lg absolute w-full h-full">
+                        <nav>
+                            <ul>
+                                {document.cookie.includes('habitTrackerToken') &&
+                                    <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
+                                        <Link to={'/'} onClick={() => handleNavBarClick()}>Home</Link>
+                                    </li>
+                                }
+                                {document.cookie.includes('habitTrackerToken') &&
+                                    <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
+                                        <Link to={'/profile'} onClick={() => handleNavBarClick()}>My Profile</Link>
+                                    </li>
+                                }
+                                {document.cookie.includes('habitTrackerToken') &&
+                                    <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
+                                        <Link to={'/progress'} onClick={() => handleNavBarClick()}>My Progress</Link>
+                                    </li>
+                                }
+                                {document.cookie.includes('habitTrackerToken') &&
+                                    <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
+                                        <Link to={'/new-habit'} onClick={() => handleNavBarClick()}>New Habit</Link>
+                                    </li>
+                                }
+                                {document.cookie.includes('habitTrackerToken') &&
+                                    <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
+                                        <Link to={'/logout'} onClick={() => handleNavBarClick()}>Logout</Link>
+                                    </li>
+                                }
+                                {!document.cookie.includes('habitTrackerToken') &&
+                                    <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
+                                        <Link to={'/register'} onClick={() => handleNavBarClick()}>Register</Link>
+                                    </li>
+                                }
+                                {!document.cookie.includes('habitTrackerToken') &&
+                                    <li className="border-b-2 border-colorBorder hover:text-colorLinkHover p-2">
+                                        <Link to={'/login'} onClick={() => handleNavBarClick()}>Login</Link>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                        <div className='text-center my-2'>
+                            <p className=''>Made by Chase Seeberger</p>
+                            <div className="flex justify-center">
+                                <a className="px-2 text-colorLink hover:text-colorLinkHover" target='_blank' rel="noreferrer" href='https://github.com/ChaseLee21'>Github</a>
+                                <a className="px-2 text-colorLink hover:text-colorLinkHover" target='_blank' rel="noreferrer" href='https://www.linkedin.com/in/chaseseeberger/'>LinkedIn</a>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </header>
         </>
     )
