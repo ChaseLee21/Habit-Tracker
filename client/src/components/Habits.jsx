@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { putDay, getUser } from '../util/axios'
+import { putDay, getUser, putHabit } from '../util/axios'
 import PropTypes from 'prop-types'
 import { findDay, findWeek, findNumberOfDaysCompleted } from '../util/helpers'
 import ConfirmUpdate from './ConfirmUpdate'
@@ -23,7 +23,6 @@ function Habits (props) {
                 const userData = await getUser(userId)
                 if (userData) {
                     setUser(userData)
-                    console.log(userData)
                 } else {
                     console.log('No user data found')
                 }
@@ -40,13 +39,11 @@ function Habits (props) {
     }
 
     async function checkFrequencyGoalMet (habit) {
-        // check if the frequency goal is met
         const frequencyGoalMet = (findNumberOfDaysCompleted(findWeek(habit)) / habit.frequency) >= 1 ? true : false
         if (frequencyGoalMet) {
             await setHabitToUpdate(habit)
             setShowConfirmUpdate(true)
         }
-        // if yes, prompt user to set a new goal
     }
 
     async function updateHabitCompletedState (habit) {
@@ -78,7 +75,6 @@ function Habits (props) {
     async function handleConfirmUpdate () {
         setShowConfirmUpdate(false)
         setShowUpdateGoal(true)
-        console.log('Show goal update', habitToUpdate)
     }
 
     function handleCancelUpdate () {
@@ -86,9 +82,19 @@ function Habits (props) {
     }
 
     async function handleUpdateGoalSubmit (habit) {
-        console.log('Update goal', habit)
         setShowUpdateGoal(false)
-        // await updateHabitGoal(habit)
+        await putHabit(habit)
+        // Clone the current user state to avoid direct mutation
+        const updatedUser = { ...user }
+        // Find the habit in the cloned state
+        const habitToUpdate = updatedUser.habits.find(h => h._id === habit._id)
+        if (habitToUpdate) {
+            // Update the habit with the new data
+            habitToUpdate.description = habit.description
+            habitToUpdate.why = habit.why
+            habitToUpdate.goal = habit.goal
+        }
+        setUser(updatedUser)
     }
 
     return (
