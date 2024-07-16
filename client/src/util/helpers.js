@@ -1,7 +1,6 @@
 const splitEmoji = (string) => [...new Intl.Segmenter().segment(string)].map(x => x.segment)
 
 const findDay = (week, timezone) => {
-    console.log(week, timezone);
     const localDay = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
     const today = new Date(localDay).toISOString().split('T')[0]
     const day = week.days.find(day => day.date === today)
