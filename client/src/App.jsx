@@ -1,4 +1,3 @@
-import Footer from './components/Footer'
 import NavBarMobile from './components/nav/NavBarMobile'
 import NavBarDesktop from './components/nav/NavBarDesktop'
 import React, { useEffect, useState } from 'react'
