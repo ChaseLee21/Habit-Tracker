@@ -42,10 +42,10 @@ function App () {
 
             {!showMobile &&
                 <div className='grid grid-cols-5'>
-                    <div className='col-span-1'>
+                    <div className='fixed col-span-1'>
                         <NavBarDesktop />
                     </div>
-                    <div className='col-span-4'>
+                    <div className='col-span-4 col-start-2'>
                         <Outlet />
                     </div>
                 </div>
