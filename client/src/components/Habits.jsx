@@ -3,6 +3,8 @@ import { putDay, getUser } from '../util/axios'
 import PropTypes from 'prop-types'
 import { findDay, findWeek, findNumberOfDaysCompleted } from '../util/helpers'
 import ConfirmUpdate from './ConfirmUpdate'
+import UpdateGoal from './UpdateGoal'
+
 
 function Habits (props) {
     const userId = props.user.user.id || ''
@@ -10,7 +12,7 @@ function Habits (props) {
     const localDay = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
     const today = new Date(localDay).toISOString().split('T')[0]
     const [user, setUser] = useState({})
-    const [showHabitEdit, setShowHabitEdit] = useState(false)
+    const [showUpdateGoal, setShowUpdateGoal] = useState(false)
     const [showConfirmUpdate, setShowConfirmUpdate] = useState(false)
     const [habitToUpdate, setHabitToUpdate] = useState({})
 
@@ -41,7 +43,6 @@ function Habits (props) {
         // check if the frequency goal is met
         const frequencyGoalMet = (findNumberOfDaysCompleted(findWeek(habit)) / habit.frequency) >= 1 ? true : false
         if (frequencyGoalMet) {
-            console.log('Frequency goal met');
             await setHabitToUpdate(habit)
             setShowConfirmUpdate(true)
         }
@@ -76,17 +77,23 @@ function Habits (props) {
 
     async function handleConfirmUpdate () {
         setShowConfirmUpdate(false)
-        // setShowHabitEdit(true)
-        console.log('Show habit edit', habitToUpdate)
+        setShowUpdateGoal(true)
+        console.log('Show goal update', habitToUpdate)
     }
 
     function handleCancelUpdate () {
         setShowConfirmUpdate(false)
     }
 
+    async function handleUpdateGoalSubmit (habit) {
+        console.log('Update goal', habit)
+        setShowUpdateGoal(false)
+        // await updateHabitGoal(habit)
+    }
+
     return (
         <div>
-            {!showHabitEdit && <section className="bg-colorBg text-colorText rounded p-2 w-fit">
+            <section className="bg-colorBg text-colorText rounded p-2 w-full">
                 <h2 className='text-2xl'>My Habits</h2>
                 <ul className="list-inside">
                     {user.habits && user.habits.map(habit => (
@@ -113,9 +120,17 @@ function Habits (props) {
                         </li>
                     ))}
                 </ul>
+            </section>
+            {showUpdateGoal && <section className='h-full w-full fixed top-0 left-0 bg-gray-800 bg-opacity-50 grid grid-flow-col grid-cols-6'>
+                <div className='col-span-4 col-start-2'>
+                    <UpdateGoal habit={habitToUpdate} onCancel={() => setShowUpdateGoal(false)} onConfirm={handleUpdateGoalSubmit} />
+                </div>
             </section>}
-            {showHabitEdit && <HabitEdit habit={habitToUpdate} />}
-            {showConfirmUpdate && <ConfirmUpdate habit={habitToUpdate} onConfirm={handleConfirmUpdate} onCancel={handleCancelUpdate} />}
+            {showConfirmUpdate && <section className='h-full w-full fixed top-0 left-0 bg-gray-800 bg-opacity-50 grid grid-flow-col grid-cols-6'>
+                <div className='col-span-4 col-start-2'>
+                    <ConfirmUpdate habit={habitToUpdate} onConfirm={handleConfirmUpdate} onCancel={handleCancelUpdate} />
+                </div>
+            </section>}
         </div>
     )
 }
