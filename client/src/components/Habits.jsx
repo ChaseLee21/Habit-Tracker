@@ -2,6 +2,7 @@ import { useEffect, useState, React } from 'react'
 import { putDay, getUser } from '../util/axios'
 import PropTypes from 'prop-types'
 import { findDay, findWeek, findNumberOfDaysCompleted } from '../util/helpers'
+import ConfirmUpdate from './ConfirmUpdate'
 
 function Habits (props) {
     const userId = props.user.user.id || ''
@@ -9,7 +10,11 @@ function Habits (props) {
     const localDay = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
     const today = new Date(localDay).toISOString().split('T')[0]
     const [user, setUser] = useState({})
+    const [showHabitEdit, setShowHabitEdit] = useState(false)
+    const [showConfirmUpdate, setShowConfirmUpdate] = useState(false)
+    const [habitToUpdate, setHabitToUpdate] = useState({})
 
+    // Fetch user data on component mount
     useEffect(() => {
         async function fetchUser () {
             try {
@@ -27,7 +32,23 @@ function Habits (props) {
         fetchUser()
     }, [])
 
-    async function handleDayCompleteSubmit (habit) {
+    async function handleDayCompletedSubmit (habit) {
+        await updateHabitCompletedState(habit)
+        checkFrequencyGoalMet(habit)
+    }
+
+    async function checkFrequencyGoalMet (habit) {
+        // check if the frequency goal is met
+        const frequencyGoalMet = (findNumberOfDaysCompleted(findWeek(habit)) / habit.frequency) >= 1 ? true : false
+        if (frequencyGoalMet) {
+            console.log('Frequency goal met');
+            await setHabitToUpdate(habit)
+            setShowConfirmUpdate(true)
+        }
+        // if yes, prompt user to set a new goal
+    }
+
+    async function updateHabitCompletedState (habit) {
         const day = { ...findDay(findWeek(habit), timezone) }
         day.completed = !day.completed
         const updatedDay = await putDay(day)
@@ -50,39 +71,52 @@ function Habits (props) {
                 habitToUpdate.streak--
             }
         }
-
         setUser(updatedUser)
     }
 
+    async function handleConfirmUpdate () {
+        setShowConfirmUpdate(false)
+        // setShowHabitEdit(true)
+        console.log('Show habit edit', habitToUpdate)
+    }
+
+    function handleCancelUpdate () {
+        setShowConfirmUpdate(false)
+    }
+
     return (
-        <section className="bg-colorBg text-colorText rounded p-2 w-fit">
-            <h2 className='text-2xl'>My Habits</h2>
-            <ul className="list-inside">
-                {user.habits && user.habits.map(habit => (
-                    <li key={habit._id} className="my-2">
-                        {/* habit completed form and habit title */}
-                        <div className="grid grid-flow-col grid-cols-6">
-                            <h3 className='text-xl col-span-4'>{habit.emoji} {habit.name}</h3>
-                            <form className='col-span-2 flex justify-end'>
-                                <label htmlFor='habitCompleteInput' className='mx-1'>
-                                    {findNumberOfDaysCompleted(findWeek(habit))} / {habit.frequency} 
-                                </label>
-                                <input id='habitCompleteInput' type="checkbox" className="large-checkbox"
-                                onChange={() => handleDayCompleteSubmit(habit)} 
-                                defaultChecked={findDay(findWeek(habit), timezone).completed} 
-                                />
-                            </form>
-                        </div>
-                        <p className="text-base">I will {habit.description}</p>
-                        <p className="text-base">Because {habit.why}</p>
-                        <p className="text-base">I finish my habit for the day when {habit.goal}</p>
-                        {habit.frequency === 1 && <p className="text-base">I will do this habit {habit.frequency} time a week</p>}
-                        {habit.frequency > 1 && <p className="text-base">I will do this habit {habit.frequency} times a week</p>}
-                        {habit.streak !== undefined && <p className="text-base">My current streak is {habit.streak} days</p>}
-                    </li>
-                ))}
-            </ul>
-        </section>
+        <div>
+            {!showHabitEdit && <section className="bg-colorBg text-colorText rounded p-2 w-fit">
+                <h2 className='text-2xl'>My Habits</h2>
+                <ul className="list-inside">
+                    {user.habits && user.habits.map(habit => (
+                        <li key={habit._id} className="my-2">
+                            {/* habit completed form and habit title */}
+                            <div className="grid grid-flow-col grid-cols-6">
+                                <h3 className='text-xl col-span-4'>{habit.emoji} {habit.name}</h3>
+                                <form className='col-span-2 flex justify-end'>
+                                    <label htmlFor='habitCompleteInput' className='mx-1'>
+                                        {findNumberOfDaysCompleted(findWeek(habit))} / {habit.frequency} 
+                                    </label>
+                                    <input id='habitCompleteInput' type="checkbox" className="large-checkbox"
+                                    onChange={() => handleDayCompletedSubmit(habit)} 
+                                    defaultChecked={findDay(findWeek(habit), timezone).completed} 
+                                    />
+                                </form>
+                            </div>
+                            <p className="text-base">I will {habit.description}</p>
+                            <p className="text-base">Because {habit.why}</p>
+                            <p className="text-base">I finish my habit for the day when {habit.goal}</p>
+                            {habit.frequency === 1 && <p className="text-base">I will do this habit {habit.frequency} time a week</p>}
+                            {habit.frequency > 1 && <p className="text-base">I will do this habit {habit.frequency} times a week</p>}
+                            {habit.streak !== undefined && <p className="text-base">My current streak is {habit.streak} days</p>}
+                        </li>
+                    ))}
+                </ul>
+            </section>}
+            {showHabitEdit && <HabitEdit habit={habitToUpdate} />}
+            {showConfirmUpdate && <ConfirmUpdate habit={habitToUpdate} onConfirm={handleConfirmUpdate} onCancel={handleCancelUpdate} />}
+        </div>
     )
 }
 
