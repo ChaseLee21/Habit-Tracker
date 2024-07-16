@@ -26,7 +26,7 @@ function App () {
     }, [width])
 
     return (
-        <>
+        <div>
             {showMobile && <div className='grid grid-flow-row grid-rows-12 h-[100vh]'>
                 <div className='row-span-1'>
                     <NavBarMobile />
@@ -36,7 +36,7 @@ function App () {
                 </div>
             </div>}
 
-            {!showMobile && <div className='grid grid-cols-5'>
+            {!showMobile && <div className='grid grid-cols-5 h-[100vh]'>
                 <div className='fixed col-span-1'>
                     <NavBarDesktop />
                 </div>
@@ -44,7 +44,7 @@ function App () {
                     <Outlet />
                 </div>
             </div>}
-        </>
+        </div>
     )
 }
 
