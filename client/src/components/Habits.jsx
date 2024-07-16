@@ -122,12 +122,12 @@ function Habits (props) {
                 </ul>
             </section>
             {showUpdateGoal && <section className='h-full w-full fixed top-0 left-0 bg-gray-800 bg-opacity-50 grid grid-flow-col grid-cols-6'>
-                <div className='col-span-4 col-start-2'>
+                <div className='col-span-6 md:col-span-4 md:col-start-2'>
                     <UpdateGoal habit={habitToUpdate} onCancel={() => setShowUpdateGoal(false)} onConfirm={handleUpdateGoalSubmit} />
                 </div>
             </section>}
             {showConfirmUpdate && <section className='h-full w-full fixed top-0 left-0 bg-gray-800 bg-opacity-50 grid grid-flow-col grid-cols-6'>
-                <div className='col-span-4 col-start-2'>
+                <div className='col-span-6 md:col-span-4 md:col-start-2'>
                     <ConfirmUpdate habit={habitToUpdate} onConfirm={handleConfirmUpdate} onCancel={handleCancelUpdate} />
                 </div>
             </section>}
