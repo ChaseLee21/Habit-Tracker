@@ -1,8 +1,8 @@
 import { useEffect, useState, React } from 'react'
-import { useUser } from '../contexts/UserContext'
-import { putDay, getUser, putHabit } from '../util/axios'
+import { useUser } from '../../../../contexts/UserContext'
+import { putDay, getUser, putHabit } from '../../../../util/axios'
 import PropTypes from 'prop-types'
-import { findDay, findWeek, daysCompletedInWeek } from '../util/helpers'
+import { findDay, findWeek, daysCompletedInWeek } from '../../../../util/helpers'
 import ConfirmUpdate from './ConfirmUpdate'
 import UpdateGoal from './UpdateGoal'
 

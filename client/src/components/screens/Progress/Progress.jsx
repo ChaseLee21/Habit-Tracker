@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { getUser } from '../util/axios'
+import { getUser } from '../../../util/axios'
 import { Engine, Render, Runner, Composite, Bodies } from 'matter-js'
-import { splitEmoji } from '../util/helpers'
+import { splitEmoji } from '../../../util/helpers'
 
 function Progress (props) {
     // constants

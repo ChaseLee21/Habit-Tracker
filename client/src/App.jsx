@@ -1,5 +1,5 @@
-import NavBarMobile from './components/nav/NavBarMobile'
-import NavBarDesktop from './components/nav/NavBarDesktop'
+import NavBarMobile from './components/layout/nav/NavBarMobile'
+import NavBarDesktop from './components/layout/nav/NavBarDesktop'
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { UserProvider } from './contexts/UserContext'

@@ -1,8 +1,8 @@
 import withAuth from './Hoc'
-import Home from '../views/Home'
-import NewHabit from '../views/NewHabit'
-import Profile from '../views/Profile'
-import Progress from '../views/Progress'
+import Home from '../components/screens/Home/Home'
+import NewHabit from '../components/screens/New Habit/NewHabit'
+import Profile from '../components/screens/Profile/Profile'
+import Progress from '../components/screens/Progress/Progress'
 
 function ProtectedRoute ({ component: Component }) {
     const component = withAuth(Component)

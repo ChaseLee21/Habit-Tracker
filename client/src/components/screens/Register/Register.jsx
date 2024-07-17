@@ -1,6 +1,6 @@
-import { validateEmail, validatePassword, validateUsername } from '../util/helpers'
+import { validateEmail, validatePassword, validateUsername } from '../../../util/helpers'
 import React from 'react'
-import { postUser } from '../util/axios'
+import { postUser } from '../../../util/axios'
 import { Link } from 'react-router-dom'
 
 function Register () {

@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { getUser } from '../util/axios'
-import ProfileSummary from '../components/profile/ProfileSummary'
-import ProfileEdit from '../components/profile/ProfileEdit'
+import { getUser } from '../../../util/axios'
+import ProfileSummary from '../../profile/ProfileSummary'
+import ProfileEdit from '../../profile/ProfileEdit'
 
 function Profile (props) {
     const userId = props.user.user.id || ''
