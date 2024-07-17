@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 import PropTypes from 'prop-types'
 import HabitEdit from './HabitEdit'
-import { putHabit, deleteHabit } from '../../util/axios'
+import { putHabit, deleteHabit } from '../../../../util/axios'
 
 function ProfileSummary (props) {
     const user = props.user
