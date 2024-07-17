@@ -31,7 +31,7 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params
     const habitData = req.body
     try {
-        const updatedHabit = await Habit.findOneAndUpdate({ _id: id }, { $set: habitData }).populate({
+        const updatedHabit = await Habit.findOneAndUpdate({ _id: id }, { $set: habitData }, { new: true }).populate({
             path: 'weeks',
             model: 'Week',
             populate: {
