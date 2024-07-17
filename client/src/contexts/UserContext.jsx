@@ -7,12 +7,12 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
 
-  const updateHabitState = (newState) => {
+  const updateUserState = (newState) => {
     setUserData(newState);
   };
 
   return (
-    <UserContext.Provider value={{ userData, updateHabitState }}>
+    <UserContext.Provider value={{ userData, updateUserState }}>
       {children}
     </UserContext.Provider>
   );
