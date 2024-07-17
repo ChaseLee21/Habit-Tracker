@@ -1,20 +1,12 @@
-import { useEffect, useState, React } from 'react'
+import { useEffect, React } from 'react'
 import { useUser } from '../../../../contexts/UserContext'
-import { putDay, getUser, putHabit } from '../../../../util/axios'
+import { getUser } from '../../../../util/axios'
 import PropTypes from 'prop-types'
 import { findDay, findWeek, daysCompletedInWeek } from '../../../../util/helpers'
-import ConfirmUpdate from './ConfirmUpdate'
-import UpdateGoal from './UpdateGoal'
-
 
 function Habits (props) {
     const timezone = props.user.user.timezone || 'America/Los_Angeles'
-    const localDay = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
-    const today = new Date(localDay).toISOString().split('T')[0]
-    const { userData, updateUserState, updateHabitCompletedState, updateHabitGoalState } = useUser()
-    const [showUpdateGoal, setShowUpdateGoal] = useState(false)
-    const [showConfirmUpdate, setShowConfirmUpdate] = useState(false)
-    const [habitToUpdate, setHabitToUpdate] = useState({})
+    const { userData, updateUserState, updateHabitCompletedState, updateHabitToUpdate } = useUser()
     
     // Fetch user data on component mount
     useEffect(() => {
@@ -40,23 +32,8 @@ function Habits (props) {
     async function checkFrequencyGoalMet (habit) {
         const frequencyGoalMet = (daysCompletedInWeek(findWeek(habit)) / habit.frequency) >= 1 ? true : false
         if (frequencyGoalMet) {
-            await setHabitToUpdate(habit)
-            setShowConfirmUpdate(true)
+            updateHabitToUpdate(habit)
         }
-    }
-
-    async function handleConfirmUpdate () {
-        setShowConfirmUpdate(false)
-        setShowUpdateGoal(true)
-    }
-
-    function handleCancelUpdate () {
-        setShowConfirmUpdate(false)
-    }
-
-    async function handleUpdateGoalSubmit (habit) {
-        await updateHabitGoalState(habit)
-        setShowUpdateGoal(false)
     }
 
     return (
@@ -89,16 +66,6 @@ function Habits (props) {
                     ))}
                 </ul>
             </section>
-            {showUpdateGoal && <section className='h-full w-full fixed top-0 left-0 bg-gray-800 bg-opacity-50 grid grid-flow-col grid-cols-6'>
-                <div className='col-span-6 md:col-span-4 md:col-start-2'>
-                    <UpdateGoal habit={habitToUpdate} onCancel={() => setShowUpdateGoal(false)} onConfirm={handleUpdateGoalSubmit} />
-                </div>
-            </section>}
-            {showConfirmUpdate && <section className='h-full w-full fixed top-0 left-0 bg-gray-800 bg-opacity-50 grid grid-flow-col grid-cols-6'>
-                <div className='col-span-6 md:col-span-4 md:col-start-2'>
-                    <ConfirmUpdate habit={habitToUpdate} onConfirm={handleConfirmUpdate} onCancel={handleCancelUpdate} />
-                </div>
-            </section>}
         </div>
     )
 }

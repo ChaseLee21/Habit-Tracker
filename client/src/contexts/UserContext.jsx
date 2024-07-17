@@ -8,6 +8,11 @@ const UserContext = createContext();
 // Provider Component
 export const UserProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
+  const [habitToUpdate, setHabitToUpdate] = useState(undefined)
+
+  const updateHabitToUpdate = (habit) => {
+    setHabitToUpdate(habit)
+  }
 
   const updateUserState = (newState) => {
     setUserData(newState);
@@ -63,7 +68,7 @@ export const UserProvider = ({ children }) => {
 
 
   return (
-    <UserContext.Provider value={{ userData, updateUserState, updateHabitCompletedState, updateHabitGoalState }}>
+    <UserContext.Provider value={{ userData, habitToUpdate, updateUserState, updateHabitCompletedState, updateHabitGoalState, updateHabitToUpdate }}>
       {children}
     </UserContext.Provider>
   );
