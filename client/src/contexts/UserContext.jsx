@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { findDay, findWeek } from '../util/helpers';
 import { putDay, putHabit } from '../util/axios';
-import moment from 'moment-timezone';
 
 // Create Context
 const UserContext = createContext();
