@@ -1,8 +1,9 @@
+import moment from 'moment-timezone'
+
 const splitEmoji = (string) => [...new Intl.Segmenter().segment(string)].map(x => x.segment)
 
 const findDay = (week, timezone) => {
-    const localDay = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
-    const today = new Date(localDay).toISOString().split('T')[0]
+    const today = moment().tz(timezone).format('YYYY-MM-DD')
     const day = week.days.find(day => day.date === today)
     return day
 }
