@@ -2,6 +2,7 @@ import NavBarMobile from './components/nav/NavBarMobile'
 import NavBarDesktop from './components/nav/NavBarDesktop'
 import React, { useEffect, useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import { UserProvider } from './contexts/UserContext'
 
 function App () {
     const [width, setWidth] = useState(window.innerWidth)
@@ -26,7 +27,7 @@ function App () {
     }, [width])
 
     return (
-        <div>
+        <UserProvider>
             {showMobile && <div className='grid grid-flow-row grid-rows-12 h-[100vh]'>
                 <div className='row-span-1'>
                     <NavBarMobile />
@@ -44,7 +45,7 @@ function App () {
                     <Outlet />
                 </div>
             </div>}
-        </div>
+        </UserProvider>
     )
 }
 
