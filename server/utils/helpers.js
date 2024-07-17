@@ -1,12 +1,13 @@
 const mongoose = require('mongoose')
+const moment = require('moment-timezone')
 
 async function endOfWeek (user) {
     // helper functions
     function EndDatePassed (habit) {
         const endDate = habit.weeks[habit.weeks.length - 1].endDate
-        const formattedEndDate = new Date(endDate).toLocaleDateString('en-US', { timeZone: user.timezone })
-        const now = new Date().toLocaleDateString('en-US', { timeZone: user.timezone })
-        return formattedEndDate < now
+        const formattedEndDate = moment.tz(endDate, user.timezone).utc()
+        const now = moment.tz(user.timezone).utc()
+        return formattedEndDate.isBefore(now)
     }
 
     function updateStreak (habit) {
@@ -41,38 +42,25 @@ async function endOfWeek (user) {
 }
 
 function setEndDate (timezone) {
-    // set now to today in the user's timezone
-    const now = new Date(new Date().toLocaleString('en-US', { timeZone: timezone }))
-    const today = now.getDay()
-
-    // number of days til next the next Saturday, if today is Saturday, it will be 7
+    const now = moment.tz(timezone)
+    const today = now.day()
     const daysUntilNextSunday = (7 - today + 7) % 7 || 7
-
-    // nextSaturday is the date of the next Saturday
-    let nextSunday = new Date(now)
-    nextSunday.setDate(now.getDate() + daysUntilNextSunday)
-    nextSunday = nextSunday.toISOString().split('T')[0]
-
-    // set endDate to the next Saturday
+    const nextSunday = now.add(daysUntilNextSunday, 'days').format('YYYY-MM-DD')
     return nextSunday
 }
 
 async function setDaysArray (endDate, weekId, habitId, timezone) {
     const days = []
     const Day = mongoose.model('Day')
-    let currentDate = new Date(endDate.toLocaleString('en-US', { timeZone: timezone }))
-    currentDate = new Date(currentDate.setDate(currentDate.getDate() - 1))
+    let currentDate = moment.tz(endDate, timezone)
     for (let i = 0; i < 7; i++) {
         const newDay = await Day.create({
-            date: currentDate.toISOString().split('T')[0],
+            date: currentDate.subtract(1, 'days').format('YYYY-MM-DD'),
             completed: false,
             week: weekId,
             habit: habitId
         })
         days.push(newDay._id)
-
-        // Decrement the date by one day for the next iteration
-        currentDate = new Date(currentDate.setDate(currentDate.getDate() - 1))
     }
     return days
 }

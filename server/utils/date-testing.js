@@ -1,41 +1,49 @@
-function setEndDate (timezone) {
-    // set now to today in the user's timezone
-    const now = new Date(new Date().toLocaleString('en-US', { timeZone: timezone }))
-    const today = now.getDay()
+const moment = require('moment-timezone')
 
-    // number of days til next the next Saturday, if today is Saturday, it will be 7
+function setEndDate(timezone) {
+    // Set 'now' to today in the user's timezone using moment-timezone
+    const now = moment.tz(timezone)
+
+    // Get today's day of the week (0-6, Sunday-Saturday)
+    const today = now.day()
+
+    // Calculate number of days until next Sunday. If today is Sunday, it will be 7
     const daysUntilNextSunday = (7 - today + 7) % 7 || 7
 
-    // nextSaturday is the date of the next Saturday
-    let nextSunday = new Date(now)
-    nextSunday.setDate(now.getDate() + daysUntilNextSunday)
-    nextSunday = nextSunday.toISOString().split('T')[0]
+    // Calculate next Sunday's date by adding daysUntilNextSunday to 'now'
+    const nextSunday = now.add(daysUntilNextSunday, 'days').format('YYYY-MM-DD')
 
-    // set endDate to the next Saturday
-    console.log(nextSunday, 'nextSunday');
+    console.log(nextSunday, 'nextSunday')
     return nextSunday
 }
 
-async function setDaysArray (endDate) {
+async function setDaysArray(endDate, timezone) {
     const days = []
-    let currentDate = new Date(endDate)
-    currentDate = new Date(currentDate.setDate(currentDate.getDate() - 1))
+    let currentDate = moment.tz(endDate, timezone)
+
     for (let i = 0; i < 7; i++) {
-        let date = currentDate.toISOString().split('T')[0]
+        // Subtract one day at a time and format to 'YYYY-MM-DD'
+        let date = currentDate.subtract(1, 'days').format('YYYY-MM-DD')
         days.push(date)
-        currentDate = new Date(currentDate.setDate(currentDate.getDate() - 1))
     }
-    console.log(days, 'days');
+
+    console.log(days)
     return days
 }
 
-function endDatePassed (endDate, timezone = `America/Los_Angeles`) {
-    const formattedEndDate = new Date(endDate).toLocaleDateString('en-US', { timezone })
-    const now = new Date().toLocaleDateString('en-US', { timezone })
-    console.log(formattedEndDate, 'formattedEndDate');
-    console.log(now, 'now');
-    console.log(formattedEndDate < now, 'formattedEndDate < now');
-    return formattedEndDate < now
+function endDatePassed(endDate, timezone) {
+    // Parse endDate in the given timezone and convert to UTC
+    const endDateObj = moment.tz(endDate, timezone).utc()
+
+    // Get the current date/time in the given timezone and convert to UTC
+    const now = moment().tz(timezone).utc()
+
+    console.log(endDateObj.format(), 'endDateObj UTC')
+    console.log(now.format(), 'now UTC')
+    console.log(endDateObj.isBefore(now), 'endDateObj < now')
+
+    // Compare the dates in UTC
+    return endDateObj.isBefore(now)
 }
 
 const endDate = setEndDate('America/Los_Angeles')
