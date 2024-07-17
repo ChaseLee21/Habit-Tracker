@@ -1,6 +1,6 @@
 import { useEffect, useState, React } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { checkToken } from '../axios'
+import { checkToken } from '../util/axios'
 
 function withAuth (ComponentToProtect) {
     const ProtectedComponent = function (props) {

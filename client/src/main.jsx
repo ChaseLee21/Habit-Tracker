@@ -4,10 +4,10 @@ import App from './App.jsx'
 import React from 'react'
 import './index.css'
 import './axiosConfig.js'
-import Register from './views/Register.jsx'
-import Login from './views/Login.jsx'
-import Logout from './views/Logout.jsx'
-import { ProtectedHome, ProtectedNewHabit, ProtectedProfile, ProtectedProgress } from './util/auth/auth.js'
+import Register from './components/screens/Register/Register.jsx'
+import Login from './components/screens/Login/Login.jsx'
+import Logout from './components/screens/Logout/Logout.jsx'
+import { ProtectedHome, ProtectedNewHabit, ProtectedProfile, ProtectedProgress } from './auth/auth.js'
 
 const router = createBrowserRouter([
     {

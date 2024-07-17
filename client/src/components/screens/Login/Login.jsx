@@ -1,8 +1,8 @@
-import { validateEmail, validateLoginPassword } from '../util/helpers'
+import { validateEmail, validateLoginPassword } from '../../../util/helpers'
 import { React, useEffect, useState } from 'react'
-import { login, checkToken } from '../util/axios'
+import { login, checkToken } from '../../../util/axios'
 import { Link } from 'react-router-dom'
-import ErrorAlert from '../components/ErrorAlert'
+import ErrorAlert from '../../common/ErrorAlert'
 
 function Login () {
     // Variables

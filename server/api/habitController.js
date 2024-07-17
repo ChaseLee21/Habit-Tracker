@@ -27,20 +27,24 @@ router.post('/:userId', (req, res) => {
 })
 
 // PUT updated habit by id
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
     const { id } = req.params
     const habitData = req.body
-    Habit.findOneAndUpdate({ _id: id }, { $set: habitData })
-        .then((habit) => {
-            if (!habit) {
-                res.status(404).json({ message: 'No habit found with this id' })
-                return
+    try {
+        const updatedHabit = await Habit.findOneAndUpdate({ _id: id }, { $set: habitData }, { new: true }).populate({
+            path: 'weeks',
+            model: 'Week',
+            populate: {
+                path: 'days',
+                model: 'Day'
             }
-            res.status(200).json({ message: 'Habit updated successfully', habit })
         })
-        .catch((err) => {
-            res.status(400).json(err)
-        })
+        if (!updatedHabit) return res.status(404).json({ message: 'No habit found with this id' })
+        res.status(200).json({ message: 'Habit updated successfully', habit: updatedHabit })
+    } catch (error) {
+        console.error("Failed to update habit:", error)
+        res.status(400).json(error)
+    }
 })
 
 // DELETE a habit by id
