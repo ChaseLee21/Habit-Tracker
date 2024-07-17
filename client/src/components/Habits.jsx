@@ -11,8 +11,7 @@ function Habits (props) {
     const timezone = props.user.user.timezone || 'America/Los_Angeles'
     const localDay = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
     const today = new Date(localDay).toISOString().split('T')[0]
-    const [user, setUser] = useState({})
-    const { userData, updateHabitState } = useUser()
+    const { userData, updateUserState, updateHabitCompletedState } = useUser()
     const [showUpdateGoal, setShowUpdateGoal] = useState(false)
     const [showConfirmUpdate, setShowConfirmUpdate] = useState(false)
     const [habitToUpdate, setHabitToUpdate] = useState({})
@@ -22,11 +21,9 @@ function Habits (props) {
         async function fetchUser () {
             try {
                 const userId = props.user.user.id || ''
-                const userData = await getUser(userId)
-                if (userData) {
-                    updateHabitState(userData)
-                } else {
-                    console.log('No user data found')
+                const response = await getUser(userId)
+                if (response) {
+                    updateUserState(response)
                 }
             } catch (err) {
                 console.log(err)
@@ -48,32 +45,6 @@ function Habits (props) {
         }
     }
 
-    async function updateHabitCompletedState (habit) {
-        const day = { ...findDay(findWeek(habit), timezone) }
-        day.completed = !day.completed
-        const updatedDay = await putDay(day)
-        // Clone the current user state to avoid direct mutation
-        const updatedUser = { ...user }
-        // Find the habit in the cloned state
-        const habitToUpdate = updatedUser.habits.find(h => h._id === habit._id)
-        if (habitToUpdate) {
-            // Find the week in the habit
-            const weekToUpdate = habitToUpdate.weeks[habitToUpdate.weeks.length - 1]
-            if (weekToUpdate) {
-                // Find the day in the week and update its completed status
-                const dayToUpdate = weekToUpdate.days.find(d => d.date === today)
-                dayToUpdate.completed = updatedDay.completed
-            }
-            // Update the streak
-            if (day.completed === true && habitToUpdate.streak !== undefined) {
-                habitToUpdate.streak++
-            } else if (day.completed === false && habitToUpdate.streak !== undefined) {
-                habitToUpdate.streak--
-            }
-        }
-        setUser(updatedUser)
-    }
-
     async function handleConfirmUpdate () {
         setShowConfirmUpdate(false)
         setShowUpdateGoal(true)
@@ -87,7 +58,7 @@ function Habits (props) {
         setShowUpdateGoal(false)
         await putHabit(habit)
         // Clone the current user state to avoid direct mutation
-        const updatedUser = { ...user }
+        const updatedUser = { ...userData }
         // Find the habit in the cloned state
         const habitToUpdate = updatedUser.habits.find(h => h._id === habit._id)
         if (habitToUpdate) {
@@ -96,7 +67,7 @@ function Habits (props) {
             habitToUpdate.why = habit.why
             habitToUpdate.goal = habit.goal
         }
-        setUser(updatedUser)
+        updateUserState(updatedUser)
     }
 
     return (
@@ -104,7 +75,7 @@ function Habits (props) {
             <section className="bg-colorBg text-colorText rounded p-2 w-fit">
                 <h2 className='text-2xl'>My Habits</h2>
                 <ul className="list-inside">
-                    {user.habits && user.habits.map(habit => (
+                    {userData.habits && userData.habits.map(habit => (
                         <li key={habit._id} className="my-2">
                             {/* habit completed form and habit title */}
                             <div className="grid grid-flow-col grid-cols-6">
