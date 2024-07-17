@@ -2,7 +2,7 @@ import { useEffect, useState, React } from 'react'
 import { useUser } from '../contexts/UserContext'
 import { putDay, getUser, putHabit } from '../util/axios'
 import PropTypes from 'prop-types'
-import { findDay, findWeek, findNumberOfDaysCompleted } from '../util/helpers'
+import { findDay, findWeek, daysCompletedInWeek } from '../util/helpers'
 import ConfirmUpdate from './ConfirmUpdate'
 import UpdateGoal from './UpdateGoal'
 
@@ -38,7 +38,7 @@ function Habits (props) {
     }
 
     async function checkFrequencyGoalMet (habit) {
-        const frequencyGoalMet = (findNumberOfDaysCompleted(findWeek(habit)) / habit.frequency) >= 1 ? true : false
+        const frequencyGoalMet = (daysCompletedInWeek(findWeek(habit)) / habit.frequency) >= 1 ? true : false
         if (frequencyGoalMet) {
             await setHabitToUpdate(habit)
             setShowConfirmUpdate(true)
@@ -71,7 +71,7 @@ function Habits (props) {
                                 <h3 className='text-xl col-span-4'>{habit.emoji} {habit.name}</h3>
                                 <form className='col-span-2 flex justify-end'>
                                     <label htmlFor='habitCompleteInput' className='mx-1'>
-                                        {findNumberOfDaysCompleted(findWeek(habit))} / {habit.frequency} 
+                                        {daysCompletedInWeek(findWeek(habit))} / {habit.frequency} 
                                     </label>
                                     <input id='habitCompleteInput' type="checkbox" className="large-checkbox"
                                     onChange={() => handleDayCompletedSubmit(habit)} 

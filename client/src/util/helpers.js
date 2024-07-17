@@ -13,7 +13,7 @@ const findWeek = (habit) => {
     return week
 }
 
-const findNumberOfDaysCompleted = (week) => {
+const daysCompletedInWeek = (week) => {
     let daysCompleted = 0
     week.days.forEach(day => {
         if (day.completed === true) {
@@ -78,4 +78,4 @@ function validateTimezone (timezone) {
     return timezones.includes(timezone)
 }
 
-export { splitEmoji, findDay, findWeek, findNumberOfDaysCompleted, validateEmail, validateUsername, validatePassword, validateLoginPassword, validateTimezone}
+export { splitEmoji, findDay, findWeek, daysCompletedInWeek, validateEmail, validateUsername, validatePassword, validateLoginPassword, validateTimezone}
