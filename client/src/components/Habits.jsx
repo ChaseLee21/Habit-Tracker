@@ -11,7 +11,7 @@ function Habits (props) {
     const timezone = props.user.user.timezone || 'America/Los_Angeles'
     const localDay = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
     const today = new Date(localDay).toISOString().split('T')[0]
-    const { userData, updateUserState, updateHabitCompletedState } = useUser()
+    const { userData, updateUserState, updateHabitCompletedState, updateHabitGoalState } = useUser()
     const [showUpdateGoal, setShowUpdateGoal] = useState(false)
     const [showConfirmUpdate, setShowConfirmUpdate] = useState(false)
     const [habitToUpdate, setHabitToUpdate] = useState({})
@@ -55,19 +55,8 @@ function Habits (props) {
     }
 
     async function handleUpdateGoalSubmit (habit) {
+        await updateHabitGoalState(habit)
         setShowUpdateGoal(false)
-        await putHabit(habit)
-        // Clone the current user state to avoid direct mutation
-        const updatedUser = { ...userData }
-        // Find the habit in the cloned state
-        const habitToUpdate = updatedUser.habits.find(h => h._id === habit._id)
-        if (habitToUpdate) {
-            // Update the habit with the new data
-            habitToUpdate.description = habit.description
-            habitToUpdate.why = habit.why
-            habitToUpdate.goal = habit.goal
-        }
-        updateUserState(updatedUser)
     }
 
     return (

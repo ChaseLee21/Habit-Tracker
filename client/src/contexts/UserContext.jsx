@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { findDay, findWeek } from '../util/helpers';
-import { putDay } from '../util/axios';
+import { putDay, putHabit } from '../util/axios';
 import moment from 'moment-timezone';
 
 // Create Context
@@ -44,9 +44,27 @@ export const UserProvider = ({ children }) => {
     }
   }
 
+  async function updateHabitGoalState (habit) {
+    try {
+      let updatedHabit = await putHabit(habit)
+      updatedHabit = updatedHabit.habit
+      setUserData((prevUserData) => {
+        const updatedUser = { ...prevUserData }
+        const habitIndex = updatedUser.habits.findIndex(h => h._id === habit._id)
+        if (habitIndex !== -1) {
+          updatedUser.habits[habitIndex] = updatedHabit
+        }
+        return updatedUser
+      })
+      console.log("Updated habit goal state:", userData);
+    } catch (error) {
+      console.log("Failed to update habit goal state:", error)
+    }
+  }
+
 
   return (
-    <UserContext.Provider value={{ userData, updateUserState, updateHabitCompletedState }}>
+    <UserContext.Provider value={{ userData, updateUserState, updateHabitCompletedState, updateHabitGoalState }}>
       {children}
     </UserContext.Provider>
   );
