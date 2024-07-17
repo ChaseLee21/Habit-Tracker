@@ -1,4 +1,5 @@
 import { useEffect, useState, React } from 'react'
+import { useUser } from '../contexts/UserContext'
 import { putDay, getUser, putHabit } from '../util/axios'
 import PropTypes from 'prop-types'
 import { findDay, findWeek, findNumberOfDaysCompleted } from '../util/helpers'
@@ -7,22 +8,23 @@ import UpdateGoal from './UpdateGoal'
 
 
 function Habits (props) {
-    const userId = props.user.user.id || ''
     const timezone = props.user.user.timezone || 'America/Los_Angeles'
     const localDay = new Date().toLocaleString('en-US', { timeZone: timezone }).split(',')[0]
     const today = new Date(localDay).toISOString().split('T')[0]
     const [user, setUser] = useState({})
+    const { userData, updateHabitState } = useUser()
     const [showUpdateGoal, setShowUpdateGoal] = useState(false)
     const [showConfirmUpdate, setShowConfirmUpdate] = useState(false)
     const [habitToUpdate, setHabitToUpdate] = useState({})
-
+    
     // Fetch user data on component mount
     useEffect(() => {
         async function fetchUser () {
             try {
+                const userId = props.user.user.id || ''
                 const userData = await getUser(userId)
                 if (userData) {
-                    setUser(userData)
+                    updateHabitState(userData)
                 } else {
                     console.log('No user data found')
                 }
