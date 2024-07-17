@@ -1,34 +1,35 @@
-import { React, useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment-timezone';
 
-function Day (props) {
-    const month = new Date().getMonth()
-    const weekDay = new Date().getDay()
-    const date = new Date().getDate()
-    const numbers = ['0', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st']
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    const timezone = props.user.user.timezone
-    const [time, setTime] = useState(new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: timezone }))
+function Day({ user }) {
+    const timezone = user.user.timezone;
+    const [time, setTime] = useState(moment().tz(timezone).format('h:mm A'));
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setTime(new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: timezone }))
-            setInterval(() => {
-                setTime(new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: timezone }))
-            }, 60000)
-        }, (60 - new Date().getSeconds()) * 1000)
-        return () => clearTimeout(timer)
-    }, [timezone])
+        // Calculate milliseconds until the next minute
+        const now = moment();
+        const nextMinute = moment().add(1, 'minute').startOf('minute');
+        const delayUntilNextMinute = nextMinute.diff(now);
+    
+        // Update time at the start of the next minute, then every minute after that
+        const timeoutId = setTimeout(() => {
+            setTime(moment().tz(timezone).format('h:mm A')); // Update immediately at the next minute
+            const intervalId = setInterval(() => {
+                setTime(moment().tz(timezone).format('h:mm A'));
+            }, 60000); // Continue updating every minute
+            return () => clearInterval(intervalId);
+        }, delayUntilNextMinute);
+    
+        return () => clearTimeout(timeoutId);
+    }, [timezone]);
 
     return (
-        <>
-            <section className="bg-colorBg text-colorText rounded p-2 w-full text-2xl">
-                <h2>Today is {days[weekDay]}, {months[month]} {numbers[date]} </h2>
-                <p>{ time }</p>
-            </section>
-        </>
-    )
+        <section className="bg-colorBg text-colorText rounded p-2 w-full text-2xl">
+            <h2>Today is {moment().tz(timezone).format('dddd, MMMM Do')}</h2>
+            <p>{time}</p>
+        </section>
+    );
 }
 
 Day.propTypes = {
@@ -40,6 +41,6 @@ Day.propTypes = {
             name: PropTypes.string
         })
     }).isRequired
-}
+};
 
-export default Day
+export default Day;
