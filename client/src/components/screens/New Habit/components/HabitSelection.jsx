@@ -3,7 +3,7 @@ import { useNewHabit } from '../../../../contexts/NewHabitContext'
 import SectionHeader from './SectionHeader'
 
 function HabitSelection () {
-    const { habit, updateHabit } = useNewHabit()
+    const { updateHabit, updateDescriptions } = useNewHabit()
 
     const defaultHabits = [
         {
@@ -113,19 +113,20 @@ function HabitSelection () {
         }
     ]
 
-    function handleHabitSelection (name) {
-        updateHabit(name)
+    function handleHabitSelection (habit) {
+        updateHabit({ name: habit.name, emoji: habit.emoji })
+        updateDescriptions(habit.descriptionOptions)
     }
 
     return (
         <div>
             <SectionHeader title='Create a New Habit' subtext='To help accelerate the process of creating a new habit we gave you some starting points. You will make goals and define your habit soon, this is just a starting point to get you going!' />
             <ul>
-                {defaultHabits.map((point, index) => {
+                {defaultHabits.map((habit, index) => {
                     return (
-                        <li key={index} className='m-2 p-2 bg-colorButtonBg text-colorButtonText rounded-md cursor-pointer hover:text-colorLinkHover' onClick={handleHabitSelection(point.name)}>
-                            <span className='mx-2 '>{point.emoji}</span>
-                            {point.name}
+                        <li key={index} className='m-2 p-2 bg-colorButtonBg text-colorButtonText rounded-md cursor-pointer hover:text-colorLinkHover' onClick={handleHabitSelection(habit)}>
+                            <span className='mx-2 '>{habit.emoji}</span>
+                            {habit.name}
                         </li>
                     )
                 })}
