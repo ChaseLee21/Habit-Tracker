@@ -10,7 +10,7 @@ export const NewHabitProvider = ({ children }) => {
     const [showNameSelection, setShowNameSelection] = useState(false)
     const [showDescriptionSelection, setShowDescriptionSelection] = useState(false)
     const [showWhySelection, setShowWhySelection] = useState(false)
-    const [ShowGoalSelection, setShowGoalSelection] = useState(false)
+    const [showGoalSelection, setShowGoalSelection] = useState(false)
     const [showFrequencySelection, setShowFrequencySelection] = useState(false)
     const [showEmojiSelection, setShowEmojiSelection] = useState(false)
     const [showHabitSummary, setShowHabitSummary] = useState(false)
@@ -56,7 +56,7 @@ export const NewHabitProvider = ({ children }) => {
     
     return (
         <NewHabitContext.Provider value={{ 
-            habit, descriptions, showHabitSelection, showNameSelection, showDescriptionSelection, showWhySelection, ShowGoalSelection, showFrequencySelection, showEmojiSelection, showHabitSummary,
+            habit, descriptions, showHabitSelection, showNameSelection, showDescriptionSelection, showWhySelection, showGoalSelection, showFrequencySelection, showEmojiSelection, showHabitSummary,
             updateHabit, updateDescriptions, updateShowHabitSelection, updateShowNameSelection, updateShowDescriptionSelection, updateShowWhySelection, updateShowGoalSelection, updateShowFrequencySelection, updateShowEmojiSelection, updateShowHabitSummary }}>
         {children}
         </NewHabitContext.Provider>
