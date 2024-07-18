@@ -1,32 +1,37 @@
 import { React } from 'react'
-import PropTypes from 'prop-types'
+import SectionHeader from './SectionHeader'
+import { useNewHabit } from '../../../../contexts/NewHabitContext'
+import { useUser } from '../../../../contexts/UserContext'
+import { postHabit } from '../../../../util/axios'
 
-function HabitSummary ({ habit, handleSaveHabit }) {
+function HabitSummary () {
+    const { habit, updateHabit } = useNewHabit()
+    const { userData } = useUser()
+
+    async function save () {
+        console.log(habit);
+        console.log('user', userData)
+        await updateHabit({ user: userData._id})
+        const response = await postHabit(userData._id, habit)
+        if (response) window.location.href = '/'
+    }
+
     return (
-        <div className='p-2 bg-colorBgAlt rounded-md cursor-pointer'>
-            <div className='flex justify-between'>
-                <h3 className='text-xl'>{habit.emoji} {habit.name}</h3>
+        <div className='p-2 bg-colorBgAlt rounded-md '>
+            <SectionHeader title='Habit Summary' subtext={`Please review your habit and click 'Save' if everything looks good!`} />
+            <div className='my-2'>
+                <div className='flex justify-between'>
+                    <h3 className='text-xl'>{habit.emoji} {habit.name}</h3>
+                </div>
+                <p>I will {habit.description}</p>
+                <p>Because {habit.why}</p>
+                <p>I finish my habit for the day when {habit.goal}</p>
+                {habit.frequency === 1 && <p>I will do this habit {habit.frequency} time a week</p>}
+                {habit.frequency > 1 && <p>I will do this habit {habit.frequency} times a week</p>}
             </div>
-            <p>I will {habit.description}</p>
-            <p>Because {habit.why}</p>
-            <p>I finish my habit for the day when {habit.goal}</p>
-            {habit.frequency === 1 && <p>I will do this habit {habit.frequency} time a week</p>}
-            {habit.frequency > 1 && <p>I will do this habit {habit.frequency} times a week</p>}
-            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt rounded w-fit p-1 my-2' onClick={() => handleSaveHabit()}>Save</button>
+            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => save()}>Save</button>
         </div>
     )
-}
-
-HabitSummary.propTypes = {
-    habit: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        description: PropTypes.string.isRequired,
-        why: PropTypes.string.isRequired,
-        goal: PropTypes.string.isRequired,
-        frequency: PropTypes.number.isRequired,
-        emoji: PropTypes.string.isRequired
-    }).isRequired,
-    handleSaveHabit: PropTypes.func.isRequired
 }
 
 export default HabitSummary

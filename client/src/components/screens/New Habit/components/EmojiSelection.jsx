@@ -23,12 +23,12 @@ function EmojiSelection () {
 
     return (
         <div className='flex flex-col bg-colorBgAlt rounded w-fit p-2 my-2'>
-        <div className='mb-2'>
-            <SectionHeader title='Select an Emoji' subtext='This emoji will represent your habit through out different features of Habit Tracker!' />
-        </div>
-        <div className='mb-2'>
-            <emoji-picker></emoji-picker>
-        </div>
+            <div className='mb-2'>
+                <SectionHeader title='Select an Emoji' subtext='This emoji will represent your habit through out different features of Habit Tracker!' />
+            </div>
+            <div className='mb-2'>
+                <emoji-picker></emoji-picker>
+            </div>
             <div className='flex'>
                 <input className='rounded px-1 w-10 h-10 m-2 text-2xl text-black' id='emojiInput' type='text' value={emoji} readOnly></input>
                 {emoji && <button className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => next()}>Next</button>}
