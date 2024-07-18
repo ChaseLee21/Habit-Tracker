@@ -1,8 +1,8 @@
 import { React, useState } from 'react'
-import PropTypes from 'prop-types'
 import SectionHeader from './SectionHeader'
+import { useNewHabit } from '../../../../contexts/NewHabitContext'
 
-function NameSelection ({ onItemClick }) {
+function NameSelection () {
     const { updateHabit, updateDescriptions, updateShowNameSelection, updateShowDescriptionSelection } = useNewHabit()
     const [name, setName] = useState('')
 
@@ -10,25 +10,22 @@ function NameSelection ({ onItemClick }) {
         setName(e.target.value.toLowerCase())
     }
 
-    function handleNameSelection () {
-        updateHabit(name)
+    function next () {
+        console.log('name', name);
+        updateHabit({name: name.charAt(0).toUpperCase() + name.slice(1)})
         updateShowDescriptionSelection(true)
         updateShowNameSelection(false)
     }
 
     return (
-        <div className='p-2 bg-colorBgAlt rounded-md cursor-pointer'>
-            <SectionHeader title='Create a New Habit' subtext='To help accelerate the process of creating a new habit we gave you some starting points. You will make goals and define your habit soon, this is just a starting point to get you going!' />
-            <div className='flex flex-wrap'>
+        <div className='p-2 bg-colorBgAlt rounded-md '>
+            <SectionHeader title='Name Your Habit' subtext={`This should be short and simple such as: 'Exercise', 'Read', 'Drink Water', Etc.`} />
+            <div className='flex flex-wrap my-2'>
                 <input className='rounded w-full px-1' id='whyInput' type='text' max='100' onInput={handleInputChange}></input>
             </div>
-            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt rounded w-fit p-1 my-2' onClick={() => handleNameSelection}>Next</button>
+            <button type='button' className='bg-colorButtonBgAlt text-colorButtonTextAlt rounded w-fit p-1 cursor-pointer' onClick={() => next()}>Next</button>
         </div>
     )
-}
-
-NameSelection.propTypes = {
-    onItemClick: PropTypes.func.isRequired
 }
 
 export default NameSelection

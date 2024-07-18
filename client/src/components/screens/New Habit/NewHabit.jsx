@@ -15,7 +15,7 @@ import HabitSummary from './components/HabitSummary'
 function NewHabit (props) {
     // Variables
     const userId = props.user.user.id || ''
-    const { habit, updateHabit, showHabitSelection, showNameSelection, showDescriptionSelection, showWhySelection, ShowGoalSelection, showFrequencySelection, showEmojiSelection, showHabitSummary } = useNewHabit()
+    const { habit, updateHabit, showHabitSelection, showNameSelection, showDescriptionSelection, showWhySelection, showGoalSelection, showFrequencySelection, showEmojiSelection, showHabitSummary } = useNewHabit()
 
     // Lifecycle Methods
     useEffect(() => {
@@ -81,7 +81,7 @@ function NewHabit (props) {
             {showNameSelection && <NameSelection />}
             {showDescriptionSelection && <DescriptionSelection />}
             {showWhySelection && <WhySelection />}
-            {ShowGoalSelection && <GoalSelection />}
+            {showGoalSelection && <GoalSelection />}
             {showFrequencySelection && <FrequencySelection />}
             {showEmojiSelection && <EmojiSelection />}
             {showHabitSummary && <HabitSummary />}
