@@ -14,6 +14,7 @@ export default [
       "semi": ["error", "never"]
     }
   },
+  {globals: globals.node},
   pluginJs.configs.recommended,
   ...fixupConfigRules(pluginReactConfig),
 ]
