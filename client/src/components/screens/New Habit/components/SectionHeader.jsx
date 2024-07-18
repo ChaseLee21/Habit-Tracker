@@ -5,7 +5,7 @@ function SectionHeader ({ title, subtext }) {
     return (
         <header>
             <h2 className='text-xl'>{ title }</h2>
-            <p> {subtext }</p>
+            <p> { subtext }</p>
         </header>
     )
 }

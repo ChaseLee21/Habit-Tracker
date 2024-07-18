@@ -4,14 +4,13 @@ import { useNewHabit } from '../../../../contexts/NewHabitContext'
 
 function FrequencySelection () {
     const [frequency, setFrequency] = useState(1)
-    const { habit, updateHabit, updateShowFrequencySelection, updateShowEmojiSelection } = useNewHabit()
+    const { updateHabit, updateShowFrequencySelection, updateShowEmojiSelection } = useNewHabit()
 
     const handleInputChange = (e) => {
         setFrequency(e.target.value)
     }
 
     function next () {
-        console.log('frequency', frequency);
         updateHabit({frequency: frequency})
         updateShowEmojiSelection(true)
         updateShowFrequencySelection(false)

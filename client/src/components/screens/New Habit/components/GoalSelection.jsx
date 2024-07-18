@@ -3,7 +3,7 @@ import SectionHeader from './SectionHeader'
 import { useNewHabit } from '../../../../contexts/NewHabitContext'
 
 function GoalSelection () {
-    const { habit, updateHabit, updateShowGoalSelection, updateShowFrequencySelection } = useNewHabit()
+    const { updateHabit, updateShowGoalSelection, updateShowFrequencySelection } = useNewHabit()
     const [goal, setGoal] = useState('')
 
     const handleInputChange = (e) => {
@@ -11,7 +11,6 @@ function GoalSelection () {
     }
 
     function next () {
-        console.log('goal', goal);
         updateHabit({goal: goal})
         updateShowFrequencySelection(true)
         updateShowGoalSelection(false)
