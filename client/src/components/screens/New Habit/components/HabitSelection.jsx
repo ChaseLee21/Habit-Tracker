@@ -3,7 +3,7 @@ import { useNewHabit } from '../../../../contexts/NewHabitContext'
 import SectionHeader from './SectionHeader'
 
 function HabitSelection () {
-    const { updateHabit, updateDescriptions, setShowHabitSelection, setShowHabitName, setShowHabitDescription } = useNewHabit()
+    const { updateHabit, updateDescriptions, updateShowHabitSelection, updateShowNameSelection, updateShowDescriptionSelection } = useNewHabit()
 
     const defaultHabits = [
         {
@@ -117,11 +117,11 @@ function HabitSelection () {
         updateHabit({ name: habit.name, emoji: habit.emoji })
         updateDescriptions(habit.descriptionOptions)
         if (habit.name === 'Create a habit of your own') {
-            setShowHabitName(true)
-            setShowHabitSelection(false)
+            updateShowNameSelection(true)
+            updateShowHabitSelection(false)
         } else {
-            setShowHabitDescription(true)
-            setShowHabitSelection(false)
+            updateShowDescriptionSelection(true)
+            updateShowHabitSelection(false)
         }
     }
 
