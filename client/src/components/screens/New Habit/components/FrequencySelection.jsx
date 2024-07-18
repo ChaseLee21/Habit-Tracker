@@ -1,13 +1,25 @@
 import { React, useState } from 'react'
-import PropTypes from 'prop-types'
+import SectionHeader from './SectionHeader'
+import { useNewHabit } from '../../../../contexts/NewHabitContext'
 
-function FrequencySelection ({ onItemClick }) {
+function FrequencySelection () {
     const [frequency, setFrequency] = useState(1)
+    const { habit, updateHabit, updateShowFrequencySelection, updateShowEmojiSelection } = useNewHabit()
+
     const handleInputChange = (e) => {
         setFrequency(e.target.value)
     }
+
+    function next () {
+        console.log('frequency', frequency);
+        updateHabit({frequency: frequency})
+        updateShowEmojiSelection(true)
+        updateShowFrequencySelection(false)
+    }
+
     return (
         <div className='p-2 bg-colorBgAlt rounded-md cursor-pointer'>
+            <SectionHeader title='How Often Will You Do This Habit?' subtext='Choose how many times a week you will do this habit.' />
             <select className='rounded w-full px-1' id='frequency' onChange={handleInputChange}>
                 <option value={1}>1</option>
                 <option value={2}>2</option>
@@ -17,13 +29,9 @@ function FrequencySelection ({ onItemClick }) {
                 <option value={6}>6</option>
                 <option value={7}>7</option>
             </select>
-            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt rounded w-fit p-1 my-2' onClick={() => onItemClick(frequency)}>Next</button>
+            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt rounded w-fit p-1 my-2' onClick={() => next()}>Next</button>
         </div>
     )
-}
-
-FrequencySelection.propTypes = {
-    onItemClick: PropTypes.func.isRequired
 }
 
 export default FrequencySelection

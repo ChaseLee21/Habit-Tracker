@@ -24,7 +24,7 @@ function GoalSelection () {
                 <label htmlFor='goalInput' className='min-w-fit mx-2'>I finish my habit for the day when</label>
                 <input className='rounded w-full px-1' id='goalInput' type='text' max='100' onInput={handleInputChange}></input>
             </div>
-            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => next(why)}>Next</button>
+            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => next()}>Next</button>
         </div>
     )
 }
