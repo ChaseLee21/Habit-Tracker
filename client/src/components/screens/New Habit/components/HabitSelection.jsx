@@ -131,7 +131,7 @@ function HabitSelection () {
             <ul>
                 {defaultHabits.map((habit, index) => {
                     return (
-                        <li key={index} className='m-2 p-2 bg-colorButtonBg text-colorButtonText rounded-md cursor-pointer hover:text-colorLinkHover' onClick={handleHabitSelection(habit)}>
+                        <li key={index} className='m-2 p-2 bg-colorButtonBg text-colorButtonText rounded-md cursor-pointer hover:text-colorLinkHover' onClick={() => { handleHabitSelection(habit) }}>
                             <span className='mx-2 '>{habit.emoji}</span>
                             {habit.name}
                         </li>

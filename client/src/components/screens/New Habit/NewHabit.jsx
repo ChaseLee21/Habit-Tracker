@@ -22,16 +22,6 @@ function NewHabit (props) {
         document.title = 'New Habit | Habit Tracker'
     }, [])
 
-    // Event Handlers
-    const setHabitName = (name) => {
-        updateHabit({ ...habit, name })
-        setShowNameSelection(false)
-        setShowDescriptionSelection(true)
-        setSectionHeader({
-            title: name,
-            subtext: `Perfect, You've choosen ${name.toLowerCase()}! Define the habit a little more. What will you do?`
-        })
-    }
     const setHabitDescription = (description) => {
         updateHabit({ ...habit, description })
         setShowDescriptionSelection(false)

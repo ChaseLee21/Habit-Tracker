@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import SectionHeader from './SectionHeader'
 
 function DescriptionSelection ({ descriptions, onItemClick }) {
     const [descriptionInput, setDescriptionInput] = useState('')
+    const { habit, updateHabit, updateDescriptions, setShowHabitName, setShowHabitDescription } = useNewHabit()
 
     function handleInputChange (e) {
         setDescriptionInput(e.target.value)
@@ -10,6 +12,7 @@ function DescriptionSelection ({ descriptions, onItemClick }) {
 
     return (
         <section>
+            <SectionHeader title='Create a New Habit' subtext={`Perfect, You've choosen ${habit.name.toLowerCase()}! Define the habit a little more. What will you do?`} />
             <div>
                 {descriptions && descriptions.length > 0 &&
                 <ul>
