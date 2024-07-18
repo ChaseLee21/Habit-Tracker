@@ -26,3 +26,5 @@ router.use('/login', (req, res) => {
 router.use('/checkToken', authMiddleware, async (req, res) => {
     res.json({ user: req.user })
 })
+
+module.exports = router
