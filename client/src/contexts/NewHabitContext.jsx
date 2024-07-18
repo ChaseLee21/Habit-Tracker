@@ -5,6 +5,7 @@ const NewHabitContext = createContext();
 export const NewHabitProvider = ({ children }) => {
 
     const [habit, setHabit] = useState(undefined);
+    const [descriptions, setDescriptions] = useState(undefined);
     
     const updateHabit = (newHabit) => {
         if (habit === undefined) {
@@ -13,9 +14,17 @@ export const NewHabitProvider = ({ children }) => {
         }
         setHabit(...habit, newHabit);
     };
+
+    const updateDescriptions = (newDescriptions) => {
+        if (descriptions === undefined) {
+            setDescriptions(newDescriptions);
+            return;
+        }
+        setDescriptions(...descriptions, newDescriptions);
+    }
     
     return (
-        <NewHabitContext.Provider value={{ habit, updateHabit }}>
+        <NewHabitContext.Provider value={{ habit, descriptions, updateHabit, updateDescriptions }}>
         {children}
         </NewHabitContext.Provider>
     );
