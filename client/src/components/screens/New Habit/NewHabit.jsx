@@ -1,11 +1,8 @@
-import { React, useState, useEffect } from 'react'
+import { React, useEffect } from 'react'
 import { useNewHabit } from '../../../contexts/NewHabitContext'
-import { postHabit } from '../../../util/axios'
-import PropTypes from 'prop-types'
 import HabitSelection from './components/HabitSelection'
 import NameSelection from './components/NameSelection'
 import DescriptionSelection from './components/DescriptionSelection'
-import SectionHeader from './components/SectionHeader'
 import WhySelection from './components/WhySelection'
 import GoalSelection from './components/GoalSelection'
 import FrequencySelection from './components/FrequencySelection'
@@ -14,7 +11,6 @@ import HabitSummary from './components/HabitSummary'
 
 function NewHabit (props) {
     // Variables
-    const userId = props.user.user.id || ''
     const { showHabitSelection, showNameSelection, showDescriptionSelection, showWhySelection, showGoalSelection, showFrequencySelection, showEmojiSelection, showHabitSummary } = useNewHabit()
 
     // Lifecycle Methods
@@ -34,14 +30,6 @@ function NewHabit (props) {
             {showHabitSummary && <HabitSummary />}
         </section>
     )
-}
-
-NewHabit.propTypes = {
-    user: PropTypes.shape({
-        user: PropTypes.shape({
-            id: PropTypes.string
-        })
-    }).isRequired
 }
 
 export default NewHabit
