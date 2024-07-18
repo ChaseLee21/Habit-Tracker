@@ -27,4 +27,9 @@ habitSchema.pre('save', async function () {
     this.weeks.push(firstWeek)
 })
 
+habitSchema.pre('remove', async function () {
+    const Week = mongoose.model('Week')
+    await Week.deleteMany({ habit: this._id })
+})
+
 module.exports = model('Habit', habitSchema)

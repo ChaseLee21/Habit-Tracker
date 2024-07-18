@@ -19,4 +19,9 @@ weekSchema.pre('save', async function () {
     this.frequency = this.habit.frequency
 })
 
+weekSchema.pre('remove', async function () {
+    const Day = model('Day')
+    await Day.deleteMany({ week: this._id })
+})
+
 module.exports = model('Week', weekSchema)
