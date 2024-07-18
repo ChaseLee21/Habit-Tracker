@@ -15,10 +15,7 @@ import HabitSummary from './components/HabitSummary'
 function NewHabit (props) {
     // Variables
     const userId = props.user.user.id || ''
-    const { habit, updateHabit } = useNewHabit()
-
-    // State Variables
-
+    const { habit, updateHabit, showHabitSelection, showNameSelection, showDescriptionSelection, showWhySelection, ShowGoalSelection, showFrequencySelection, showEmojiSelection, showHabitSummary } = useNewHabit()
 
     // Lifecycle Methods
     useEffect(() => {
@@ -90,7 +87,7 @@ function NewHabit (props) {
 
     return (
         <section className="flex flex-col rounded-md m-2 bg-colorBg text-colorText p-2">
-            {ShowHabitSelection && <HabitSelection />}
+            {showHabitSelection && <HabitSelection />}
             {showNameSelection && <NameSelection />}
             {showDescriptionSelection && <DescriptionSelection />}
             {showWhySelection && <WhySelection />}
