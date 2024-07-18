@@ -4,7 +4,7 @@ import { useNewHabit } from '../../../../contexts/NewHabitContext'
 
 function FrequencySelection () {
     const [frequency, setFrequency] = useState(1)
-    const { updateHabit, updateShowFrequencySelection, updateShowEmojiSelection } = useNewHabit()
+    const { updateHabit, updateShowFrequencySelection, updateShowEmojiSelection, updateShowGoalSelection } = useNewHabit()
 
     const handleInputChange = (e) => {
         setFrequency(e.target.value)
@@ -13,6 +13,11 @@ function FrequencySelection () {
     function next () {
         updateHabit({frequency: frequency})
         updateShowEmojiSelection(true)
+        updateShowFrequencySelection(false)
+    }
+
+    function back () {
+        updateShowGoalSelection(true)
         updateShowFrequencySelection(false)
     }
 
@@ -28,6 +33,7 @@ function FrequencySelection () {
                 <option value={6}>6</option>
                 <option value={7}>7</option>
             </select>
+            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 m-2' onClick={() => back()}>Back</button>
             <button className='bg-colorButtonBgAlt text-colorButtonTextAlt rounded w-fit p-1 my-2' onClick={() => next()}>Next</button>
         </div>
     )
