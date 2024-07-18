@@ -41,11 +41,11 @@ export const NewHabitProvider = ({ children }) => {
     }
 
     const updateHabit = (newHabit) => {
-        if (habit === undefined) {
+        if (habit === undefined || habit === null || typeof habit !== 'object') {
             setHabit(newHabit);
             return;
         }
-        setHabit(...habit, newHabit);
+        setHabit(...habit, ...newHabit);
     };
 
     const updateDescriptions = (newDescriptions) => {
