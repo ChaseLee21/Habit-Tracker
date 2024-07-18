@@ -18,14 +18,7 @@ function NewHabit (props) {
     const { habit, updateHabit } = useNewHabit()
 
     // State Variables
-    const [ShowHabitSelection, setShowHabitSelection] = useState(true)
-    const [showNameSelection, setShowNameSelection] = useState(false)
-    const [showDescriptionSelection, setShowDescriptionSelection] = useState(false)
-    const [showWhySelection, setShowWhySelection] = useState(false)
-    const [ShowGoalSelection, setShowGoalSelection] = useState(false)
-    const [showFrequencySelection, setShowFrequencySelection] = useState(false)
-    const [showEmojiSelection, setShowEmojiSelection] = useState(false)
-    const [showHabitSummary, setShowHabitSummary] = useState(false)
+
 
     // Lifecycle Methods
     useEffect(() => {
@@ -33,23 +26,6 @@ function NewHabit (props) {
     }, [])
 
     // Event Handlers
-    const setHabitSelection = (newHabit) => {
-        setShowHabitSelection(false)
-        if (newHabit.name === 'Create a habit of your own') {
-            setShowNameSelection(true)
-            setSectionHeader({
-                title: 'Name Your Habit',
-                subtext: 'Make it simple and easy to remember, like "Exercise" or "Read". What will you call your new habit?'
-            })
-        } else {
-            setShowDescriptionSelection(true)
-            updateHabit(newHabit)
-            setSectionHeader({
-                title: newHabit.name,
-                subtext: `Perfect, You've choosen ${newHabit.name.toLowerCase()}! Define the habit a little more. What will you do?`
-            })
-        }
-    }
     const setHabitName = (name) => {
         updateHabit({ ...habit, name })
         setShowNameSelection(false)
