@@ -12,13 +12,14 @@ function NameSelection () {
 
     function next () {
         console.log('name', name);
+        updateDescriptions(null)
         updateHabit({name: name.charAt(0).toUpperCase() + name.slice(1)})
         updateShowDescriptionSelection(true)
         updateShowNameSelection(false)
     }
 
     return (
-        <div className='p-2 bg-colorBgAlt rounded-md '>
+        <div className='p-2 bg-colorBgAlt rounded-md'>
             <SectionHeader title='Name Your Habit' subtext={`This should be short and simple such as: 'Exercise', 'Read', 'Drink Water', Etc.`} />
             <div className='flex flex-wrap my-2'>
                 <input className='rounded w-full px-1' id='whyInput' type='text' max='100' onInput={handleInputChange}></input>

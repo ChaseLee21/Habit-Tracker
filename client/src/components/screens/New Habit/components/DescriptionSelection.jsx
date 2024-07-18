@@ -19,9 +19,9 @@ function DescriptionSelection () {
 
     return (
         <section>
-            <SectionHeader title='Create a New Habit' subtext={`Perfect, You've choosen ${habit.name.toLowerCase()}! Define the habit a little more. What will you do?`} />
+            {descriptions && descriptions.length > 0 &&
             <div>
-                {descriptions && descriptions.length > 0 &&
+                <SectionHeader title='Describe Your Habit' subtext={`Perfect, You've choosen ${habit.name.toLowerCase()}! Define the habit a little more. What will you do?`} />
                 <ul>
                     {descriptions.map((description, index) => {
                         return (
@@ -30,12 +30,13 @@ function DescriptionSelection () {
                             </li>
                         )
                     })}
-                </ul>}
-            </div>
+                </ul>
+            </div>}
             <div>
                 {!descriptions &&
-                <div className='p-2 bg-colorBgAlt rounded-md cursor-pointer'>
-                    <div className='flex'>
+                <div className='p-2 bg-colorBgAlt rounded-md'>
+                    <SectionHeader title='Describe Your Habit' subtext={`Perfect, You've choosen ${habit.name.toLowerCase()}! Define the habit a little more. What will you do? Example: go for a run, read a book, cook dinner at home`} />
+                    <div className='flex my-2'>
                         <label htmlFor='descriptionInput' className='min-w-fit mx-2'>I will </label>
                         <input className='rounded w-full px-1' id='descriptionInput' type='text' max='100' onChange={handleInputChange}></input>
                     </div>
