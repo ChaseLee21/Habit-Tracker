@@ -24,7 +24,8 @@ function NameSelection () {
             <div className='flex flex-wrap my-2'>
                 <input className='rounded w-full px-1' id='whyInput' type='text' max='100' onInput={handleInputChange}></input>
             </div>
-            <button type='button' className='bg-colorButtonBgAlt text-colorButtonTextAlt rounded w-fit p-1 cursor-pointer' onClick={() => next()}>Next</button>
+            {name && <button type='button' className='bg-colorButtonBgAlt text-colorButtonTextAlt rounded w-fit p-1 cursor-pointer my-2' onClick={() => next()}>Next</button>}
+            {!name && <button className='bg-gray-600 text-gray-50 rounded w-fit p-1 my-2' disabled>Next</button>}
         </div>
     )
 }

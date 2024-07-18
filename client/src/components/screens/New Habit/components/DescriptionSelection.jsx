@@ -40,7 +40,8 @@ function DescriptionSelection () {
                         <label htmlFor='descriptionInput' className='min-w-fit mx-2'>I will </label>
                         <input className='rounded w-full px-1' id='descriptionInput' type='text' max='100' onChange={handleInputChange}></input>
                     </div>
-                    <button type='button' className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => handleDescriptionSelection(descriptionInput)}>Next</button>
+                    {descriptionInput && <button type='button' className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => handleDescriptionSelection()}>Next</button>}
+                    {!descriptionInput && <button className='bg-gray-600 text-gray-50 rounded w-fit p-1 my-2' disabled>Next</button>}
                 </div>
                 }
             </div>

@@ -23,7 +23,8 @@ function WhySelection () {
                 <label htmlFor='whyInput' className='min-w-fit mx-2'>Because</label>
                 <input className='rounded w-full px-1' id='whyInput' type='text' max='100' onInput={handleInputChange}></input>
             </div>
-            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => next(why)}>Next</button>
+            {why && <button className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => next(why)}>Next</button>}
+            {!why && <button className='bg-gray-600 text-gray-50 rounded w-fit p-1 my-2' disabled>Next</button>}
         </div>
     )
 }
