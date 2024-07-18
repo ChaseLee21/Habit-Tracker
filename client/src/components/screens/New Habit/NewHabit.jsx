@@ -18,10 +18,6 @@ function NewHabit (props) {
     const { habit, updateHabit } = useNewHabit()
 
     // State Variables
-    const [sectionHeader, setSectionHeader] = useState({
-        title: 'Create a New Habit',
-        subtext: 'To help accelerate the process of creating a new habit we gave you some starting points. You will make goals and define your habit soon, this is just a starting point to get you going!'
-    })
     const [ShowHabitSelection, setShowHabitSelection] = useState(true)
     const [showNameSelection, setShowNameSelection] = useState(false)
     const [showDescriptionSelection, setShowDescriptionSelection] = useState(false)
@@ -118,15 +114,14 @@ function NewHabit (props) {
 
     return (
         <section className="flex flex-col rounded-md m-2 bg-colorBg text-colorText p-2">
-            <SectionHeader title={sectionHeader.title} subtext={sectionHeader.subtext} />
-            {ShowHabitSelection && <HabitSelection defaultHabits={defaultHabits} onItemClick={setHabitSelection} />}
-            {showNameSelection && <NameSelection onItemClick={setHabitName} />}
-            {showDescriptionSelection && <DescriptionSelection descriptions={habit.descriptionOptions} onItemClick={setHabitDescription} />}
-            {showWhySelection && <WhySelection onItemClick={setHabitWhy} />}
-            {ShowGoalSelection && <GoalSelection onItemClick={setHabitGoal} />}
-            {showFrequencySelection && <FrequencySelection onItemClick={setHabitFrequency} />}
-            {showEmojiSelection && <EmojiSelection onItemClick={setHabitEmoji} />}
-            {showHabitSummary && <HabitSummary habit={habit} handleSaveHabit={saveHabit}/>}
+            {ShowHabitSelection && <HabitSelection />}
+            {showNameSelection && <NameSelection />}
+            {showDescriptionSelection && <DescriptionSelection />}
+            {showWhySelection && <WhySelection />}
+            {ShowGoalSelection && <GoalSelection />}
+            {showFrequencySelection && <FrequencySelection />}
+            {showEmojiSelection && <EmojiSelection />}
+            {showHabitSummary && <HabitSummary />}
         </section>
     )
 }

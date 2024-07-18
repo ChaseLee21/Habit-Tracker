@@ -4,17 +4,14 @@ const NewHabitContext = createContext();
 
 export const NewHabitProvider = ({ children }) => {
 
-    const [habit, setHabit] = useState({
-        name: 'New Habit',
-        description: '',
-        why: '',
-        goal: '',
-        frequency: '',
-        emoji: ''
-    });
+    const [habit, setHabit] = useState(undefined);
     
     const updateHabit = (newHabit) => {
-        setHabit(newHabit);
+        if (habit === undefined) {
+            setHabit(newHabit);
+            return;
+        }
+        setHabit(...habit, newHabit);
     };
     
     return (

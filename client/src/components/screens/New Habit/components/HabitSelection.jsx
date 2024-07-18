@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNewHabit } from '../../../../contexts/NewHabitContext'
+import SectionHeader from './SectionHeader'
 
 function HabitSelection () {
     const { habit, updateHabit } = useNewHabit()
@@ -113,20 +114,23 @@ function HabitSelection () {
     ]
 
     function handleHabitSelection (name) {
-        updateHabit( ...habit, name )
+        updateHabit(name)
     }
 
     return (
-        <ul>
-            {defaultHabits.map((point, index) => {
-                return (
-                    <li key={index} className='m-2 p-2 bg-colorButtonBg text-colorButtonText rounded-md cursor-pointer hover:text-colorLinkHover' onClick={handleHabitSelection(point.name)}>
-                        <span className='mx-2 '>{point.emoji}</span>
-                        {point.name}
-                    </li>
-                )
-            })}
-        </ul>
+        <div>
+            <SectionHeader title='Create a New Habit' subtext='To help accelerate the process of creating a new habit we gave you some starting points. You will make goals and define your habit soon, this is just a starting point to get you going!' />
+            <ul>
+                {defaultHabits.map((point, index) => {
+                    return (
+                        <li key={index} className='m-2 p-2 bg-colorButtonBg text-colorButtonText rounded-md cursor-pointer hover:text-colorLinkHover' onClick={handleHabitSelection(point.name)}>
+                            <span className='mx-2 '>{point.emoji}</span>
+                            {point.name}
+                        </li>
+                    )
+                })}
+            </ul>
+        </div>
     )
 }
 
