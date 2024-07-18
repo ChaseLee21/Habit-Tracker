@@ -5,7 +5,7 @@ import { useUser } from '../../../../contexts/UserContext'
 import { postHabit } from '../../../../util/axios'
 
 function HabitSummary () {
-    const { habit, updateHabit } = useNewHabit()
+    const { habit, updateHabit, updateShowEmojiSelection, updateShowHabitSummary } = useNewHabit()
     const { userData } = useUser()
 
     async function save () {
@@ -14,6 +14,11 @@ function HabitSummary () {
         await updateHabit({ user: userData._id})
         const response = await postHabit(userData._id, habit)
         if (response) window.location.href = '/'
+    }
+
+    function back () {
+        updateShowEmojiSelection(true)
+        updateShowHabitSummary(false)
     }
 
     return (
@@ -29,6 +34,7 @@ function HabitSummary () {
                 {habit.frequency === 1 && <p>I will do this habit {habit.frequency} time a week</p>}
                 {habit.frequency > 1 && <p>I will do this habit {habit.frequency} times a week</p>}
             </div>
+            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 m-2' onClick={() => back()}>Back</button>
             <button className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => save()}>Save</button>
         </div>
     )
