@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from 'react'
+import { useNewHabit } from '../../../contexts/NewHabitContext'
 import { postHabit } from '../../../util/axios'
 import PropTypes from 'prop-types'
 import HabitSelection from './components/HabitSelection'
@@ -14,6 +15,7 @@ import HabitSummary from './components/HabitSummary'
 function NewHabit (props) {
     // Variables
     const userId = props.user.user.id || ''
+    const { habit, updateHabit } = useNewHabit()
     const defaultHabits = [
         {
             name: 'Exercise',
@@ -123,7 +125,6 @@ function NewHabit (props) {
     ]
 
     // State Variables
-    const [habit, setHabit] = useState(null)
     const [sectionHeader, setSectionHeader] = useState({
         title: 'Create a New Habit',
         subtext: 'To help accelerate the process of creating a new habit we gave you some starting points. You will make goals and define your habit soon, this is just a starting point to get you going!'
@@ -139,7 +140,7 @@ function NewHabit (props) {
 
     // Lifecycle Methods
     useEffect(() => {
-        document.title = 'Create Habit - Habit Tracker'
+        document.title = 'New Habit | Habit Tracker'
     }, [])
 
     // Event Handlers
@@ -153,7 +154,7 @@ function NewHabit (props) {
             })
         } else {
             setShowDescriptionSelection(true)
-            setHabit(newHabit)
+            updateHabit(newHabit)
             setSectionHeader({
                 title: newHabit.name,
                 subtext: `Perfect, You've choosen ${newHabit.name.toLowerCase()}! Define the habit a little more. What will you do?`
@@ -161,7 +162,7 @@ function NewHabit (props) {
         }
     }
     const setHabitName = (name) => {
-        setHabit({ ...habit, name })
+        updateHabit({ ...habit, name })
         setShowNameSelection(false)
         setShowDescriptionSelection(true)
         setSectionHeader({
@@ -170,7 +171,7 @@ function NewHabit (props) {
         })
     }
     const setHabitDescription = (description) => {
-        setHabit({ ...habit, description })
+        updateHabit({ ...habit, description })
         setShowDescriptionSelection(false)
         setShowWhySelection(true)
         setSectionHeader({
@@ -179,7 +180,7 @@ function NewHabit (props) {
         })
     }
     const setHabitWhy = (why) => {
-        setHabit({ ...habit, why })
+        updateHabit({ ...habit, why })
         setShowWhySelection(false)
         setShowGoalSelection(true)
         setSectionHeader({
@@ -188,7 +189,7 @@ function NewHabit (props) {
         })
     }
     const setHabitGoal = (goal) => {
-        setHabit({ ...habit, goal })
+        updateHabit({ ...habit, goal })
         setShowGoalSelection(false)
         setShowFrequencySelection(true)
         setSectionHeader({
@@ -198,7 +199,7 @@ function NewHabit (props) {
     }
     const setHabitFrequency = (frequency) => {
         frequency = parseInt(frequency)
-        setHabit({ ...habit, frequency })
+        updateHabit({ ...habit, frequency })
         setShowFrequencySelection(false)
         setShowEmojiSelection(true)
         setSectionHeader({
@@ -207,7 +208,7 @@ function NewHabit (props) {
         })
     }
     const setHabitEmoji = (emoji) => {
-        setHabit({ ...habit, emoji })
+        updateHabit({ ...habit, emoji })
         setShowEmojiSelection(false)
         setShowHabitSummary(true)
         setSectionHeader({

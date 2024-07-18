@@ -5,7 +5,7 @@ const NewHabitContext = createContext();
 export const NewHabitProvider = ({ children }) => {
 
     const [habit, setHabit] = useState({
-        name: '',
+        name: 'New Habit',
         description: '',
         why: '',
         goal: '',
@@ -22,4 +22,12 @@ export const NewHabitProvider = ({ children }) => {
         {children}
         </NewHabitContext.Provider>
     );
+};
+
+export const useNewHabit = () => {
+    const context = useContext(NewHabitContext);
+    if (context === undefined) {
+        throw new Error('useNewHabit must be used within a NewHabitProvider');
+    }
+    return context;
 };
