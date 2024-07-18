@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 import SectionHeader from './SectionHeader'
+import { useNewHabit } from '../../../../contexts/NewHabitContext'
 
-function DescriptionSelection ({ descriptions, onItemClick }) {
+function DescriptionSelection () {
+    const { habit, descriptions, updateHabit, updateShowDescriptionSelection, updateShowWhySelection } = useNewHabit()
     const [descriptionInput, setDescriptionInput] = useState('')
-    const { habit, updateHabit, updateDescriptions, setShowHabitName, setShowHabitDescription } = useNewHabit()
 
     function handleInputChange (e) {
         setDescriptionInput(e.target.value)
+    }
+
+    function handleDescriptionSelection (description) {
+        if (description) updateHabit({ description: description })
+        else updateHabit({description: descriptionInput})
+        updateShowWhySelection(true)
+        updateShowDescriptionSelection(false)
     }
 
     return (
@@ -18,7 +25,7 @@ function DescriptionSelection ({ descriptions, onItemClick }) {
                 <ul>
                     {descriptions.map((description, index) => {
                         return (
-                            <li key={index} className='m-2 p-2 bg-colorButtonBg text-colorButtonText rounded-md cursor-pointer hover:text-colorLinkHover' onClick={() => onItemClick(description)}>
+                            <li key={index} className='m-2 p-2 bg-colorButtonBg text-colorButtonText rounded-md cursor-pointer hover:text-colorLinkHover' onClick={() => handleDescriptionSelection(description)}>
                                 I will {description}
                             </li>
                         )
@@ -32,17 +39,12 @@ function DescriptionSelection ({ descriptions, onItemClick }) {
                         <label htmlFor='descriptionInput' className='min-w-fit mx-2'>I will </label>
                         <input className='rounded w-full px-1' id='descriptionInput' type='text' max='100' onChange={handleInputChange}></input>
                     </div>
-                    <button type='button' className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => onItemClick(descriptionInput)}>Next</button>
+                    <button type='button' className='bg-colorButtonBgAlt text-colorButtonTextAlt hover:text-colorLinkHover rounded w-fit p-1 my-2' onClick={() => handleDescriptionSelection(descriptionInput)}>Next</button>
                 </div>
                 }
             </div>
         </section>
     )
-}
-
-DescriptionSelection.propTypes = {
-    descriptions: PropTypes.arrayOf(PropTypes.string),
-    onItemClick: PropTypes.func.isRequired
 }
 
 export default DescriptionSelection
