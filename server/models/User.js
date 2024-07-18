@@ -62,4 +62,9 @@ userSchema.pre('findOneAndUpdate', function (next) {
     }
 })
 
+userSchema.pre('remove', async function () {
+    const Habit = model('Habit')
+    await Habit.deleteMany({ user: this._id })
+})
+
 module.exports = model('User', userSchema)
