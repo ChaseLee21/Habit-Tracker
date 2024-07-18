@@ -54,36 +54,36 @@ router.post('/', async (req, res) => {
 })
 
 // PUT updated user by id
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
     const { id } = req.params
     const userData = req.body
-    User.findOneAndUpdate({ _id: id }, { $set: userData })
-        .then((user) => {
-            if (!user) {
-                res.status(404).json({ message: 'No user found with this id' })
-                return
-            }
-            res.status(200).json({ message: 'User updated successfully', user })
-        })
-        .catch((err) => {
-            res.status(400).json(err.message)
-        })
+    try {
+        let user = await User.findOneAndUpdate({ _id: id }, { $set: userData }, { new: true })
+        if (!user) {
+            res.status(404).json({ message: 'No user found with this id' })
+            return
+        }
+        res.status(200).json({ message: 'User updated successfully', user })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error)
+    }
 })
 
 // DELETE user by id
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
     const { id } = req.params
-    User.findOneAndDelete({ _id: id })
-        .then((user) => {
-            if (!user) {
-                res.status(404).json({ message: 'No user found with this id' })
-                return
-            }
-            res.status(200).json({ message: 'User deleted successfully' })
-        })
-        .catch((err) => {
-            res.status(400).json(err)
-        })
+    try {
+        let user = await User.findOneAndDelete({ _id: id })
+        if (!user) {
+            res.status(404).json({ message: 'No user found with this id' })
+            return
+        }
+        res.status(200).json({ message: 'User deleted successfully' })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error)
+    }
 })
 
 module.exports = router
