@@ -3,17 +3,17 @@ import PropTypes from 'prop-types'
 import SectionHeader from './SectionHeader'
 
 function NameSelection ({ onItemClick }) {
-    const { updateHabit, updateDescriptions, setShowHabitName, setShowHabitDescription } = useNewHabit()
+    const { updateHabit, updateDescriptions, updateShowNameSelection, updateShowDescriptionSelection } = useNewHabit()
+    const [name, setName] = useState('')
 
     const handleInputChange = (e) => {
         setName(e.target.value.toLowerCase())
     }
 
-    function handleNameSelection (name) {
+    function handleNameSelection () {
         updateHabit(name)
-        setShowHabitDescription(true)
-        updateDescriptions(undefined)
-        setShowHabitName(false)
+        updateShowDescriptionSelection(true)
+        updateShowNameSelection(false)
     }
 
     return (
@@ -22,7 +22,7 @@ function NameSelection ({ onItemClick }) {
             <div className='flex flex-wrap'>
                 <input className='rounded w-full px-1' id='whyInput' type='text' max='100' onInput={handleInputChange}></input>
             </div>
-            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt rounded w-fit p-1 my-2' onClick={() => handleNameSelection(name)}>Next</button>
+            <button className='bg-colorButtonBgAlt text-colorButtonTextAlt rounded w-fit p-1 my-2' onClick={() => handleNameSelection}>Next</button>
         </div>
     )
 }
