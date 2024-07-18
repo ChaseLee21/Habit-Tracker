@@ -1,10 +1,17 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import SectionHeader from './SectionHeader'
 import { useNewHabit } from '../../../../contexts/NewHabitContext'
 
 function FrequencySelection () {
     const [frequency, setFrequency] = useState(1)
-    const { updateHabit, updateShowFrequencySelection, updateShowEmojiSelection, updateShowGoalSelection } = useNewHabit()
+    const { habit, updateHabit, updateShowFrequencySelection, updateShowEmojiSelection, updateShowGoalSelection } = useNewHabit()
+
+    useEffect(() => {
+        if (habit.frequency) {
+            setFrequency(habit.frequency)
+            document.getElementById('frequencySelect').value = habit.frequency
+        }
+    }, [])
 
     const handleInputChange = (e) => {
         setFrequency(e.target.value)
@@ -24,7 +31,7 @@ function FrequencySelection () {
     return (
         <div className='p-2 bg-colorBgAlt rounded-md cursor-pointer'>
             <SectionHeader title='How Often Will You Do This Habit?' subtext='Choose how many times a week you will do this habit.' />
-            <select className='rounded w-full px-1' id='frequency' onChange={handleInputChange}>
+            <select className='rounded w-full px-1' id='frequencySelect' onChange={handleInputChange}>
                 <option value={1}>1</option>
                 <option value={2}>2</option>
                 <option value={3}>3</option>

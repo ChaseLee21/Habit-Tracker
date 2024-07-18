@@ -4,7 +4,7 @@ import SectionHeader from './SectionHeader'
 import { useNewHabit } from '../../../../contexts/NewHabitContext'
 
 function EmojiSelection () {
-    const { updateHabit, updateShowEmojiSelection, updateShowHabitSummary, updateShowFrequencySelection } = useNewHabit()
+    const { habit, updateHabit, updateShowEmojiSelection, updateShowHabitSummary, updateShowFrequencySelection } = useNewHabit()
     const [emoji, setEmoji] = useState('')
 
     useEffect(() => {
@@ -13,6 +13,13 @@ function EmojiSelection () {
         emojiPicker.addEventListener('emoji-click', (event) => {
             setEmoji(event.detail.unicode)
         })
+    }, [])
+
+    useEffect(() => {
+        if (habit.emoji) {
+            setEmoji(habit.emoji)
+            document.getElementById('emojiInput').value = habit.emoji
+        }
     }, [])
 
     function next () {

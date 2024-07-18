@@ -1,10 +1,17 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import SectionHeader from './SectionHeader'
 import { useNewHabit } from '../../../../contexts/NewHabitContext'
 
 function NameSelection () {
-    const { updateHabit, updateDescriptions, updateShowNameSelection, updateShowDescriptionSelection, updateShowHabitSelection } = useNewHabit()
+    const { habit, updateHabit, updateDescriptions, updateShowNameSelection, updateShowDescriptionSelection, updateShowHabitSelection } = useNewHabit()
     const [name, setName] = useState('')
+
+    useEffect(() => {
+        if (habit.name && habit.name !== 'Create a habit of your own') {
+            setName(habit.name)
+            document.getElementById('whyInput').value = habit.name
+        }
+    }, [])
 
     const handleInputChange = (e) => {
         setName(e.target.value.toLowerCase())

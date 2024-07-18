@@ -1,10 +1,17 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import SectionHeader from './SectionHeader'
 import { useNewHabit } from '../../../../contexts/NewHabitContext'
 
 function GoalSelection () {
-    const { updateHabit, updateShowGoalSelection, updateShowFrequencySelection, updateShowWhySelection } = useNewHabit()
+    const { habit, updateHabit, updateShowGoalSelection, updateShowFrequencySelection, updateShowWhySelection } = useNewHabit()
     const [goal, setGoal] = useState('')
+
+    useEffect(() => {
+        if (habit.goal) {
+            setGoal(habit.goal)
+            document.getElementById('goalInput').value = habit.goal
+        }
+    }, [])
 
     const handleInputChange = (e) => {
         setGoal(e.target.value.toLowerCase())

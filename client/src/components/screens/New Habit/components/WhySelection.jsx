@@ -1,10 +1,17 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import SectionHeader from './SectionHeader'
 import { useNewHabit } from '../../../../contexts/NewHabitContext'
 
 function WhySelection () {
     const { habit, updateHabit, updateShowGoalSelection, updateShowWhySelection, updateShowDescriptionSelection } = useNewHabit()
     const [why, setWhy] = useState('')
+
+    useEffect(() => {
+        if (habit.why) {
+            setWhy(habit.why)
+            document.getElementById('whyInput').value = habit.why
+        }
+    }, [])
 
     const handleInputChange = (e) => {
         setWhy(e.target.value)

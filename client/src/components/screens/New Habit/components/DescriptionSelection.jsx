@@ -1,10 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SectionHeader from './SectionHeader'
 import { useNewHabit } from '../../../../contexts/NewHabitContext'
 
 function DescriptionSelection () {
     const { habit, descriptions, updateHabit, updateShowDescriptionSelection, updateShowWhySelection, updateShowHabitSelection, updateShowNameSelection } = useNewHabit()
     const [descriptionInput, setDescriptionInput] = useState('')
+
+    useEffect(() => {
+        if (habit.description) {
+            setDescriptionInput(habit.description)
+            document.getElementById('descriptionInput').value = habit.description
+        }
+    }, [])
 
     function handleInputChange (e) {
         setDescriptionInput(e.target.value)
