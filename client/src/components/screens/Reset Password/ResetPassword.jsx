@@ -7,7 +7,8 @@ function ResetPassword() {
     // Variables
     const [error, setError] = useState('')
 
-    async function handleResetPasswordSubmit () {
+    async function handleResetPasswordSubmit (e) {
+        e.preventDefault()
         const email = document.getElementById('email').value
         const response = await resetPassword(email)
         console.log(response)
