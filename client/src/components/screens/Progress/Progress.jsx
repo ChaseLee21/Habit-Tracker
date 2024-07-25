@@ -54,7 +54,7 @@ function Progress (props) {
             options: {
                 width: canvasWidth,
                 height: canvasHeight,
-                background: '#F5F5F5',
+                background: 'transparent',
                 wireframes: false
             }
         })
@@ -106,8 +106,8 @@ function Progress (props) {
 
     return (
         <div id='canvasContainer' className='w-full h-full'>
-            <p className='leading-loose text-center tracking-widest fixed text-3xl p-2 opacity-50 h-full'>"Every action you take is a vote for the type of person you wish to become" -James Clear</p>
-            <main id='canvas' className='w-full h-full'>
+            <p className='leading-loose text-center tracking-widest text-3xl p-2 opacity-50 h-auto absolute -z-10'>"Every action you take is a vote for the type of person you wish to become" -James Clear</p>
+            <main id='canvas' className='w-full h-full bg-transparent'>
             
             </main>
         </div>

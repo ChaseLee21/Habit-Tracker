@@ -10,7 +10,7 @@ function Header () {
 
     return (
         <>
-            <header className="bg-colorPrimary text-colorSecondary h-full">
+            <header className="bg-colorPrimary text-colorSecondary h-full ">
                 {/* Menu Button and Title */}
                 <div className="flex justify-between p-2 h-full">
                     <button onClick={() => handleNavBarClick()}>
@@ -24,7 +24,7 @@ function Header () {
                 </div>
                 {/* Nav Dropdown */}
                 {showMenu && (
-                    <div className="bg-colorBg text-colorLinktext-lg absolute w-full h-full">
+                    <div className="bg-colorBg text-colorLinktext-lg absolute w-full h-full z-50">
                         <nav>
                             <ul>
                                 {document.cookie.includes('habitTrackerToken') &&
