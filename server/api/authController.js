@@ -27,4 +27,14 @@ router.use('/checkToken', authMiddleware, async (req, res) => {
     res.json({ user: req.user })
 })
 
+router.use('/reset-password', async (req, res) => {
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) {
+        res.status(401).json({ message: 'No user with that email!' })
+        return 
+    }
+    // TODO: send email with reset link
+    res.json({ message: 'Email sent!' })
+})
+
 module.exports = router
