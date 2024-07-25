@@ -87,9 +87,10 @@ async function login (userData) {
 async function resetPassword (email) {
     try {
         const request = await axios.post('/api/reset-password', email)
-        return request.data
+        return request
     } catch (err) {
         console.log(err)
+        return err.response
     }
 }
 
