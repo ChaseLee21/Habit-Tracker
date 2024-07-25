@@ -26,8 +26,7 @@ router.get('/:id', async (req, res) => {
         if (!user) return res.status(404).json({ message: 'No user found with this id' })
         // Check if any new instances of Week document need to be created for the user
         // Updates streak for each habit if necessary
-        await endOfWeek(user)
-        await user.save()
+        user = await endOfWeek(user)
         res.json(user)
     } catch (err) {
         console.log(err)

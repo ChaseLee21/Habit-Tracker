@@ -11,34 +11,36 @@ async function endOfWeek (user) {
     }
 
     function updateStreak (habit) {
-        const lastWeek = habit.weeks[habit.weeks.length - 1]
+        const thisWeek = habit.weeks[habit.weeks.length - 1]
         let daysCompleted = 0
-        for (const day of lastWeek.days) {
+        for (const day of thisWeek.days) {
             if (day.completed) {
                 daysCompleted++
             }
         }
-        if (daysCompleted < lastWeek.frequency) {
-            habit.streak = 0
+        if (daysCompleted < thisWeek.frequency) {
+            return 0
         }
+        return habit.streak
     }
 
     async function createNewWeek (habit) {
         const Week = mongoose.model('Week')
-        const newWeek = await Week.create({ habit: habit._id, user: user._id })
-        habit.weeks.push(newWeek)
+        return await Week.create({ habit: habit._id, user: user._id })
     }
 
     for (const habit of user.habits) {
         if (EndDatePassed(habit)) {
             // Check if frequency was met and update streak
-            await updateStreak(habit)
+            habit.streak = await updateStreak(habit)
             // Create new week document
-            await createNewWeek(habit, user.timezone)
+            habit.weeks.push(await createNewWeek(habit, user.timezone))
             // Save habit
             await habit.save()
         }
     }
+    await user.save()
+    return user
 }
 
 function setEndDate (timezone) {
