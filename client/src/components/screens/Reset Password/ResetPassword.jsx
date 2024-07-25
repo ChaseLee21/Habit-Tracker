@@ -1,13 +1,16 @@
 import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import ErrorAlert from "../../common/ErrorAlert";
+import { resetPassword } from "../../../util/axios";
 
 function ResetPassword() {
     // Variables
     const [error, setError] = useState('')
 
     async function handleResetPasswordSubmit () {
-        throw new Error('Not implemented')
+        const email = document.getElementById('email').value
+        const response = await resetPassword(email)
+        console.log(response)
     }
 
     return (
