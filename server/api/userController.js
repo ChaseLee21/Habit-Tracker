@@ -10,7 +10,7 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params
     try {
         // Find user by id and populate habits, weeks, and days
-        const user = await User.findOne({ _id: id }).populate({
+        let user = await User.findOne({ _id: id }).populate({
             path: 'habits',
             model: 'Habit',
             populate: {
