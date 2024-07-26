@@ -1,5 +1,5 @@
-import { React, useState } from "react";
-import { Link } from "react-router-dom";
+import { React, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import ErrorAlert from "../../common/ErrorAlert";
 import SuccessAlert from "../../common/SuccessAlert";
 import { resetPassword } from "../../../util/axios";
@@ -8,6 +8,7 @@ function ResetPassword() {
     // Variables
     const [error, setError] = useState('')
     const [alert, setAlert] = useState('')
+    const { token } = useParams()
 
     async function handleResetPasswordSubmit (e) {
         e.preventDefault()
@@ -23,6 +24,12 @@ function ResetPassword() {
             return
         }
     }
+
+    useEffect(() => {
+        if (token) {
+            console.log(token);
+        }
+    }, [token])
 
     return (
         <section className='bg-colorBg text-colorText rounded p-2 m-1 h-fit'>
