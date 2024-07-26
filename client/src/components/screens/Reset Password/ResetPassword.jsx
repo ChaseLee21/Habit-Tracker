@@ -30,15 +30,28 @@ function ResetPassword() {
         e.preventDefault()
         const newPassword = document.getElementById('newPassword').value
         const confirmPassword = document.getElementById('confirmPassword').value
-        if (newPassword !== confirmPassword) {
-            setError('Passwords do not match')
-            return
+        try {
+            if (newPassword !== confirmPassword) {
+                setError('Passwords do not match')
+                return
+            }
+            if (!validatePassword(newPassword, confirmPassword)) {
+                setError('Password must be at least 8 characters long and contain at least one number, one uppercase letter, and one lowercase letter')
+                return
+            }
+            const response = await resetPassword(newPassword, token)
+            console.log(response);
+            if (response.status !== 200) {
+                setError(response.data.message)
+                return
+            } else {
+                setAlert('Password reset!')
+                return
+            }
+        } catch (error) {
+            console.log(error);
+            setError('Error resetting password')
         }
-        if (!validatePassword(newPassword, confirmPassword)) {
-            setError('Password must be at least 8 characters long and contain at least one number, one uppercase letter, and one lowercase letter')
-            return
-        }
-        const response = await resetPassword(newPassword, token)
     }
 
     useEffect(() => {
