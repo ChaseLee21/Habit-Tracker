@@ -2,6 +2,7 @@ const { User } = require('../models')
 const { authMiddleware, signToken } = require('../utils/auth')
 const router = require('express').Router()
 const nodemailer = require('nodemailer')
+require('dotenv').config()
 
 router.use('/login', (req, res) => {
     User.findOne({ email: req.body.email }).then(user => {
@@ -66,6 +67,34 @@ router.post('/reset-password', async (req, res) => {
         }
         res.status(200).json({ message: 'Email sent!' });
     });
+})
+
+router.post('/reset-password/:token', async (req, res) => {
+    const { token } = req.params
+    const { newPassword } = req.body.newPassword
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        const user = await User.findOne({ 
+            _id: decoded.id,
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() } 
+        })
+
+        if (!user) {
+            return res.status(400).json({ message: 'Password reset token is invalid or has expired' });
+        }
+
+        user.password = newPassword
+        user.resetPasswordToken = undefined
+        user.resetPasswordExpires = undefined
+        await user.save()
+
+        res.status(200).json({ message: 'Password updated successfully' });
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ message: 'Invalid token' });
+    }
 })
 
 module.exports = router
