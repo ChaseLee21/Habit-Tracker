@@ -48,7 +48,6 @@ async function postHabit (id, habitData) {
 
 async function putHabit (habit) {
     try {
-        console.log(habit)
         const request = await axios.put('/api/habits/' + habit._id, habit)
         return request.data
     } catch (err) {
@@ -77,14 +76,13 @@ async function checkToken () {
 async function login (userData) {
     try {
         const request = await axios.post('/api/login', userData, { withCredentials: true })
-        console.log(request)
         return request
     } catch (err) {
         console.log(err)
         return err.response
     }
 }
-async function resetPassword (email) {
+async function sendResetPasswordEmail (email) {
     try {
         const request = await axios.post('/api/reset-password', email)
         return request
@@ -93,5 +91,14 @@ async function resetPassword (email) {
         return err.response
     }
 }
+async function resetPassword (newPassword, token) {
+    try {
+        const request = await axios.post('/api/reset-password/' + token, { newPassword })
+        return request
+    } catch (err) {
+        console.log(err)
+        return err.response
+    }
+}
 
-export { putDay, getUser, putUser, postUser, checkToken, login, resetPassword, postHabit, putHabit, deleteHabit }
+export { putDay, getUser, putUser, postUser, checkToken, login, resetPassword, sendResetPasswordEmail, postHabit, putHabit, deleteHabit }
