@@ -17,6 +17,9 @@ const userSchema = new Schema({
 // Method to generate a reset token
 userSchema.methods.generateResetToken = function () {
     const resetToken = jwt.sign({id: this._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+    this.resetPasswordToken = resetToken
+    this.resetPasswordExpires = Date.now() + 3600000 // 1 hour
+    return resetToken
 }
 
 // Method to check the password
