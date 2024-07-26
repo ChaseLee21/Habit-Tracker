@@ -9,8 +9,15 @@ const userSchema = new Schema({
     habits: [{ type: Schema.Types.ObjectId, ref: 'Habit' }],
     todos: [{ type: String, required: false }],
     timezone: { type: String, required: true, default: 'America/Los_Angeles' },
-    emojis: { type: String, required: false, default: '☀️' }
+    emojis: { type: String, required: false, default: '☀️' },
+    resetPasswordToken: { type: String, required: false },
+    resetPasswordExpires: { type: Date, required: false }
 })
+
+// Method to generate a reset token
+userSchema.methods.generateResetToken = function () {
+    const resetToken = jwt.sign({id: this._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+}
 
 // Method to check the password
 userSchema.methods.checkPassword = function (password) {
