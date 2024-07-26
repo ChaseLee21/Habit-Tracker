@@ -39,13 +39,14 @@ function ResetPassword() {
                 setError('Password must be at least 8 characters long and contain at least one number, one uppercase letter, and one lowercase letter')
                 return
             }
-            const response = await resetPassword(newPassword, token)
+            const response = await resetPassword({newPassword}, token)
             console.log(response);
             if (response.status !== 200) {
                 setError(response.data.message)
                 return
             } else {
                 setAlert('Password reset!')
+                window.location.href = '/login'
                 return
             }
         } catch (error) {
