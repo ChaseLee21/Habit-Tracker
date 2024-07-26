@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose')
 const crypto = require('crypto')
+const jwt = require('jsonwebtoken')
 
 const userSchema = new Schema({
     name: { type: String, required: true },

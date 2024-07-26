@@ -1,6 +1,7 @@
 const { User } = require('../models')
 const { authMiddleware, signToken } = require('../utils/auth')
 const router = require('express').Router()
+const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 require('dotenv').config()
 
