@@ -55,17 +55,18 @@ function Login () {
     }
 
     return (
-        <section className='bg-colorBg text-colorText rounded p-2 m-2 h-fit'>
-            <h2 className="text-2xl">Login</h2>
+        <section className='bg-colorBg text-colorText rounded p-2 m-1 h-fit'>
+            <h2 className="text-2xl m-1">Login</h2>
             {error && <ErrorAlert message={error} handleCloseAlert={() => setError(null)}/>}
-            <form className="flex flex-col m-2 p-2 bg-colorBgAlt rounded shadow-md shadow-colorShadow text-lg" onSubmit={handleLoginSubmit}>
-                <label htmlFor="email" className="p-1 mx-2">Email:</label>
-                <input type="email" id="email" name="email" autoComplete='email' className="p-1 m-2 rounded-md" />
-                <label htmlFor="password" className="p-1 mx-2">Password:</label>
-                <input type="password" id="password" name="password" autoComplete='current-password' className="p-1 m-2 rounded-md" />
-                <button type="submit" className="bg-colorButtonBgAlt text-colorButtonTextAlt w-fit p-2 rounded-md m-2">Login</button>
-                <p>Do not have an account? <Link to={'/register'} className='text-colorLink hover:text-colorLinkHover underline'>Click here to register</Link></p>
+            <form className="flex flex-col m-1 p-1 bg-colorBgAlt rounded shadow-md shadow-colorShadow text-lg" onSubmit={handleLoginSubmit}>
+                <label htmlFor="email" className="p-1 mx-1">Email:</label>
+                <input type="email" id="email" name="email" autoComplete='email' className="p-1 m-1 rounded-md" />
+                <label htmlFor="password" className="p-1 mx-1">Password:</label>
+                <input type="password" id="password" name="password" autoComplete='current-password' className="p-1 m-1 rounded-md" />
+                <button type="submit" className="bg-colorButtonBgAlt text-colorButtonTextAlt w-fit p-1 rounded-md m-1">Login</button>
             </form>
+            <p className='p-2 m-1'>Do not have an account? <Link to={'/register'} className='text-colorLink hover:text-colorLinkHover underline'>Click here to register</Link></p>
+            <p className='p-2 m-1'>Forgot your password? <Link to={'/reset-password'} className='text-colorLink hover:text-colorLinkHover underline'>Reset Password</Link></p>
         </section>
     )
 }

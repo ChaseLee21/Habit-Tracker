@@ -10,7 +10,7 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params
     try {
         // Find user by id and populate habits, weeks, and days
-        const user = await User.findOne({ _id: id }).populate({
+        let user = await User.findOne({ _id: id }).populate({
             path: 'habits',
             model: 'Habit',
             populate: {
@@ -27,6 +27,10 @@ router.get('/:id', async (req, res) => {
         // Check if any new instances of Week document need to be created for the user
         // Updates streak for each habit if necessary
         user = await endOfWeek(user)
+        await user.save()
+        user = user.toObject()
+        delete user.password
+        delete user.salt
         res.json(user)
     } catch (err) {
         console.log(err)

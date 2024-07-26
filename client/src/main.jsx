@@ -8,6 +8,7 @@ import Register from './components/screens/Register/Register.jsx'
 import Login from './components/screens/Login/Login.jsx'
 import Logout from './components/screens/Logout/Logout.jsx'
 import { ProtectedHome, ProtectedNewHabit, ProtectedProfile, ProtectedProgress } from './auth/auth.js'
+import ResetPassword from './components/screens/Reset Password/ResetPassword.jsx'
 
 const router = createBrowserRouter([
     {
@@ -42,6 +43,14 @@ const router = createBrowserRouter([
             {
                 path: '/progress',
                 element: <ProtectedProgress />
+            },
+            {
+                path: '/reset-password',
+                element: <ResetPassword />
+            },
+            {
+                path: '/reset-password/:token',
+                element: <ResetPassword />
             }
         ]
     }

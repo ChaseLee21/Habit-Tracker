@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose')
 const crypto = require('crypto')
+const jwt = require('jsonwebtoken')
 
 const userSchema = new Schema({
     name: { type: String, required: true },
@@ -9,8 +10,18 @@ const userSchema = new Schema({
     habits: [{ type: Schema.Types.ObjectId, ref: 'Habit' }],
     todos: [{ type: String, required: false }],
     timezone: { type: String, required: true, default: 'America/Los_Angeles' },
-    emojis: { type: String, required: false, default: '☀️' }
+    emojis: { type: String, required: false, default: '☀️' },
+    resetPasswordToken: { type: String, required: false },
+    resetPasswordExpires: { type: Date, required: false }
 })
+
+// Method to generate a reset token
+userSchema.methods.generateResetToken = function () {
+    const resetToken = jwt.sign({id: this._id }, process.env.JWT_SECRET, { expiresIn: '1h' })
+    this.resetPasswordToken = resetToken
+    this.resetPasswordExpires = Date.now() + 3600000 // 1 hour
+    return resetToken
+}
 
 // Method to check the password
 userSchema.methods.checkPassword = function (password) {
