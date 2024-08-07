@@ -3,7 +3,7 @@ describe('User Controller', () => {
 
     const userData = {
         email: 'testemail123@gmail.com',
-        username: 'testuser',
+        name: 'testuser',
         password: 'Password321!'
     }
 
