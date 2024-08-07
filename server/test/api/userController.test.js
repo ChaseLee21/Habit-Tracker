@@ -31,13 +31,17 @@ describe('User Controller', () => {
             });
     });
 
-    it('GET /api/users/:id should return a user with populated habits, weeks, and days', function (done) {
+    it('GET /api/users/:id should invoke endOfWeek method and return the updated user', function (done) {
         request(server)
             .get(`/api/users/${testUser._id}`)
             .expect(200)
             .end(function (err, res) {
                 if (err) return done(err);
-                expect(res.body).to.be.an('object');
+                let user = res.body;
+                expect(user).to.be.an('object');
+                expect(user.email).to.equal(userData.email);
+                expect(user.name).to.equal(userData.name);
+                expect(user.password).to.be.undefined;
                 done();
             });
     });
@@ -51,17 +55,18 @@ describe('User Controller', () => {
             .expect(200)
             .end(function (err, res) {
                 if (err) return done(err);
-                expect(res.body).to.be.an('object');
+                let user = res.body.user;
+                expect(user).to.be.an('object');
+                expect(user.email).to.equal('testuser321@gmail.com');
+                expect(user.name).to.equal(userData.name);
+                expect(user.password).to.be.undefined;
                 done();
             });
     });
 
     it('DELETE /api/users/:id should delete a user and recieve a 200 response', function (done) {
         request(server)
-            .put(`/api/users/${testUser._id}`)
-            .send({
-                email: 'testuser321@gmail.com'
-            })
+            .delete(`/api/users/${testUser._id}`)
             .expect(200)
             .end(function (err, res) {
                 if (err) return done(err);
