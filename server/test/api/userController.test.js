@@ -1,5 +1,11 @@
 describe('User Controller', () => {
-    let chai, expect, request, server;
+    let chai, expect, request, server, testUser;
+
+    const userData = {
+        email: 'testemail123@gmail.com',
+        username: 'testuser',
+        password: 'Password321!'
+    }
 
     before(async () => {
         chai = await import('chai');
@@ -12,9 +18,50 @@ describe('User Controller', () => {
         if (!server) throw new Error('Server not initialized');
     });
 
-    it('GET /api/user/:id should return a user with populated habits, weeks, and days', function (done) {
+    it('POST /api/users should create a new user and return it', function (done) {
         request(server)
-            .get('/api/users/6679dbb83f2d019488af9a21')
+            .post('/api/users')
+            .send(userData)
+            .expect(201)
+            .end(function (err, res) {
+                if (err) return done(err);
+                testUser = res.body;
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('GET /api/users/:id should return a user with populated habits, weeks, and days', function (done) {
+        request(server)
+            .get(`/api/users/${testUser._id}`)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('PUT /api/users/:id should update a user and return it', function (done) {
+        request(server)
+            .put(`/api/users/${testUser._id}`)
+            .send({
+                email: 'testuser321@gmail.com'
+            })
+            .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('DELETE /api/users/:id should delete a user and recieve a 200 response', function (done) {
+        request(server)
+            .put(`/api/users/${testUser._id}`)
+            .send({
+                email: 'testuser321@gmail.com'
+            })
             .expect(200)
             .end(function (err, res) {
                 if (err) return done(err);
