@@ -31,7 +31,7 @@ describe('User Controller', () => {
             });
     });
 
-    it('GET /api/users/:id should invoke endOfWeek method and return the updated user', function (done) {
+    it('GET /api/users/:id should return back the user', function (done) {
         request(server)
             .get(`/api/users/${testUser._id}`)
             .expect(200)
