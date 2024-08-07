@@ -66,6 +66,9 @@ router.put('/:id', async (req, res) => {
             res.status(404).json({ message: 'No user found with this id' })
             return
         }
+        user = user.toObject()
+        delete user.password
+        delete user.salt
         res.status(200).json({ message: 'User updated successfully', user })
     } catch (error) {
         console.log(error)
