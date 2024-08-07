@@ -35,12 +35,17 @@ if (process.env.NODE_ENV === 'production') {
 db.on('error', console.error.bind(console, 'connection error:'));
 
 let server;
-db.once('open', () => {
-    console.log('Connected to MongoDB');
+const serverReady = new Promise((resolve, reject) => {
+    db.once('open', () => {
+        console.log('Connected to MongoDB');
+    
+        server = app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+            resolve(server);
+        });
 
-    server = app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
+        server.on('error', reject);
     });
-});
+})
 
-module.exports = { app, server }; // Export both app and server
+module.exports = { app, serverReady }; // Export both app and server
