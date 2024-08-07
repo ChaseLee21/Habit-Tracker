@@ -1,21 +1,30 @@
-import { useEffect, React } from 'react'
+import { useEffect, React, useState } from 'react'
 import { useUser } from '../../../../contexts/UserContext'
 import { getUser } from '../../../../util/axios'
 import PropTypes from 'prop-types'
-import { findDay, findWeek, daysCompletedInWeek } from '../../../../util/helpers'
+import { findDay, findWeek, daysCompletedInWeek, validateHabit } from '../../../../util/helpers'
 
 function Habits (props) {
     const timezone = props.user.user.timezone || 'America/Los_Angeles'
     const { userData, updateUserState, updateHabitCompletedState, updateHabitToUpdate } = useUser()
+    const [loaded, setLoaded] = useState(false)
     
     // Fetch user data on component mount
     useEffect(() => {
         async function fetchUser () {
             try {
                 const userId = props.user.user.id || ''
-                const response = await getUser(userId)
-                if (response) {
+                let response = await getUser(userId)
+                if (!response || !response.habits) {
+                    return
+                } else {
+                    await response.habits.forEach(async (habit) => {
+                        if (!validateHabit(habit, timezone)) {
+                            response = await getUser(userId)
+                        }
+                    })
                     updateUserState(response)
+                    setLoaded(true)
                 }
             } catch (err) {
                 console.log(err)
@@ -36,12 +45,14 @@ function Habits (props) {
         }
     }
 
+
+
     return (
         <div>
             <section className="bg-colorBg text-colorText rounded p-2 w-fit">
                 <h2 className='text-2xl'>My Habits</h2>
                 <ul className="list-inside">
-                    {userData.habits && userData.habits.map(habit => (
+                    {loaded && userData.habits.map(habit => (
                         <li key={habit._id} className="my-2">
                             {/* habit completed form and habit title */}
                             <div className="grid grid-flow-col grid-cols-6">
@@ -50,10 +61,10 @@ function Habits (props) {
                                     <label htmlFor='habitCompleteInput' className='mx-1'>
                                         {daysCompletedInWeek(findWeek(habit))} / {habit.frequency} 
                                     </label>
-                                    <input id='habitCompleteInput' type="checkbox" className="large-checkbox"
+                                    {findDay(findWeek(habit), timezone) && <input id='habitCompleteInput' type="checkbox" className="large-checkbox"
                                     onChange={() => handleDayCompletedSubmit(habit)} 
                                     defaultChecked={findDay(findWeek(habit), timezone).completed} 
-                                    />
+                                    />}
                                 </form>
                             </div>
                             <p className="text-base">I will {habit.description}</p>
