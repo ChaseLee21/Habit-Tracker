@@ -14,7 +14,7 @@ describe('User Controller', () => {
 
     it('GET /api/user/:id should return a user with populated habits, weeks, and days', function (done) {
         request(server)
-            .get('/api/user/6679dbb83f2d019488af9a21')
+            .get('/api/users/6679dbb83f2d019488af9a21')
             .expect(200)
             .end(function (err, res) {
                 if (err) return done(err);
