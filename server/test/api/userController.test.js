@@ -92,8 +92,6 @@ describe('User Controller', () => {
                 if (err) return done(err);
                 try {
                     let user = res.body;
-                    console.log(user.habits[0].weeks[0]);
-                    console.log(user.habits[0].weeks[1]);
                     expect(user).to.be.an('object');
                     expect(user.habits[0].weeks.length).to.equal(2);
                     expect(user.habits[0].weeks[0].endDate).to.equal('2024-08-04');
