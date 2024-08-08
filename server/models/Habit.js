@@ -47,7 +47,7 @@ habitSchema.methods.updateStreak = async function () {
     }
 }
 
-habit.schema.methods.currentWeek = async function () {
+habitSchema.methods.currentWeek = async function () {
     const Week = mongoose.model('Week')
     return await Week.findOne({ habit: this.weeks[habit.weeks.length - 1]._id })
 }
