@@ -23,6 +23,12 @@ const daysCompletedInWeek = (week) => {
     return daysCompleted
 }
 
+function validateHabit (habit, timezone) {
+    if (!findDay(findWeek(habit), timezone)) {
+        return false
+    }
+}
+
 function validateEmail (email) {
     const re = /\S+@\S+\.\S+/
     return re.test(email)
@@ -78,4 +84,4 @@ function validateTimezone (timezone) {
     return timezones.includes(timezone)
 }
 
-export { splitEmoji, findDay, findWeek, daysCompletedInWeek, validateEmail, validateUsername, validatePassword, validateLoginPassword, validateTimezone}
+export { splitEmoji, findDay, findWeek, daysCompletedInWeek, validateEmail, validateUsername, validatePassword, validateLoginPassword, validateTimezone, validateHabit }
