@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose')
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
 
 const userSchema = new Schema({
     name: { type: String, required: true },
@@ -29,6 +30,25 @@ userSchema.methods.checkPassword = function (password) {
     return this.password === hash
 }
 
+userSchema.methods.endOfWeek = async function () {
+    const Habit = mongoose.model('Habit')
+    try {
+        for (const habit of this.habits) {
+            if (habit.endDatePassed(this.timezone)) {
+                const newStreak = await habit.updateStreak()
+                const newWeek = await habit.createNewWeek()
+                habit.weeks.push(newWeek._id)
+                await Habit.findOneAndUpdate({ _id: habit._id }, { $set: { streak: newStreak, weeks: habit.weeks } })
+            }
+        }
+        this.save()
+        return this
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error)
+    }
+}
+
 // Middleware to hash the password before saving
 userSchema.pre('save', function (next) {
     if (!this.isModified('password')) {
@@ -44,6 +64,29 @@ userSchema.pre('save', function (next) {
         this.password = hash.toString('hex')
         next()
     })
+})
+
+// Middleware to populate habits, weeks, and days
+userSchema.pre('findOne', function (next) {
+    this.populate({
+        path: 'habits',
+            model: 'Habit',
+            populate: {
+                path: 'weeks',
+                model: 'Week',
+                populate: {
+                    path: 'days',
+                    model: 'Day'
+                }
+            }
+    })
+    next()
+})
+
+// Middleware to remove password and salt from the response
+userSchema.pre('findOne', function (next) {
+    this.select('-password -salt')
+    next()
 })
 
 // Middleware to hash the password before updating

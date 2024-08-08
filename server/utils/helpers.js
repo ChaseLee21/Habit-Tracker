@@ -1,48 +1,6 @@
 const mongoose = require('mongoose')
 const moment = require('moment-timezone')
 
-async function endOfWeek (user) {
-    // helper functions
-    function EndDatePassed (habit) {
-        const endDate = habit.weeks[habit.weeks.length - 1].endDate
-        const formattedEndDate = moment.tz(endDate, user.timezone).utc()
-        const now = moment.tz(user.timezone).utc()
-        return formattedEndDate.isBefore(now)
-    }
-
-    function updateStreak (habit) {
-        const thisWeek = habit.weeks[habit.weeks.length - 1]
-        let daysCompleted = 0
-        for (const day of thisWeek.days) {
-            if (day.completed) {
-                daysCompleted++
-            }
-        }
-        if (daysCompleted < thisWeek.frequency) {
-            return 0
-        }
-        return habit.streak
-    }
-
-    async function createNewWeek (habit) {
-        const Week = mongoose.model('Week')
-        return await Week.create({ habit: habit._id, user: user._id })
-    }
-
-    for (const habit of user.habits) {
-        if (EndDatePassed(habit)) {
-            // Check if frequency was met and update streak
-            habit.streak = await updateStreak(habit)
-            // Create new week document
-            habit.weeks.push(await createNewWeek(habit, user.timezone))
-            // Save habit
-            await habit.save()
-        }
-    }
-    await user.save()
-    return user
-}
-
 function setEndDate (timezone) {
     const now = moment.tz(timezone)
     const today = now.day()
@@ -101,4 +59,4 @@ async function deleteWeek (week) {
     }
 }
 
-module.exports = { endOfWeek, setEndDate, setDaysArray, addEmoji, removeEmoji, deleteDay, deleteWeek }
+module.exports = { setEndDate, setDaysArray, addEmoji, removeEmoji, deleteDay, deleteWeek }

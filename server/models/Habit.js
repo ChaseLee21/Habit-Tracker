@@ -1,4 +1,5 @@
 const { Schema, model, default: mongoose } = require('mongoose')
+const moment = require('moment-timezone')
 
 const habitSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
@@ -12,6 +13,44 @@ const habitSchema = new Schema({
     weeks: [{ type: Schema.Types.ObjectId, ref: 'Week' }],
     emoji: { type: String, required: false }
 })
+
+habitSchema.methods.endDatePassed = function (timezone) {
+    const endDate = this.weeks[this.weeks.length - 1].endDate
+    const formattedEndDate = moment.tz(endDate, timezone).utc()
+    const now = moment.tz(timezone).utc()
+    return formattedEndDate.isBefore(now)
+}
+
+habitSchema.methods.createNewWeek = async function () {
+    const Week = mongoose.model('Week')
+    return await Week.create({ habit: this._id, user: this.user })
+}
+
+habitSchema.methods.updateStreak = async function () {
+    const currentWeek = this.currentWeek()
+    let newStreak = this.streak
+    let daysCompleted = 0
+    try {
+        for (const index of currentWeek.days) {
+            const Day = mongoose.model('Day')
+            if (await Day.findOne({ _id: index }).completed) {
+                daysCompleted++
+            }
+        }
+        if (daysCompleted < currentWeek.frequency) {
+            newStreak = 0
+        }
+        return newStreak
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error)
+    }
+}
+
+habitSchema.methods.currentWeek = async function () {
+    const Week = mongoose.model('Week')
+    return await Week.findOne({ habit: this.weeks[habit.weeks.length - 1]._id })
+}
 
 habitSchema.pre('save', async function () {
     if (!this.isNew) {
