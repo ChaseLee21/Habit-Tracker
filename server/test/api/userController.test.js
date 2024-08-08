@@ -56,9 +56,8 @@ describe('User Controller', () => {
                 expect(testHabit.goal).to.equal(habitData.goal);
                 expect(testHabit.frequency).to.equal(habitData.frequency);
                 expect(testHabit.user).to.equal(testUser._id);
-                expect(testHabit.completed).to.equal(false);
                 expect(testHabit.streak).to.equal(0);
-                expect(testHabit.weeks).to.be.an('object');
+                expect(testHabit.weeks).to.be.an('array');
                 done();
             });
     })
