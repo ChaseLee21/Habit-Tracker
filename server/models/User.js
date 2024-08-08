@@ -30,14 +30,6 @@ userSchema.methods.checkPassword = function (password) {
 }
 
 userSchema.methods.endOfWeek = async function () {
-        // helper functions
-        function EndDatePassed (habit) {
-            const endDate = habit.weeks[habit.weeks.length - 1].endDate
-            const formattedEndDate = moment.tz(endDate, user.timezone).utc()
-            const now = moment.tz(user.timezone).utc()
-            return formattedEndDate.isBefore(now)
-        }
-    
         async function updateStreak (habit) {
             let newStreak = habit.streak;
             const thisWeek = habit.weeks[habit.weeks.length - 1]
@@ -59,7 +51,7 @@ userSchema.methods.endOfWeek = async function () {
         }
         try {
             for (const habit of this.habits) {
-                if (EndDatePassed(habit)) {
+                if (habit.EndDatePassed()) {
                     const Habit = mongoose.model('Habit')
                     // Check if frequency was met and update streak
                     const newStreak = await updateStreak(habit)

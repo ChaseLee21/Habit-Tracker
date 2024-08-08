@@ -1,4 +1,5 @@
 const { Schema, model, default: mongoose } = require('mongoose')
+const moment = require('moment-timezone')
 
 const habitSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
@@ -12,6 +13,13 @@ const habitSchema = new Schema({
     weeks: [{ type: Schema.Types.ObjectId, ref: 'Week' }],
     emoji: { type: String, required: false }
 })
+
+habitSchema.methods.endDatePassed = function () {
+    const endDate = this.weeks[this.weeks.length - 1].endDate
+    const formattedEndDate = moment.tz(endDate, user.timezone).utc()
+    const now = moment.tz(user.timezone).utc()
+    return formattedEndDate.isBefore(now)
+}
 
 habitSchema.pre('save', async function () {
     if (!this.isNew) {
