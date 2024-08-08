@@ -14,10 +14,10 @@ const habitSchema = new Schema({
     emoji: { type: String, required: false }
 })
 
-habitSchema.methods.endDatePassed = function () {
+habitSchema.methods.endDatePassed = function (timezone) {
     const endDate = this.weeks[this.weeks.length - 1].endDate
-    const formattedEndDate = moment.tz(endDate, user.timezone).utc()
-    const now = moment.tz(user.timezone).utc()
+    const formattedEndDate = moment.tz(endDate, timezone).utc()
+    const now = moment.tz(timezone).utc()
     return formattedEndDate.isBefore(now)
 }
 

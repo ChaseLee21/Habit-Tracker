@@ -31,19 +31,17 @@ userSchema.methods.checkPassword = function (password) {
 }
 
 userSchema.methods.endOfWeek = async function () {
+    const Habit = mongoose.model('Habit')
     try {
         for (const habit of this.habits) {
-            if (habit.EndDatePassed()) {
-                const Habit = mongoose.model('Habit')
-                // Check if frequency was met and update streak
+            if (habit.endDatePassed(this.timezone)) {
                 const newStreak = await habit.updateStreak()
-                // Create new week document
                 const newWeek = await habit.createNewWeek()
                 habit.weeks.push(newWeek._id)
-                // Update habit document
                 await Habit.findOneAndUpdate({ _id: habit._id }, { $set: { streak: newStreak, weeks: habit.weeks } })
             }
         }
+        this.save()
         return this
     } catch (error) {
         console.log(error)
@@ -82,7 +80,6 @@ userSchema.pre('findOne', function (next) {
                 }
             }
     })
-    this.endOfWeek()
     next()
 })
 

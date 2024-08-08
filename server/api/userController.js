@@ -10,6 +10,7 @@ router.get('/:id', async (req, res) => {
     try {
         let user = await User.findOne({ _id: id })
         if (!user) return res.status(404).json({ message: 'No user found with this id' })
+        user = await user.endOfWeek()
         res.json(user)
     } catch (err) {
         console.log(err)
