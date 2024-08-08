@@ -69,13 +69,18 @@ describe('User Controller', () => {
             .expect(200)
             .end(async function (err, res) {
                 if (err) return done(err);
-                let user = res.body;
-                let testWeek = await Week.findOneAndUpdate({ _id: user.habits[0].weeks[0]._id }, { $set: { endDate : '2024-08-04' }}, { new: true })
-                expect(user).to.be.an('object');
-                expect(user.email).to.equal(userData.email);
-                expect(user.name).to.equal(userData.name);
-                expect(user.password).to.be.undefined;
-                done();
+                try {
+                    let user = res.body;
+                    expect(user).to.be.an('object');
+                    expect(user.email).to.equal(userData.email);
+                    expect(user.name).to.equal(userData.name);
+                    expect(user.password).to.be.undefined;
+                    // changing the endDate of the test habit to a date in the past to test the endOfWeek method in the next test
+                    await Week.findOneAndUpdate({ _id: user.habits[0].weeks[0]._id }, { $set: { endDate : '2024-08-04' }}, { new: true })
+                    done();
+                } catch (error) {
+                    done(error);
+                }
             });
     });
 
