@@ -1,3 +1,5 @@
+const { Week } = require('../../models/index');
+
 describe('User Controller', () => {
     let chai, expect, request, server, testUser;
 
@@ -47,8 +49,7 @@ describe('User Controller', () => {
             .expect(201)
             .end(function (err, res) {
                 if (err) return done(err);
-                testHabit = res.body.habit;
-                console.log(testHabit);
+                let testHabit = res.body.habit;
                 expect(testHabit).to.be.an('object');
                 expect(testHabit.name).to.equal(habitData.name);
                 expect(testHabit.description).to.equal(habitData.description);
@@ -66,13 +67,30 @@ describe('User Controller', () => {
         request(server)
             .get(`/api/users/${testUser._id}`)
             .expect(200)
-            .end(function (err, res) {
+            .end(async function (err, res) {
                 if (err) return done(err);
                 let user = res.body;
+                let testWeek = await Week.findOneAndUpdate({ _id: user.habits[0].weeks[0]._id }, { $set: { endDate : '2024-08-04' }}, { new: true })
+                console.log(testWeek);
                 expect(user).to.be.an('object');
                 expect(user.email).to.equal(userData.email);
                 expect(user.name).to.equal(userData.name);
                 expect(user.password).to.be.undefined;
+                done();
+            });
+    });
+
+    it('GET /api/users/:id should invoke habit.endOfWeek method and generate a new week document for the users habit', function (done) {
+        request(server)
+            .get(`/api/users/${testUser._id}`)
+            .expect(200)
+            .end(async function (err, res) {
+                if (err) return done(err);
+                let user = res.body;
+                expect(user).to.be.an('object');
+                expect(user.habits[0].weeks.length).to.equal(2);
+                expect(user.habits[0].weeks[0].endDate).to.equal('2024-08-04');
+                expect(user.habits[0].weeks[0].endDate).to.not.equal(user.habits[0].weeks[1].endDate);
                 done();
             });
     });
