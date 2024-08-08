@@ -3,6 +3,7 @@ import { useUser } from '../../../../contexts/UserContext'
 import { getUser } from '../../../../util/axios'
 import PropTypes from 'prop-types'
 import { findDay, findWeek, daysCompletedInWeek, validateHabit } from '../../../../util/helpers'
+import { Link } from 'react-router-dom'
 
 function Habits (props) {
     const timezone = props.user.user.timezone || 'America/Los_Angeles'
@@ -75,6 +76,16 @@ function Habits (props) {
                             {habit.streak !== undefined && <p className="text-base">My current streak is {habit.streak} days</p>}
                         </li>
                     ))}
+                    {loaded && userData.habits.length === 0 && <div className='text-lg'>
+                        <p>Thank you for creating an Account!</p>
+                        <Link className='text-colorLink hover:text-colorLinkHover font-bold' to={'/new-habit'} onClick={() => handleNavBarClick()}>Click here to get started</Link>
+                    </div>
+                    }
+                    {!loaded && <div>
+                        <p>Loading...</p>
+                        <p>Try refreshing the page.</p>
+                    </div>
+                    }
                 </ul>
             </section>
         </div>
