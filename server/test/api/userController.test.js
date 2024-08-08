@@ -1,4 +1,5 @@
-const { Week } = require('../../models/index');
+const { Week, Day } = require('../../models/index');
+const moment = require('moment-timezone');
 
 describe('User Controller', () => {
     let chai, expect, request, server, testUser;
@@ -92,11 +93,17 @@ describe('User Controller', () => {
                 if (err) return done(err);
                 try {
                     let user = res.body;
+                    const now = moment.tz('America/Los_Angeles').utc().format('YYYY-MM-DD');
+                    let confirmTodayExists = await Day.findOne({ week: user.habits[0].weeks[1]._id, date: now })
                     expect(user).to.be.an('object');
                     expect(user.habits[0].weeks.length).to.equal(2);
                     expect(user.habits[0].weeks[0].endDate).to.equal('2024-08-04');
                     expect(user.habits[0].weeks[1].endDate).to.not.equal('2024-08-04');
                     expect(user.habits[0].weeks[1].endDate).to.be.an('string');
+                    expect(moment.tz(user.habits[0].weeks[1].endDate, 'America/Los_Angeles').utc().isAfter(now)).to.be.true;
+                    expect(user.habits[0].weeks[1].days.length).to.equal(7);
+                    expect(confirmTodayExists).to.be.an('object');
+                    expect(confirmTodayExists.date).to.equal(now);
                     done();
                 } catch (error) {
                     done(error);
