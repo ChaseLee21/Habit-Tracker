@@ -46,6 +46,23 @@ userSchema.pre('save', function (next) {
     })
 })
 
+// Middleware to populate habits, weeks, and days
+userSchema.pre('findOne', function (next) {
+    this.populate({
+        path: 'habits',
+            model: 'Habit',
+            populate: {
+                path: 'weeks',
+                model: 'Week',
+                populate: {
+                    path: 'days',
+                    model: 'Day'
+                }
+            }
+    })
+    next()
+})
+
 // Middleware to hash the password before updating
 userSchema.pre('findOneAndUpdate', function (next) {
     const update = this.getUpdate()

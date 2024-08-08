@@ -10,18 +10,7 @@ router.get('/:id', async (req, res) => {
     const { id } = req.params
     try {
         // Find user by id and populate habits, weeks, and days
-        let user = await User.findOne({ _id: id }).populate({
-            path: 'habits',
-            model: 'Habit',
-            populate: {
-                path: 'weeks',
-                model: 'Week',
-                populate: {
-                    path: 'days',
-                    model: 'Day'
-                }
-            }
-        })
+        let user = await User.findOne({ _id: id })
         // 404 error if no user found
         if (!user) return res.status(404).json({ message: 'No user found with this id' })
         // Check if any new instances of Week document need to be created for the user
