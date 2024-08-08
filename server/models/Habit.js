@@ -21,7 +21,7 @@ habitSchema.methods.endDatePassed = function () {
     return formattedEndDate.isBefore(now)
 }
 
-habit.habitSchema.methods.createNewWeek = async function () {
+habitSchema.methods.createNewWeek = async function () {
     const Week = mongoose.model('Week')
     return await Week.create({ habit: this._id, user: this.user })
 }
