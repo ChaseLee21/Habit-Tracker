@@ -1,5 +1,4 @@
 const { User } = require('../models/index')
-const { endOfWeek } = require('../utils/helpers')
 const router = require('express').Router()
 const { signToken } = require('../utils/auth')
 
@@ -11,7 +10,7 @@ router.get('/:id', async (req, res) => {
     try {
         let user = await User.findOne({ _id: id })
         if (!user) return res.status(404).json({ message: 'No user found with this id' })
-        user = await endOfWeek(user)
+        user = await user.endOfWeek()
         await user.save()
         res.json(user)
     } catch (err) {

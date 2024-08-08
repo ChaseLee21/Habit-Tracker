@@ -38,7 +38,8 @@ userSchema.methods.endOfWeek = async function () {
             return formattedEndDate.isBefore(now)
         }
     
-        function updateStreak (habit) {
+        async function updateStreak (habit) {
+            let newStreak = habit.streak;
             const thisWeek = habit.weeks[habit.weeks.length - 1]
             let daysCompleted = 0
             for (const day of thisWeek.days) {
@@ -47,28 +48,33 @@ userSchema.methods.endOfWeek = async function () {
                 }
             }
             if (daysCompleted < thisWeek.frequency) {
-                return 0
+                newStreak = 0
             }
-            return habit.streak
+            return newStreak
         }
     
         async function createNewWeek (habit) {
             const Week = mongoose.model('Week')
             return await Week.create({ habit: habit._id, user: user._id })
         }
-    
-        for (const habit of this.habits) {
-            if (EndDatePassed(habit)) {
-                // Check if frequency was met and update streak
-                habit.streak = await updateStreak(habit)
-                // Create new week document
-                habit.weeks.push(await createNewWeek(habit, user.timezone))
-                // Save habit
-                await habit.save()
+        try {
+            for (const habit of this.habits) {
+                if (EndDatePassed(habit)) {
+                    const Habit = mongoose.model('Habit')
+                    // Check if frequency was met and update streak
+                    const newStreak = await updateStreak(habit)
+                    // Create new week document
+                    const newWeek = await createNewWeek(habit)
+                    habit.weeks.push(newWeek._id)
+                    // Update habit document
+                    await Habit.findOneAndUpdate({ _id: habit._id }, { $set: { streak: newStreak, weeks: habit.weeks } })
+                }
             }
+            return this
+        } catch (error) {
+            console.log(error)
+            res.status(500).json(error)
         }
-        await this.save()
-        return this
 }
 
 // Middleware to hash the password before saving
