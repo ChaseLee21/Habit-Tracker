@@ -82,6 +82,7 @@ userSchema.pre('findOne', function (next) {
                 }
             }
     })
+    this.endOfWeek()
     next()
 })
 
