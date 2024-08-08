@@ -86,10 +86,12 @@ describe('User Controller', () => {
             .end(async function (err, res) {
                 if (err) return done(err);
                 let user = res.body;
+                console.log(user.habits[0].weeks);
                 expect(user).to.be.an('object');
                 expect(user.habits[0].weeks.length).to.equal(2);
                 expect(user.habits[0].weeks[0].endDate).to.equal('2024-08-04');
-                expect(user.habits[0].weeks[0].endDate).to.not.equal(user.habits[0].weeks[1].endDate);
+                expect(user.habits[0].weeks[1].endDate).to.not.equal('2024-08-04');
+                expect(user.habits[0].weeks[1].endDate).to.be.an('string');
                 done();
             });
     });
