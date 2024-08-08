@@ -38,6 +38,10 @@ describe('User Controller', () => {
                 if (err) return done(err);
                 testUser = res.body;
                 expect(res.body).to.be.an('object');
+                expect(testUser.email).to.equal(userData.email);
+                expect(testUser.name).to.equal(userData.name);
+                expect(testUser.password).to.be.undefined;
+                expect(testUser.salt).to.be.undefined;
                 done();
             });
     });
