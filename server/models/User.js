@@ -30,43 +30,24 @@ userSchema.methods.checkPassword = function (password) {
 }
 
 userSchema.methods.endOfWeek = async function () {
-        async function updateStreak (habit) {
-            let newStreak = habit.streak;
-            const thisWeek = habit.weeks[habit.weeks.length - 1]
-            let daysCompleted = 0
-            for (const day of thisWeek.days) {
-                if (day.completed) {
-                    daysCompleted++
-                }
+    try {
+        for (const habit of this.habits) {
+            if (habit.EndDatePassed()) {
+                const Habit = mongoose.model('Habit')
+                // Check if frequency was met and update streak
+                const newStreak = await habit.updateStreak()
+                // Create new week document
+                const newWeek = await habit.createNewWeek()
+                habit.weeks.push(newWeek._id)
+                // Update habit document
+                await Habit.findOneAndUpdate({ _id: habit._id }, { $set: { streak: newStreak, weeks: habit.weeks } })
             }
-            if (daysCompleted < thisWeek.frequency) {
-                newStreak = 0
-            }
-            return newStreak
         }
-    
-        async function createNewWeek (habit) {
-            const Week = mongoose.model('Week')
-            return await Week.create({ habit: habit._id, user: user._id })
-        }
-        try {
-            for (const habit of this.habits) {
-                if (habit.EndDatePassed()) {
-                    const Habit = mongoose.model('Habit')
-                    // Check if frequency was met and update streak
-                    const newStreak = await updateStreak(habit)
-                    // Create new week document
-                    const newWeek = await createNewWeek(habit)
-                    habit.weeks.push(newWeek._id)
-                    // Update habit document
-                    await Habit.findOneAndUpdate({ _id: habit._id }, { $set: { streak: newStreak, weeks: habit.weeks } })
-                }
-            }
-            return this
-        } catch (error) {
-            console.log(error)
-            res.status(500).json(error)
-        }
+        return this
+    } catch (error) {
+        console.log(error)
+        res.status(500).json(error)
+    }
 }
 
 // Middleware to hash the password before saving
