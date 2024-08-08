@@ -3,8 +3,6 @@ const router = require('express').Router()
 const { signToken } = require('../utils/auth')
 
 // Get user by id
-// Check if any new instances of Week document need to be created for the user
-// Check if streak needs to be updated for each habit
 router.get('/:id', async (req, res) => {
     const { id } = req.params
     try {
