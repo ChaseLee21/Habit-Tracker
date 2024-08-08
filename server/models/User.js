@@ -88,6 +88,10 @@ userSchema.pre('findOne', function (next) {
     this.select('-password -salt')
     next()
 })
+userSchema.pre('findOneAndUpdate', function (next) {
+    this.select('-password -salt')
+    next()
+})
 
 // Middleware to hash the password before updating
 userSchema.pre('findOneAndUpdate', function (next) {
