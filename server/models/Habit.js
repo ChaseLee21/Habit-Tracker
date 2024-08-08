@@ -27,7 +27,7 @@ habitSchema.methods.createNewWeek = async function () {
 }
 
 habitSchema.methods.updateStreak = async function () {
-    const currentWeek = this.currentWeek()
+    const currentWeek = await this.currentWeek()
     let newStreak = this.streak
     let daysCompleted = 0
     try {
@@ -49,7 +49,9 @@ habitSchema.methods.updateStreak = async function () {
 
 habitSchema.methods.currentWeek = async function () {
     const Week = mongoose.model('Week')
-    return await Week.findOne({ habit: this.weeks[habit.weeks.length - 1]._id })
+    const id = this.weeks[this.weeks.length - 1]._id
+    const data = await Week.findOne({ _id: id }).populate('days')
+    return data
 }
 
 habitSchema.pre('save', async function () {

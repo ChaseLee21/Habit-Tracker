@@ -71,7 +71,6 @@ describe('User Controller', () => {
                 if (err) return done(err);
                 let user = res.body;
                 let testWeek = await Week.findOneAndUpdate({ _id: user.habits[0].weeks[0]._id }, { $set: { endDate : '2024-08-04' }}, { new: true })
-                console.log(testWeek);
                 expect(user).to.be.an('object');
                 expect(user.email).to.equal(userData.email);
                 expect(user.name).to.equal(userData.name);
