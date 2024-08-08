@@ -7,6 +7,14 @@ describe('User Controller', () => {
         password: 'Password321!'
     }
 
+    const habitData = {
+        name: 'Test Habit',
+        description: 'This is a test habit',
+        why: 'To test the habit creation',
+        goal: 'To complete the habit',
+        frequency: 5
+    }
+
     before(async () => {
         chai = await import('chai');
         expect = chai.expect;
@@ -30,6 +38,30 @@ describe('User Controller', () => {
                 done();
             });
     });
+
+    it('POST /api/habits/:userId should create a new habit for the user', function (done) {
+        habitData.user = testUser._id;
+        request(server)
+            .post(`/api/habits/${testUser._id}`)
+            .send(habitData)
+            .expect(201)
+            .end(function (err, res) {
+                if (err) return done(err);
+                testHabit = res.body.habit;
+                console.log(testHabit);
+                expect(testHabit).to.be.an('object');
+                expect(testHabit.name).to.equal(habitData.name);
+                expect(testHabit.description).to.equal(habitData.description);
+                expect(testHabit.why).to.equal(habitData.why);
+                expect(testHabit.goal).to.equal(habitData.goal);
+                expect(testHabit.frequency).to.equal(habitData.frequency);
+                expect(testHabit.user).to.equal(testUser._id);
+                expect(testHabit.completed).to.equal(false);
+                expect(testHabit.streak).to.equal(0);
+                expect(testHabit.weeks).to.be.an('object');
+                done();
+            });
+    })
 
     it('GET /api/users/:id should return back the user', function (done) {
         request(server)
