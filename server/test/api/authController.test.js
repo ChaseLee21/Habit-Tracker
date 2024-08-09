@@ -43,7 +43,21 @@ describe('Auth Controller', () => {
             .end(function (err, res) {
                 if (err) return done(err);
                 expect(res.body).to.be.an('object');
-                expect(res.cookie.habitTrackerToken).to.be.a('string');
+                expect(res.body.user).to.be.an('object');
+                expect(res.body.user.name).to.equal('testuser');
+                expect(res.body.user.email).to.equal('testemail123@gmail.com');
+                expect(res.body.user._id).to.equal(testUser._id);
+                done();
+            });
+    });
+
+    it('DELETE /api/users/:id should delete a user and recieve a 200 response', function (done) {
+        request(server)
+            .delete(`/api/users/${testUser._id}`)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                expect(res.body).to.be.an('object');
                 done();
             });
     });
