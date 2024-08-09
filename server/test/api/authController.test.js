@@ -64,7 +64,7 @@ describe('Auth Controller', () => {
             });
     });
 
-    it('POST /api/checktoken should return the token as an user object', function (done) {
+    it('GET /api/checktoken should return the token as an user object', function (done) {
         request(server)
             .get('/api/checktoken')
             .set('Cookie', testToken)
