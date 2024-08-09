@@ -12,7 +12,7 @@ router.use('/login', (req, res) => {
             res.status(401).json({ message: 'No user with that email!' })
             return
         }
-        if (!user.checkPassword(req.body.password, user.salt)) {
+        if (!user.checkPassword(req.body.password)) {
             console.log('password incorrect')
             res.status(401).json({ message: 'Wrong password!' })
             return

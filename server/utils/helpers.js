@@ -1,29 +1,4 @@
 const mongoose = require('mongoose')
-const moment = require('moment-timezone')
-
-function setEndDate (timezone) {
-    const now = moment.tz(timezone)
-    const today = now.day()
-    const daysUntilNextSunday = (7 - today + 7) % 7 || 7
-    const nextSunday = now.add(daysUntilNextSunday, 'days').format('YYYY-MM-DD')
-    return nextSunday
-}
-
-async function setDaysArray (endDate, weekId, habitId, timezone) {
-    const days = []
-    const Day = mongoose.model('Day')
-    let currentDate = moment.tz(endDate, timezone)
-    for (let i = 0; i < 7; i++) {
-        const newDay = await Day.create({
-            date: currentDate.subtract(1, 'days').format('YYYY-MM-DD'),
-            completed: false,
-            week: weekId,
-            habit: habitId
-        })
-        days.push(newDay._id)
-    }
-    return days
-}
 
 async function addEmoji (habit) {
     const User = mongoose.model('User')
@@ -59,4 +34,4 @@ async function deleteWeek (week) {
     }
 }
 
-module.exports = { setEndDate, setDaysArray, addEmoji, removeEmoji, deleteDay, deleteWeek }
+module.exports = { addEmoji, removeEmoji, deleteDay, deleteWeek }

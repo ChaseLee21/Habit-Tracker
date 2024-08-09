@@ -3,14 +3,15 @@ const router = require('express').Router()
 const { signToken } = require('../utils/auth')
 
 // Get user by id
-// Check if any new instances of Week document need to be created for the user
-// Check if streak needs to be updated for each habit
 router.get('/:id', async (req, res) => {
     const { id } = req.params
     try {
         let user = await User.findOne({ _id: id })
         if (!user) return res.status(404).json({ message: 'No user found with this id' })
         user = await user.endOfWeek()
+        user = user.toObject()
+        delete user.password
+        delete user.salt
         res.json(user)
     } catch (err) {
         console.log(err)

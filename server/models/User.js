@@ -37,11 +37,11 @@ userSchema.methods.endOfWeek = async function () {
             if (habit.endDatePassed(this.timezone)) {
                 const newStreak = await habit.updateStreak()
                 const newWeek = await habit.createNewWeek()
-                habit.weeks.push(newWeek._id)
+                habit.weeks.push(newWeek)
                 await Habit.findOneAndUpdate({ _id: habit._id }, { $set: { streak: newStreak, weeks: habit.weeks } })
             }
         }
-        this.save()
+        await this.save()
         return this
     } catch (error) {
         console.log(error)
@@ -80,12 +80,6 @@ userSchema.pre('findOne', function (next) {
                 }
             }
     })
-    next()
-})
-
-// Middleware to remove password and salt from the response
-userSchema.pre('findOne', function (next) {
-    this.select('-password -salt')
     next()
 })
 
