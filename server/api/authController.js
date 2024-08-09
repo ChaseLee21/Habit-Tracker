@@ -8,12 +8,10 @@ require('dotenv').config()
 router.use('/login', (req, res) => {
     User.findOne({ email: req.body.email }).then(user => {
         if (!user) {
-            console.log('no user found')
             res.status(401).json({ message: 'No user with that email!' })
             return
         }
         if (!user.checkPassword(req.body.password)) {
-            console.log('password incorrect')
             res.status(401).json({ message: 'Wrong password!' })
             return
         }
@@ -33,7 +31,6 @@ router.use('/checkToken', authMiddleware, async (req, res) => {
 router.post('/reset-password', async (req, res) => {
     // Find user by email
     try {
-        console.log(process.env.EMAIL, process.env.EMAIL_PASSWORD);
         const user = await User.findOne({ email: req.body.email })
         if (!user) {
             return res.status(404).json({ message: 'No user with that email!' })
