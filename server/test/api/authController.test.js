@@ -7,6 +7,12 @@ describe('Auth Controller', () => {
         password: 'Password321!'
     }
 
+    const fakeUserData = {
+        email: 'idonotexist@gmail.com',
+        password: 'IAmFake321!',
+        name: 'fakeuser'
+    }
+
     before(async () => {
         chai = await import('chai');
         expect = chai.expect;
@@ -47,6 +53,49 @@ describe('Auth Controller', () => {
                 expect(res.body.user.name).to.equal('testuser');
                 expect(res.body.user.email).to.equal('testemail123@gmail.com');
                 expect(res.body.user._id).to.equal(testUser._id);
+
+                // Check if the cookie is set
+                const cookies = res.headers['set-cookie'];
+                expect(cookies).to.be.an('array').that.is.not.empty;
+                const tokenCookie = cookies.find(cookie => cookie.startsWith('habitTrackerToken='));
+                expect(tokenCookie).to.exist;
+
+                done();
+            });
+    });
+
+    it('POST /api/login should return 401 no user found', function (done) {
+        request(server)
+            .post('/api/login')
+            .send({ email: fakeUserData.email, password: fakeUserData.password })
+            .expect(401)
+            .end(function (err, res) {
+                if (err) return done(err);
+                expect(res.body).to.be.an('object');
+                expect(res.body.message).to.equal('No user with that email!');
+
+                // Check if the cookie is not set
+                const cookies = res.headers['set-cookie'];
+                expect(cookies).to.be.a('undefined')
+
+                done();
+            });
+    });
+
+    it('POST /api/login should return 401 wrong password', function (done) {
+        request(server)
+            .post('/api/login')
+            .send({ email: userData.email, password: fakeUserData.password })
+            .expect(401)
+            .end(function (err, res) {
+                if (err) return done(err);
+                expect(res.body).to.be.an('object');
+                expect(res.body.message).to.equal('Wrong password!');
+
+                // Check if the cookie is not set
+                const cookies = res.headers['set-cookie'];
+                expect(cookies).to.be.a('undefined')
+
                 done();
             });
     });
