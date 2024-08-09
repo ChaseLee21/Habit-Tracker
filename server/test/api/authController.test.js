@@ -57,9 +57,22 @@ describe('Auth Controller', () => {
                 // Check if the cookie is set
                 const cookies = res.headers['set-cookie'];
                 expect(cookies).to.be.an('array').that.is.not.empty;
-                const tokenCookie = cookies.find(cookie => cookie.startsWith('habitTrackerToken='));
-                expect(tokenCookie).to.exist;
+                testToken = cookies.find(cookie => cookie.startsWith('habitTrackerToken='));
+                expect(testToken).to.exist;
 
+                done();
+            });
+    });
+
+    it('POST /api/checktoken should return the token as an user object', function (done) {
+        request(server)
+            .get('/api/checktoken')
+            .set('Cookie', testToken)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                expect(res.body).to.be.an('object');
+                expect(res.body.user).to.be.an('object');
                 done();
             });
     });
