@@ -9,6 +9,9 @@ router.get('/:id', async (req, res) => {
         let user = await User.findOne({ _id: id })
         if (!user) return res.status(404).json({ message: 'No user found with this id' })
         user = await user.endOfWeek()
+        user = user.toObject()
+        delete user.password
+        delete user.salt
         res.json(user)
     } catch (err) {
         console.log(err)
@@ -44,6 +47,9 @@ router.put('/:id', async (req, res) => {
             res.status(404).json({ message: 'No user found with this id' })
             return
         }
+        user = user.toObject()
+        delete user.password
+        delete user.salt
         res.status(200).json({ message: 'User updated successfully', user })
     } catch (error) {
         console.log(error)
