@@ -1,5 +1,7 @@
+const { Week } = require('../../models/index');
+
 describe('Day Controller', () => {
-    let chai, expect, request, server, testUser;
+    let chai, expect, request, server, testUser, testWeek, dayId;
 
     const userData = {
         email: 'testemail123@gmail.com',
@@ -13,6 +15,10 @@ describe('Day Controller', () => {
         why: 'To test the habit creation',
         goal: 'To complete the habit',
         frequency: 5
+    }
+
+    const dayData = {
+        completed: true
     }
 
     before(async () => {
@@ -49,18 +55,55 @@ describe('Day Controller', () => {
             .post(`/api/habits/${testUser._id}`)
             .send(habitData)
             .expect(201)
+            .end(async function (err, res) {
+                if (err) return done(err);
+                try {
+                    let testHabit = res.body.habit;
+                    expect(testHabit).to.be.an('object');
+                    expect(testHabit.name).to.equal(habitData.name);
+                    expect(testHabit.description).to.equal(habitData.description);
+                    expect(testHabit.why).to.equal(habitData.why);
+                    expect(testHabit.goal).to.equal(habitData.goal);
+                    expect(testHabit.frequency).to.equal(habitData.frequency);
+                    expect(testHabit.user).to.equal(testUser._id);
+                    expect(testHabit.streak).to.equal(0);
+                    expect(testHabit.weeks).to.be.an('array');
+                    // populating week and days for the next two tests
+                    testWeek = await Week.findOne({ _id: testHabit.weeks[0] }).populate('days');
+                    done();
+                } catch (error) {
+                    done(error);
+                }
+            });
+    })
+
+    it('PUT /api/days/:id should mark the habit as complete for the user', function (done) {
+        dayId = testWeek.days[0]._id;
+        request(server)
+            .put(`/api/days/${dayId}`)
+            .send(dayData)
+            .expect(200)
             .end(function (err, res) {
                 if (err) return done(err);
-                let testHabit = res.body.habit;
-                expect(testHabit).to.be.an('object');
-                expect(testHabit.name).to.equal(habitData.name);
-                expect(testHabit.description).to.equal(habitData.description);
-                expect(testHabit.why).to.equal(habitData.why);
-                expect(testHabit.goal).to.equal(habitData.goal);
-                expect(testHabit.frequency).to.equal(habitData.frequency);
-                expect(testHabit.user).to.equal(testUser._id);
-                expect(testHabit.streak).to.equal(0);
-                expect(testHabit.weeks).to.be.an('array');
+                let testDay = res.body;
+                expect(testDay).to.be.an('object');
+                expect(testDay.completed).to.equal(true);
+                done();
+            });
+
+    })
+
+    it('PUT /api/days/:id should mark the habit as incomplete for the user', function (done) {
+        dayData.completed = false;
+        request(server)
+            .put(`/api/days/${dayId}`)
+            .send(dayData)
+            .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                let testDay = res.body;
+                expect(testDay).to.be.an('object');
+                expect(testDay.completed).to.equal(false);
                 done();
             });
     })
