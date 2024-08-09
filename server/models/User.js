@@ -83,16 +83,6 @@ userSchema.pre('findOne', function (next) {
     next()
 })
 
-// Middleware to remove password and salt from the response
-userSchema.pre('findOne', function (next) {
-    this.select('-password -salt')
-    next()
-})
-userSchema.pre('findOneAndUpdate', function (next) {
-    this.select('-password -salt')
-    next()
-})
-
 // Middleware to hash the password before updating
 userSchema.pre('findOneAndUpdate', function (next) {
     const update = this.getUpdate()
