@@ -1,7 +1,7 @@
 const { Week } = require('../../models/index');
 
 describe('Day Controller', () => {
-    let chai, expect, request, server, testUser;
+    let chai, expect, request, server, testUser, testHabit;
 
     const userData = {
         email: 'testemail123@gmail.com',
@@ -54,7 +54,7 @@ describe('Day Controller', () => {
             .end(async function (err, res) {
                 if (err) return done(err);
                 try {
-                    let testHabit = res.body.habit;
+                    testHabit = res.body.habit;
                     expect(testHabit).to.be.an('object');
                     expect(testHabit.name).to.equal(habitData.name);
                     expect(testHabit.description).to.equal(habitData.description);
@@ -75,6 +75,17 @@ describe('Day Controller', () => {
         request(server)
             .delete(`/api/users/${testUser._id}`)
             .expect(200)
+            .end(function (err, res) {
+                if (err) return done(err);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('GET /api/habits/:id should return a 404 response', function (done) {
+        request(server)
+            .get(`/api/habits/${testHabit._id}`)
+            .expect(404)
             .end(function (err, res) {
                 if (err) return done(err);
                 expect(res.body).to.be.an('object');
