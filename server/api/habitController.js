@@ -1,6 +1,30 @@
 const router = require('express').Router()
 const { Habit, User } = require('../models/index')
 
+
+// Get habit by id
+router.get('/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        const habit = await Habit.findById(id).populate({
+            path: 'weeks',
+            model: 'Week',
+            populate: {
+                path: 'days',
+                model: 'Day'
+            }
+        })
+        if (!habit) {
+            res.status(404).json({ message: 'No habit found with this id' })
+            return
+        }
+        res.status(200).json(habit)
+    } catch (error) {
+        console.error("Failed to get habit:", error)
+        res.status(400).json(error)
+    }
+})
+
 // POST a new habit
 router.post('/:userId', async (req, res) => {
     const habitData = req.body
