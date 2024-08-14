@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const { Habit, User } = require('../models/index')
 
-
 // Get habit by id
 router.get('/:id', async (req, res) => {
     const { id } = req.params
@@ -72,7 +71,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     const { id } = req.params
     try {
-        const habit = await Habit.findByIdAndDelete(id)
+        const habit = await Habit.findOneAndDelete({ _id: id })
         if (!habit) {
             res.status(404).json({ message: 'No habit found with this id' })
             return
