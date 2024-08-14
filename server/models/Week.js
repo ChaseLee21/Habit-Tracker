@@ -14,7 +14,6 @@ const weekSchema = new Schema({
 weekSchema.methods.setEndDate = function () {
     try {
         const now = moment.tz(this.timezone)
-        console.log(now);
         const today = now.day()
         const daysUntilNextSunday = (7 - today + 7) % 7 || 7
         const nextSunday = now.add(daysUntilNextSunday, 'days').format('YYYY-MM-DD')
