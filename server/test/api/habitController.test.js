@@ -1,7 +1,7 @@
-const { Week } = require('../../models/index');
+const { Week, Day } = require('../../models/index');
 
 describe('Day Controller', () => {
-    let chai, expect, request, server, testUser, testHabit, testWeek;
+    let chai, expect, request, server, testUser, testHabit, testWeek, testDay;
 
     const userData = {
         email: 'testemail123@gmail.com',
@@ -56,6 +56,7 @@ describe('Day Controller', () => {
                 try {
                     testHabit = res.body.habit;
                     testWeek = await Week.findOne({ habit: testHabit._id });
+                    testDay = await Day.findOne({ week: testWeek._id });
                     expect(testHabit).to.be.an('object');
                     expect(testHabit.name).to.equal(habitData.name);
                     expect(testHabit.description).to.equal(habitData.description);
@@ -97,6 +98,17 @@ describe('Day Controller', () => {
     it('GET /api/weeks/:id should return a 404 response', function (done) {
         request(server)
             .get(`/api/weeks/${testWeek._id}`)
+            .expect(404)
+            .end(function (err, res) {
+                if (err) return done(err);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('GET /api/days/:id should return a 404 response', function (done) {
+        request(server)
+            .get(`/api/days/${testDay._id}`)
             .expect(404)
             .end(function (err, res) {
                 if (err) return done(err);
