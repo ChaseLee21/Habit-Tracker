@@ -57,9 +57,18 @@ weekSchema.pre('save', async function () {
     this.frequency = this.habit.frequency
 })
 
-weekSchema.pre('remove', async function () {
-    const Day = model('Day')
-    await Day.deleteMany({ week: this._id })
+weekSchema.pre('findOneAndDelete', async function (next) {
+    const Day = mongoose.model('Day')
+    try {
+        const week = await this.model.findOne(this.getQuery())
+        for (const day of week.days) {
+            await Day.deleteOne({ _id: day })
+        }
+        next()
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
 })
 
 module.exports = model('Week', weekSchema)
