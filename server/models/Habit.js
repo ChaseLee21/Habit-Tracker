@@ -73,7 +73,7 @@ habitSchema.pre('findOneAndDelete', async function (next) {
     try {
         const habit = await this.model.findOne(this.getQuery())
         for (const week of habit.weeks) {
-            await Week.deleteOne({ _id: week })
+            await Week.findOneAndDelete({ _id: week })
         }
         next()
     } catch (error) {

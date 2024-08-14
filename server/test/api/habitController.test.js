@@ -56,7 +56,6 @@ describe('Day Controller', () => {
                 try {
                     testHabit = res.body.habit;
                     testWeek = await Week.findOne({ habit: testHabit._id });
-                    console.log(testWeek);
                     expect(testHabit).to.be.an('object');
                     expect(testHabit.name).to.equal(habitData.name);
                     expect(testHabit.description).to.equal(habitData.description);

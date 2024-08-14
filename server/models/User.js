@@ -115,7 +115,7 @@ userSchema.pre('findOneAndDelete', async function (next) {
     try {
         const user = await this.model.findOne(this.getQuery())
         for (const habit of user.habits) {
-            await Habit.deleteOne({ _id: habit })
+            await Habit.findOneAndDelete({ _id: habit })
         }
         next()
     } catch (error) {
