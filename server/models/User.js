@@ -110,9 +110,18 @@ userSchema.pre('findOneAndUpdate', function (next) {
     }
 })
 
-userSchema.pre('remove', async function () {
-    const Habit = model('Habit')
-    await Habit.deleteMany({ user: this._id })
+userSchema.pre('findOneAndDelete', async function (next) {
+    const Habit = mongoose.model('Habit')
+    try {
+        const user = await this.model.findOne(this.getQuery())
+        for (const habit of user.habits) {
+            await Habit.findOneAndDelete({ _id: habit })
+        }
+        next()
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
 })
 
 module.exports = model('User', userSchema)
