@@ -26,7 +26,10 @@ db.once('open', async () => {
     const habits = await Habit.find()
     for (let habit of habits) {
         let user = await User.findOne({ _id: habit.user })
-        if (!user) console.log('habit with no user', habit)
+        if (!user) {
+            console.log('habit with no user', habit)
+            await Habit.findOneAndDelete({ _id: habit._id })
+        }
     }
     console.log('----------------------')
 
